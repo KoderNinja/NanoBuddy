@@ -29,7 +29,7 @@ const uint8_t MAX_FEATS = 48;
 const uint8_t NAME_LEN = 15;
 const uint16_t EE_NAME = 1000;  // EEPROM: magic byte, then name (NanoLang uses 0..451)
 const uint8_t EE_MAGIC = 0xC7;
-const float MIN_CONFIDENCE = 0.45;
+const float MIN_CONFIDENCE = 0.7;  // below this, the Brain's mini GPT writes the reply (keeps 171/176 right answers)
 const uint8_t BUTTON_PIN = 2;   // button between D2 and GND
 
 char line[LINE_LEN + 1];
@@ -285,19 +285,22 @@ const char R_JOKE[] PROGMEM =
   "What do you call a magic dog? A labracadabrador.";
 #else
 const char R_HELP[] PROGMEM = "Try: joke, riddle, roll 2 dice, again, 12*7, timer 5 min, stopwatch, guess my number, rock. With helpers: invent a word, trivia, calc x=5, 5 miles to km, morse sos, who is einstein, survival tip.";
-const char R_JOKE[] PROGMEM =
+const char R_JOKE[] PROGMEM =  // backups: the Library helper has 50 more
   "Why did the robot go on vacation? It needed to recharge.|"
-  "Why do programmers prefer dark mode? Because light attracts bugs.|"
-  "What do you call a sleeping bull? A bulldozer.|"
-  "Why was the math book sad? It had too many problems.|"
   "I told my Arduino a joke. It didn't laugh, it just blinked.";
 #endif
+#ifdef SOLO
 const char R_FACT[] PROGMEM =
   "Honey never spoils. 3000-year-old honey is still edible.|"
   "I run at 16 MHz: 16 million steps per second.|"
   "A day on Venus is longer than its year.|"
   "Bananas are berries, but strawberries aren't.|"
   "The first computer bug was a real moth, found in 1947.";
+#else  // NanoNet: the Library helper has hundreds; these are just backups
+const char R_FACT[] PROGMEM =
+  "Honey never spoils. 3000-year-old honey is still edible.|"
+  "I run at 16 MHz: 16 million steps per second.";
+#endif
 const char R_THANKS[] PROGMEM = "You're welcome!|Anytime, @.|Happy to help!|No problem!";
 const char R_COMPLIMENT[] PROGMEM = "Thanks! You're pretty cool too.|Aw, my LED is blushing.|Thank you, @!|I try my best with 2 KB of RAM.";
 const char R_INSULT[] PROGMEM = "Hey, I'm only 2 KB of RAM. Be nice!|Ouch. I'll pretend I didn't hear that.|Sorry! I'm still learning.";
@@ -309,11 +312,17 @@ const char R_EIGHTBALL[] PROGMEM = "It is certain.|Without a doubt.|Yes, definit
 const char R_AGE[] PROGMEM = "I was born when you uploaded me!|Brand new, but my chip design is from 2008.|Young enough to still be learning.";
 const char R_FAVORITE[] PROGMEM = "I love blinking LEDs.|My favorite number is 16, like my megahertz.|Electricity is my favorite food.|Anything with a USB cable.";
 const char R_LOVE[] PROGMEM = "Aw, I like you too, @!|We're definitely friends.|You're my favorite human.";
+#ifdef SOLO
 const char R_RIDDLE[] PROGMEM =
   "What has keys but can't open locks? ... A keyboard!|"
   "What gets wetter the more it dries? ... A towel!|"
   "What has a head and a tail but no body? ... A coin!|"
   "What can you catch but not throw? ... A cold!";
+#else  // NanoNet: the Library helper has hundreds; these are just backups
+const char R_RIDDLE[] PROGMEM =
+  "What has keys but can't open locks? ... A keyboard!|"
+  "What gets wetter the more it dries? ... A towel!";
+#endif
 const char R_UNKNOWN[] PROGMEM = "Hmm, I'm a tiny brain. Try help.|I didn't get that. Type help for ideas.|Not sure what you mean, @. Try other words?";
 const char R_NO_NET[] PROGMEM = "I'd need the internet for that. Run bridge.py on your Mac and ask me again!";
 
@@ -836,6 +845,90 @@ NOINLINE bool tryTrivia(const char *s) {
 }
 #endif
 
+#ifndef SOLO
+// ---------- self-training: remember corrections ----------
+// "wrong, it was a joke" -> your previous message means "joke" from now on.
+// Stored in EEPROM so it survives unplugging: byte 460 = how many, 461 = next slot,
+// then up to 100 slots of (4-byte message fingerprint, 1-byte intent).
+// (NanoLang uses EEPROM 0..451; your name is at 1000.)
+const uint16_t EE_LEARN = 460;
+const uint8_t LEARN_MAX = 100;
+
+// Fingerprint of a message: lowercase letters/digits, words joined by single spaces.
+uint32_t msgHash(const char *s) {
+  uint32_t h = 2166136261UL;
+  bool space = false, started = false;
+  for (; *s; s++) {
+    char c = tolower(*s);
+    if (!isalnum(c)) { space = started; continue; }
+    if (space) h = fnvStep(h, ' ');
+    h = fnvStep(h, c);
+    space = false;
+    started = true;
+  }
+  return h;
+}
+
+uint8_t learnCount() {
+  uint8_t n = EEPROM.read(EE_LEARN);
+  return n > LEARN_MAX ? 0 : n;  // 0xFF = never used
+}
+
+// The intent you taught for this message, or 0xFF.
+uint8_t learnedIntent(const char *s) {
+  uint32_t h = msgHash(s), e;
+  for (uint8_t i = 0; i < learnCount(); i++) {
+    EEPROM.get(EE_LEARN + 2 + i * 5, e);
+    if (e == h) return EEPROM.read(EE_LEARN + 6 + i * 5);
+  }
+  return 0xFF;
+}
+
+void learn(const char *s, uint8_t intent) {
+  uint32_t h = msgHash(s), e;
+  uint8_t n = learnCount(), slot = EEPROM.read(EE_LEARN + 1);
+  for (uint8_t i = 0; i < n; i++) {  // already taught? just update it
+    EEPROM.get(EE_LEARN + 2 + i * 5, e);
+    if (e == h) { EEPROM.update(EE_LEARN + 6 + i * 5, intent); return; }
+  }
+  if (slot >= LEARN_MAX || n == 0) slot = n == 0 ? 0 : slot % LEARN_MAX;
+  EEPROM.put(EE_LEARN + 2 + slot * 5, h);
+  EEPROM.update(EE_LEARN + 6 + slot * 5, intent);
+  EEPROM.update(EE_LEARN + 1, (slot + 1) % LEARN_MAX);  // when full, overwrite the oldest
+  if (n < LEARN_MAX) EEPROM.update(EE_LEARN, n + 1);
+}
+
+void printName(uint8_t intent) {
+  PGM_P c = CHAT_NAMES;
+  for (uint8_t k = intent; k; c++) if (pgm_read_byte(c) == '|') k--;
+  for (char ch; (ch = pgm_read_byte(c)) && ch != '|'; c++) out.print(ch);
+}
+
+// "wrong, it was a joke" / "no, i wanted a riddle": learn what `prev` meant.
+NOINLINE bool tryCorrection(const char *s, const char *prev) {
+  if (!findAny(s, PSTR("wrong|no|nope|thats wrong|that's wrong|not what i meant"), false)) return false;
+  uint8_t k;
+  if (!prev[0] || !findAny(s, CHAT_NAMES, true, &k)) {
+    if (!findAny(s, PSTR("wrong"), true)) return false;  // a plain "no" is just a no
+    out.println(F("Oops! Say: wrong, it was a joke (or fact, riddle, dice, greet...)"));
+    return true;
+  }
+  learn(prev, k);
+  out.print(F("Got it! Now \""));
+  out.print(prev);
+  out.print(F("\" means "));
+  printName(k);
+  out.println('.');
+  if (bridgeOn) {  // the app saves it to train/learned.txt for the next real training
+    Serial.print(F("@L"));
+    printName(k);
+    Serial.print('|');
+    Serial.println(prev);
+  }
+  return true;
+}
+#endif
+
 // ---------- main dispatch ----------
 
 char lastMsg[LINE_LEN + 1];  // for "again" / "one more": the last thing you asked
@@ -876,6 +969,9 @@ void reply(char *s) {
 #endif
     return;
   }
+#ifndef SOLO
+  if (tryCorrection(s, lastMsg)) return;  // before lastMsg changes: it's the message being corrected
+#endif
   // "again": run your last message once more, whatever it was (dice, trivia, a joke...)
   char repeat[LINE_LEN + 1];
   if (lastMsg[0] && isRepeat(s)) s = strcpy(repeat, lastMsg);
@@ -900,7 +996,13 @@ void reply(char *s) {
   if (looksLikeLookup(s)) { rememberTopic(s); askNet("lookup", s); return; }
 
   float conf;
+#ifdef SOLO
   uint8_t k = classify(s, &conf);
+#else
+  uint8_t k = learnedIntent(s);  // something you taught it wins
+  if (k == 0xFF) k = classify(s, &conf);
+  else conf = 1;
+#endif
   if (conf < MIN_CONFIDENCE) {
     if (bridgeOn && looksLikeQuestion(s)) askNet("lookup", s);
     else {

@@ -46,6 +46,21 @@ def features(words):
     return sorted(feats)
 
 
+def load_learned(path, intents, data):
+    """Add corrections saved by the app (train/learned.txt: "intent|message")."""
+    try:
+        lines = open(path).read().splitlines()
+    except OSError:
+        return 0
+    n = 0
+    for line in lines:
+        name, _, text = line.partition("|")
+        if name in intents and text.strip():
+            data.append((tokens(text), intents.index(name)))
+            n += 1
+    return n
+
+
 def load(path):
     intents, data, cur = [], [], None
     for line in open(path):
@@ -119,6 +134,9 @@ def fit(data, K, log=print):
 def main():
     random.seed(int(ENV.get("SEED", 7)))
     intents, data = load(sys.argv[1])
+    learned = load_learned(__import__("os").path.join(__import__("os").path.dirname(sys.argv[1]) or ".", "learned.txt"), intents, data)
+    if learned:
+        print(f"+ {learned} corrections from learned.txt")
     K = len(intents)
     print(f"{K} intents, {len(data)} examples")
     W1, b1, W2, b2, forward = fit(data, K)
@@ -158,6 +176,8 @@ def main():
         out.write(f"#define CHAT_BITS {QBITS}   // weights per byte: 8 = one, 4 = two (low nibble first)\n")
         out.write(f"#define CHAT_PREFIX {int(PREFIX)} // 1 = also hash each word's first 4 letters\n")
         out.write("enum Intent { " + ", ".join("I_" + n.upper() for n in intents) + " };\n")
+        # names you can use to correct it: "wrong, it was a joke" (same order as the enum)
+        out.write('const char CHAT_NAMES[] PROGMEM = "' + "|".join(n.replace("_", " ") for n in intents) + '";\n')
         out.write(f"const float chat_s2 = {s2:.8g};\n")
         flat1 = [x for r in qW1 for x in r]
         if QBITS == 4:  # pack two signed 4-bit weights per byte

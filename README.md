@@ -12,6 +12,7 @@ On the Nano by itself:
 - Tools: timer (`set a timer for 5 minutes`, countdown on the LCD), stopwatch, math (`20 percent of 50`)
 - Remembers your name (`my name is Sam`)
 - `again` repeats your last message
+- Self-training: if it gets something wrong, say `wrong, it was a joke` (or fact, riddle, dice, greet, bye, sad, happy...). It remembers that message from then on, even after unplugging (up to 100 corrections, kept in EEPROM). With the Mac app running, corrections are also saved to `NanoChat/train/learned.txt`, and `train.py` learns from them the next time you retrain, so similar wordings get understood too
 - A **button menu**: use it with no computer at all
 
 With helper Nanos (NanoNet, all optional):

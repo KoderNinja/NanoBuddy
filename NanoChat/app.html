@@ -368,6 +368,9 @@
       showFace(2, "thinking…");
       faceWrap.classList.add("thinking");
       lcdRaw("Asking the", "internet...");
+    } else if (ev.kind === "learned") {
+      const [intent, msg] = ev.text.split("|");
+      note(`Learned: "${msg}" means ${intent} (saved for the next training)`);
     } else if (ev.kind === "network") {
       [...ev.text].forEach((c, i) => helperEls[i] && helperEls[i].classList.toggle("on", c === "1"));
     } else if (ev.kind === "helper") {

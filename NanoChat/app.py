@@ -90,6 +90,10 @@ class Nano:
                 if text.startswith("@NET "):
                     self.emit("thinking")
                     threading.Thread(target=self.net_reply, args=(text[5:],), daemon=True).start()
+                elif text.startswith("@L") and "|" in text:  # NanoChat learned a correction
+                    with open(os.path.join(HERE, "train", "learned.txt"), "a") as f:
+                        f.write(text[2:] + "\n")  # "intent|message", used by train.py next time
+                    self.emit("learned", text[2:])
                 elif text.startswith("@N") and text[2:].isdigit():
                     self.network = text[2:]
                     self.emit("network", self.network)  # which helpers are plugged in, e.g. "1011"

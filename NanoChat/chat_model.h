@@ -8,6 +8,7 @@ const uint8_t CHAT_K = 30;
 #define CHAT_BITS 4   // weights per byte: 8 = one, 4 = two (low nibble first)
 #define CHAT_PREFIX 1 // 1 = also hash each word's first 4 letters
 enum Intent { I_GREET, I_BYE, I_HOW_ARE_YOU, I_WHO_ARE_YOU, I_CREATOR, I_HELP, I_JOKE, I_FACT, I_THANKS, I_COMPLIMENT, I_INSULT, I_ASK_USER_NAME, I_TIME, I_WEATHER, I_SAD, I_HAPPY, I_BORED, I_COIN, I_DICE, I_EIGHTBALL, I_AGE, I_FAVORITE, I_LOVE, I_RIDDLE, I_LOOKUP, I_NEWS, I_CONVERT, I_TRANSLATE, I_TIMER, I_FUN_FACT };
+const char CHAT_NAMES[] PROGMEM = "greet|bye|how are you|who are you|creator|help|joke|fact|thanks|compliment|insult|ask user name|time|weather|sad|happy|bored|coin|dice|eightball|age|favorite|love|riddle|lookup|news|convert|translate|timer|fun fact";
 const float chat_s2 = 0.019320203;
 const uint8_t chat_W1[6144] PROGMEM = {
   31,16,15,0,1,16,241,18,225,239,15,16,0,255,255,0,255,242,0,240,240,255,240,0,255,225,210,240,255,33,255,50,
