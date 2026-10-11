@@ -130,6 +130,24 @@ hi there buddy
 ahoy nano
 g'day
 well hello there
+hellooo
+hiii
+um hi
+oh hi nano
+hello nano please talk to me
+hola
+whats up nano
+hallo
+helo
+hey whats good
+ayy hi
+hey um hello
+hi robot
+hey little guy
+nano hi
+top of the morning
+hewwo
+hey u there
 # bye
 goodnight
 goodnight nano
@@ -272,6 +290,24 @@ catch ya later
 so long nano
 im off
 farewell friend
+bye nano
+i'm going to bed
+going to sleep
+i gotta go bye
+time for bed
+i'm off now
+gtg
+g2g bye
+heading out
+i need to go eat dinner bye
+mom says bed time bye
+off to bed
+cu later
+laters
+see u soon
+well bye
+sleepy time bye
+i'm logging off
 # how_are_you
 how are you feeling nano
 whats up with you today
@@ -375,6 +411,29 @@ hows life
 whats your mood today
 how are you doing buddy
 feeling good today nano
+how's it going nano
+are you good
+u good
+you okay nano
+whats up with you
+how are u feeling
+hru
+how r you today
+hey nano how are you
+how are you doing today nano
+how you feelin
+is everything ok with you
+how is nano today
+hows ur day
+how are yuo
+how are you please tell me
+how's your day been
+how do u feel today
+nano how are you doing
+how goes it
+you doing well
+how are u
+r u ok
 # who_are_you
 what kind of creature are you
 are you a toy
@@ -470,6 +529,21 @@ tell me what you are
 are you alive like me
 
 whats your name buddy
+what's ur name
+what r u
+r u a robot
+are u human
+whats nano
+what is nano
+who are u
+hey what is your name
+your name
+r u an ai
+who r u
+wat are you
+name pls
+are you a human being
+what is ur name
 # creator
 who is your maker nano
 who made you robot
@@ -576,6 +650,28 @@ how did your creator make you
 
 who coded this bot
 was it a person who made you
+who made u
+who made nano
+who programmed this
+who created nano
+who built this robot
+who coded u
+who is ur creator
+whos your maker
+who is the builder of this
+who make you
+who made you please
+hey nano who built you
+um who created you
+who designed this thing
+tell me who made you
+who created this
+who is your boss
+who brought you into the world
+who made yuo
+who built u
+who programmed u
+who created u nano
 # help
 what do i say
 what are you for
@@ -679,6 +775,27 @@ help me out
 what commands do you have
 im not sure what to type
 any suggestions for what to try
+help me
+list commands
+what can u do
+how to use this
+what can i talk about
+um what can you do
+help pls
+instructions
+what topics do you know
+ideas of what to ask
+what can i do here
+i'm stuck what do i say
+show commands
+what is there to do
+whats ur skills
+what can nano do
+how do i play with you
+guide me
+how do you work
+what can u help with
+how do i use u
 # joke
 say something to make me laugh
 tell me a knock knock joke
@@ -786,6 +903,20 @@ tell me something funny
 got a joke
 give me a pun
 whats a funny joke
+i wanna hear a joke
+can you tell me a joke
+funny
+tell me a joke nano
+tell me jokes
+jokes
+tel me a joke
+say something that will make me laugh
+hey nano tell me a joke
+um tell me a joke
+do a joke
+lol tell me a joke
+you know any funny jokes
+another one
 # fact
 give me an animal fact
 tell me a space fact
@@ -954,6 +1085,29 @@ random fun fact from the internet
 surprise me with a fun fact
 get a weird fact online
 fun fact of the day
+i wanna learn something
+got any trivia
+trivia
+random fact
+say a fact
+did you know any facts
+one more fact
+something cool pls
+i want a fact
+tell me an animal fact
+teach me a thing
+tell me something new
+what's a cool thing to know
+interesting fact
+hit me with a fact
+give me some trivia
+a fact pls
+do you know any fun facts
+fact please nano
+hey tell me a fun fact
+what is something cool you know
+gimme a fact
+more facts
 # thanks
 you helped me a lot
 thank you robot
@@ -1049,6 +1203,20 @@ ok cool thank you
 
 you helped a lot thanks
 grateful for you thanks
+thanks so much
+thnx
+thanks that helped
+thanks man
+thank youu
+thanks for the fact
+awesome thanks
+thanks alot
+thankss
+um thanks
+oh thanks
+thank you for helping me
+big thanks
+thanks bro
 # compliment
 you are so funny nano
 you are hilarious
@@ -1181,6 +1349,36 @@ youre really clever
 youre pretty cool
 you are the smartest
 impressive nano
+you're really clever
+ur so smart
+that was really good
+you're not bad
+not bad nano
+not bad at all
+you're helpful
+nano is cool
+ur awesome
+that was cool
+i like how smart you are
+youre the best robot
+you're kinda smart
+you're actually pretty good
+you're not dumb at all
+smart bot
+you're the best nano
+not too shabby
+awesome job
+youre so clever
+u r smart
+u r so cool
+u r awesome
+u r the best bot
+u r really clever
+u r amazing nano
+u r a genius
+ur really smart
+u r so funny and smart
+u r good at this
 # insult
 you are not funny
 that was not funny
@@ -1306,6 +1504,30 @@ youre stupid
 youre so annoying
 thats a dumb answer
 youre boring
+you're dumb
+ur dumb
+you're so useless
+youre annoying
+you are wrong
+you're wrong again
+you dont know anything
+you're so good at being wrong
+wow great job being useless
+nice job getting it wrong
+youre not helpful
+this is stupid
+you're garbage
+so annoying
+you never get it right
+you're so smart at being dumb
+stoopid bot
+you dumb
+u r dumb
+u r so stupid
+u r useless
+u r annoying
+u r bad at this
+u r the worst
 # ask_user_name
 do you know me nano
 whats my name robot
@@ -1390,6 +1612,22 @@ did i tell you my name yet
 can you remember me
 who am i to you
 
+what's my name nano
+you remember me
+do u know me
+do u remember my name
+hey nano whats my name
+you forgot my name
+um what is my name
+nano do you remember who i am
+am i someone you know
+do you recall my name
+you know who i am
+my name what is it
+know my name
+do you still remember me
+who is this you are talking to
+wats my name
 # time
 what time is it please
 current time please
@@ -1492,6 +1730,22 @@ how long have you been online
 check the time
 
 whats the time now
+tell me what time it is
+show me the clock
+what time is it pls
+wat time is it
+um what time is it
+hey what time is it
+do u know what time it is
+what time is it there
+the time pls
+how many oclock is it
+what o'clock is it
+tell time
+what's the hour
+what time is it rn
+time nano
+is it time yet
 # weather
 whats the weather today
 whats the weather like today
@@ -1593,6 +1847,26 @@ whats the forecast for tomorrow
 will it storm tonight
 whats it like outside
 should i wear a jacket
+what's the weather like
+what's the temperature
+temperature
+tell me the weather
+what is the weather today
+weather pls
+how's the weather today
+is it going to snow tomorrow
+will it be sunny tomorrow
+what's the weather tomorrow
+is it a rainy day
+do i need a coat
+tell me the forecast
+wat is the weather
+whats the weathr
+check the weather
+is it stormy
+hey nano whats the weather
+how many degrees is it
+should i wear shorts today
 # sad
 i feel sad right now
 i am not happy
@@ -1741,6 +2015,38 @@ im depressed
 im so stressed
 im really unhappy
 my day was terrible
+i'm so sad
+i have no friends
+im so stressed out
+i'm worried
+i'm worried about my test
+im not happy
+i'm not feeling happy
+i am not okay
+my feelings are hurt
+someone was mean to me
+i got hurt
+i'm scared
+i feel so alone
+i dont feel good
+i'm feeling blue
+im kinda sad
+i lost my game and im sad
+my dog is sick and im sad
+i am not having a good day
+im sooo sad
+i feel depressed
+im stressed about school
+school is stressing me out
+i have too much homework and im stressed
+school was awful today
+im nervous about tomorrow
+my teacher yelled at me
+im so tired of school
+im anxious
+i am worried
+exams are stressing me
+i had a fight with my friend
 # happy
 i feel so happy right now
 i am really glad
@@ -1875,6 +2181,37 @@ im so excited
 im really happy today
 i got a good grade
 im pumped
+i'm really happy today
+i'm feeling good
+i'm feeling great
+i'm proud of myself
+i am so proud
+i have good news
+guess what good news
+i won the game
+i won
+i did it
+yay i did it
+i'm in a good mood
+im feeling awesome
+my day was amazing
+i got a new puppy
+it's my birthday and im happy
+i'm thrilled
+i'm so glad
+i am not sad anymore
+im super happy today
+feeling happy
+i'm having a great day
+i made a new friend today
+im so stoked
+i'm over the moon
+im happpy
+great day today
+school was great today
+i got an a
+no homework today yay
+i aced my exam
 # bored
 i m so bored
 im bored nano what now
@@ -1991,6 +2328,30 @@ what can i do right now
 im looking for something fun
 
 im so bored right now
+i'm so bored
+i'm bored nano
+im sooo bored
+i want to play
+let's play something
+lets play a game
+wanna play
+can we play a game
+play with me
+what can i do
+im bord
+i'm so bored there is nothing to do
+do something fun
+im bored lol
+i got nothing to do
+um im bored
+want to play a game
+im bored pls help
+tell me something to do
+im really really bored
+any games
+game time
+im bored what do we do
+find me something to do
 # coin
 coin flip please nano
 flip the coin please
@@ -2070,6 +2431,24 @@ decide with a coin
 
 flip coin please
 call it heads or tails
+let's flip a coin
+flip me a coin
+heads
+tails
+i call heads
+i pick tails
+um flip a coin
+can u flip a coin
+toss a coin to decide
+spin a coin
+wanna flip a coin
+coin flip time
+will you flip a coin
+make a coin flip
+flp a coin
+flip a coin lol
+please toss a coin
+heads or tail
 # dice
 roll a die nano
 roll the dice please
@@ -2169,6 +2548,26 @@ roll a six sided dice
 
 roll 2 dice
 shake the dice
+roll dice please
+roll a 20 sided die
+can you roll a dice
+d6
+d20
+do a dice roll
+roll a random dice
+roll the dice pls
+roll me a number with dice
+um roll a dice
+toss the dice
+roll a 6 sided dice
+rol a dice
+roll a dice lol
+roll d20 please
+random dice number
+cast the dice
+play dice
+roll the cube
+dice time
 # eightball
 what is my future
 will i have a good day
@@ -2284,6 +2683,29 @@ will i be lucky today
 predict what happens next
 
 is it going to work out
+should i play a game
+will i get a good grade
+will i find love
+am i going to be ok
+should i stay up late
+will i have fun tomorrow
+shake the magic eight ball
+8 ball
+ask the eight ball
+should i call her
+will my crush like me
+should i take the test
+will i ever be a pro gamer
+should i eat cake
+should i sleep
+will i win the lottery
+do you think i will win
+will i grow up to be a scientist
+will it snow on my birthday
+should i read a book
+is it a good idea to quit
+wil i pass
+will i be happy
 # age
 are you a kid nano
 how old are you exactly nano
@@ -2385,6 +2807,23 @@ how long ago were you programmed
 do you celebrate a birthday
 
 whats your birthday
+when's your birthday
+how old are u nano
+what is your birthday
+whens ur birthday
+when were you built
+when did you come to life
+um how old are you
+how old are you in robot years
+what date were you born
+which year were you born
+what day is your birthday
+can you tell me your age
+how old are you pls
+when were you invented
+age pls
+how old are u
+when were u made
 # favorite
 what is your favorite color nano
 what is your favorite food nano
@@ -2475,6 +2914,27 @@ what is your favorite animal
 which game do you like best
 what kind of music do you like
 which color do you like best
+what's your favorite animal
+whats ur fav color
+fav food
+what's your fav animal
+what do you like to eat
+what's your favorite thing to do
+do you like dogs
+do you like cats
+what do you enjoy
+what is your fav game
+what's your favorite season
+what do you love most
+what makes you happy
+tell me your favorite thing
+what is ur favorite food
+what is your favorit color
+whats your favorite ice cream
+do you have hobbies
+whats ur fav food
+what do u like
+whats ur fav song
 # love
 i like you robot
 you are my best friend robot
@@ -2583,6 +3043,28 @@ will you always be my friend
 
 i like you
 we are friends right
+luv u
+wanna be friends
+let's be friends
+im your friend
+i think you're great and i like you
+i like chatting with you
+i love this robot
+i really love you
+love u nano
+i like u
+i want to be your friend
+you're my buddy
+i luv you
+i love you lots
+aww i love you
+you are my bestie
+i love you more than pizza
+can you be my friend
+i love u
+u r my best friend
+luv u nano
+will u be my friend
 # riddle
 give me a challenge
 i want a challenge
@@ -2694,6 +3176,25 @@ i want a brain teaser
 got any riddles
 know a good riddle
 quiz me with a riddle
+one more riddle
+tell me a brain teaser
+say a riddle
+hit me with a riddle
+challenge my brain
+a hard riddle please
+tell me an easy riddle
+um tell me a riddle
+riddle pls
+i wanna hear a riddle
+test my brain with a riddle
+give me a tricky riddle
+tell me a riddel
+what's a good riddle
+hey nano tell me a riddle
+tell me a riddle lol
+new riddle
+let me solve a riddle
+think of a riddle
 # lookup
 who is the president of the usa
 what is the biggest planet
@@ -2821,6 +3322,25 @@ look up the moon
 search for sharks
 who invented the lightbulb
 look up mount everest
+what are dinosaurs
+what is a dolphin
+who is mozart
+what is a rainbow
+what is electricity
+who is spider man
+what is a galaxy
+who discovered america
+what is dna
+who is michael jordan
+what is pluto
+what is the amazon
+what is a triangle
+who is shakespeare
+what are clouds
+what is an earthquake
+what is a pyramid
+who was leonardo da vinci
+what is wikipedia
 # news
 whats the news nano
 tell me todays headlines
@@ -2889,6 +3409,29 @@ news of the day
 
 whats happening in the world
 top stories
+what's the news
+news
+any news
+today's news
+news today
+what's happening in the world
+headlines
+what's new in the world
+tell me what is happening
+what happened today
+what's going on today
+is there any news
+what's the latest news
+whats on the news
+got any news
+update me on the news
+tell me some news
+hey nano whats the news
+um any news
+wat is the news
+what's happening around the world
+did anything happen today
+fill me in on the news
 # convert
 convert 20 miles to kilometers
 convert 50 kilograms to pounds
@@ -2980,6 +3523,34 @@ convert 100 fahrenheit to celsius
 whats 3 meters in feet
 convert 2 liters to gallons
 50 kg to pounds
+how many miles is 5 km
+convert miles to km
+convert km to miles
+how many pounds in a kilogram
+convert celsius to fahrenheit
+convert fahrenheit to celsius
+how many meters in a mile
+what is 10 miles in kilometers
+what is 100 km in miles
+what is 50 f in celsius
+what is 20 c in fahrenheit
+how many grams in a pound
+convert 5 feet to inches
+convert 3 kg to pounds
+5 miles in km
+10 kg in lbs
+100 f to c
+how many mm in a cm
+how many feet are in 2 miles
+convert inches to centimeters
+how many cm is 6 inches
+how many gallons is 8 quarts
+what is 3 miles in feet
+convert pounds to ounces
+how many kilometers in a mile
+whats 70 degrees f in c
+how many lbs is 5 kg
+convert liters to cups
 # translate
 translate hi to spanish
 how do you say cat in french
@@ -3056,6 +3627,38 @@ how do i say water in japanese
 spanish for friend
 translate good morning to french
 how do you say yes in german
+how do you say goodbye in japanese
+how do i say please in spanish
+translate cat to french
+what is hello in japanese
+how to say water in spanish
+translate thank you to german
+how do you say apple in french
+what is the spanish word for house
+what is bye in french
+translate good night to spanish
+how do you say friend in italian
+say thank you in japanese
+translate hello into chinese
+what's hello in korean
+translate dog into german
+how do you say pizza in italian
+how do u say hi in spanish
+translate happy birthday to spanish
+what is mother in spanish
+translate good morning in italian
+how to say cat in german
+say i love you in french
+translate book to spanish
+what is the french word for cat
+translate no to french
+translate hello to portuguese
+whats blue in spanish
+how do you say welcome in german
+translate see you later to french
+translate cheese into spanish
+how do i say good luck in japanese
+translate hola to english
 # timer
 set a timer for 3 minutes
 timer for 10 minutes please
@@ -3127,3 +3730,32 @@ timer 10 minutes
 remind me in 3 minutes
 count down from 60
 start a 1 minute timer
+timer for 1 minute
+start a timer
+start a timer for 2 minutes
+timer 30 seconds
+set timer 3 minutes
+remind me in 5 minutes
+set a countdown for 1 minute
+timer for 20 minutes
+set a 5 minute timer
+set a 15 minute timer
+timer pls
+5 minute timer
+10 min timer
+1 minute timer
+time me for 2 minutes
+count down 30 seconds
+start timer 45 seconds
+remind me in an hour
+set a timer for an hour
+set a timer for half an hour
+timer for 7 minutes
+set timer for 60 seconds
+ping me in 3 minutes
+tell me when 5 minutes is up
+countdown timer 10 seconds
+start a 1 min timer
+timer for 90 seconds
+begin a 25 minute timer
+set the timer for 8 minutes

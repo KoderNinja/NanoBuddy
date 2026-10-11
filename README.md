@@ -77,10 +77,11 @@ arduino-cli compile -u -p /dev/cu.usbserial-XXXX -b arduino:avr:nano --build-pro
 
 ```bash
 cd NanoChat/train
-F=512 H=18 QBITS=4 PREFIX=1 FILL=0.3 WD=0.0005 SEED=8 EXTRA_TESTS=tests-extra.txt python3 train.py intents-more-training.txt ../chat_model.h   # NanoChat model
+F=576 H=21 QBITS=4 PREFIX=1 FILL=0.3 WD=0.0005 SEED=2 EXTRA_TESTS=tests-extra.txt,tests-fresh.txt python3 train.py intents-more-training.txt ../chat_model.h   # NanoNet boss model
+F=512 H=18 QBITS=4 PREFIX=1 FILL=0.3 WD=0.0005 SEED=8 python3 train.py intents-more-training.txt ../solo_model.h   # smaller Solo model
 python3 audit.py intents-more-training.txt                       # find confusing examples
 ```
-Add examples under `# intent_name` in `intents-more-training.txt`. `tests-more-training.txt` and `tests-extra.txt` hold phrases that are *not* in the training data, for an honest score (currently 177/190). Corrections you taught NanoChat (`learned.txt`) are added automatically.
+Add examples under `# intent_name` in `intents-more-training.txt`. `tests-more-training.txt`, `tests-extra.txt` and `tests-fresh.txt` hold phrases that are *not* in the training data, for an honest score (boss model: 290/311, 93%). `tests-fresh.txt` was written separately and never used to pick training examples. Corrections you taught NanoChat (`learned.txt`) are added automatically.
 
 `FILL=0.3` randomly adds filler words ("hey", "nano", "um") while training so the model learns to ignore them.
 

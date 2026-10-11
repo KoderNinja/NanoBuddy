@@ -1,0 +1,122 @@
+# fresh held-out test phrases (written separately, never trained on): text|expected intent
+hey there nano|greet
+yo whats up buddy|greet
+heya|greet
+hello hello anyone home|greet
+howdy partner|greet
+well hi there|greet
+gotta go see ya|bye
+im going to bed goodnight|bye
+ok i have to leave now, talk later|bye
+cya later alligator|bye
+goodbye nano it was fun|bye
+my mom is calling me, bye|bye
+signing off for today|bye
+how r u|how_are_you
+are you ok nano|how_are_you
+hows it going with you|how_are_you
+how are you feeling right now|how_are_you
+hows your day been|how_are_you
+how have you been lately|how_are_you
+are you a robot or a person|who_are_you
+introduce yourself please|who_are_you
+who is the one that coded you|creator
+whos your dad, the guy who made you|creator
+i dont know what to say, give me some ideas|help
+what are your commands|help
+what things do you know how to do|help
+say a joke pls|joke
+know any good knock knock jokes|joke
+crack me up nano|joke
+teach me something cool|fact
+say something interesting|fact
+i want some trivia|fact
+got any random facts|fact
+share a cool fact about animals|fact
+thx nano|thanks
+ty that helped|thanks
+thanks a lot buddy|thanks
+thank u for that|thanks
+you are awesome|compliment
+great job nano|compliment
+i think youre really cool|compliment
+you are the best chatbot ever|compliment
+wow you are so funny and clever|compliment
+good bot|compliment
+nice work, youre amazing|compliment
+you are stupid|insult
+youre dumb|insult
+you are the worst bot ever|insult
+shut up you idiot|insult
+ur trash|insult
+what a useless dumb robot|insult
+remember me? whats my name|ask_user_name
+do you know the time right now|time
+can you check what time it is|time
+time check please|time
+is it going to rain today|weather
+how hot is it outside|weather
+do i need a jacket today|weather
+is it sunny out|weather
+how cold is it outside right now|weather
+im so upset right now|sad
+today was a really bad day|sad
+im stressed about my test|sad
+im feeling down and lonely|sad
+im so worried about everything|sad
+i had a terrible day and im sad|sad
+i just won my game!|happy
+im really excited for my birthday|happy
+guess what i got an a on my test|happy
+im so proud of myself|happy
+today is the best day ever|happy
+im super hyped right now|happy
+so boooored|bored
+there is nothing fun to do right now|bored
+im so bored i could fall asleep|bored
+this is boring, entertain me|bored
+i dont know what to do, im bored|bored
+can you flip a coin pls|coin
+i need a coin flip to decide|coin
+lets do heads or tails|coin
+throw a die for me|dice
+i want to roll dice|dice
+give me a random dice number|dice
+should i eat pizza for dinner|eightball
+will i be famous someday|eightball
+will my team win tomorrow|eightball
+should i tell my friend the truth|eightball
+ask the magic 8 ball, will i get a puppy|eightball
+am i going to get a good grade|eightball
+whens ur bday|age
+how long have you been alive|age
+whats your favorite color|favorite
+favorite movie?|favorite
+which sport do you like most|favorite
+i really like talking to you|love
+i think i love this bot|love
+got any riddles for me|riddle
+can you stump me with a puzzle|riddle
+give me a hard riddle to solve|riddle
+tell me about the moon|lookup
+look up the eiffel tower|lookup
+any headlines today|news
+tell me the latest news|news
+give me todays headlines|news
+whats new in the news today|news
+convert 10 pounds to kilograms|convert
+how many cups are in a gallon|convert
+change 3 meters into feet|convert
+convert 20 cm to inches|convert
+what is dog in german|translate
+translate good night into italian|translate
+say cat in spanish|translate
+translate i love you to french|translate
+whats the spanish word for apple|translate
+set a timer for 5 minutes|timer
+start a countdown from 10|timer
+remind me in 2 minutes with a timer|timer
+set a 10 minute timer please|timer
+can you time 1 minute for me|timer
+countdown 20 seconds|timer
+start a timer for 15 min|timer

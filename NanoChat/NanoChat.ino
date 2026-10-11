@@ -13,11 +13,16 @@
 #include <EEPROM.h>
 #include <avr/pgmspace.h>
 #include <math.h>
-#include "chat_model.h"
 
 // Solo version: a single Nano with no helpers. Uncomment to drop the NanoNet code
 // and use the space for trivia and a bigger joke collection.
 // #define SOLO
+
+#ifdef SOLO
+#include "solo_model.h"  // smaller model: leaves room for trivia, jokes and self-training
+#else
+#include "chat_model.h"
+#endif
 
 // Keep big helpers out of loop(): inlined, all their buffers would sit on the stack at once.
 #define NOINLINE __attribute__((noinline))
