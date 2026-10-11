@@ -1,0 +1,41 @@
+# 40 fresh phrasings, none in intents-more-training.txt: text|expected intent
+well hey there nano|greet
+alright see you tomorrow nano|bye
+hows everything going for you|how_are_you
+are you some sort of robot|who_are_you
+who is the person who built you|creator
+what kinds of things do you do|help
+tell me a joke about robots|joke
+teach me one interesting thing|fact
+thank you for the help nano|thanks
+you are super smart|compliment
+you are a terrible robot|insult
+can you remember my name|ask_user_name
+what time is it at the moment|time
+is it going to rain later|weather
+i feel really lonely today|sad
+i am really happy right now|happy
+im so bored today nano|bored
+can you flip a coin please|coin
+please roll a die for me|dice
+will i do well on my test|eightball
+how many years old is nano|age
+what color do you like the most|favorite
+i really like you a lot nano|love
+can you give me a riddle|riddle
+who was george washington|lookup
+any news for me today|news
+what are todays top news stories|news
+tell me the news headlines nano|news
+how many inches are in a yard|convert
+convert 40 pounds into kilograms|convert
+how many cups are in a quart|convert
+how do you say thanks in spanish|translate
+translate good night into french|translate
+what is the word for dog in german|translate
+please set a timer for 4 minutes|timer
+start a countdown for 10 seconds|timer
+remind me in 20 minutes please|timer
+tell me a random weird fact|fun_fact
+get me a fun fact from the internet|fun_fact
+give me a strange random fact|fun_fact

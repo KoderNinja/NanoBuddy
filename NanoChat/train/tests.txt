@@ -1,0 +1,30 @@
+# unseen phrasings: text|expected intent
+hey whats going on|greet
+good evening nano|greet
+ok bye now|bye
+how is everything going|how_are_you
+what should i call you|who_are_you
+who is the person that made you|creator
+what are you able to do|help
+can you tell me something funny|joke
+teach me a cool fact|fact
+thanks so much buddy|thanks
+you are really smart|compliment
+you are so dumb|insult
+do you remember what my name is|ask_user_name
+what time is it right now|time
+is it going to be sunny today|weather
+i feel really sad today|sad
+i am feeling great today|happy
+i am so bored right now|bored
+can you flip a coin for me|coin
+roll a die for me|dice
+can you invent a new word|invent_word
+will i win the game|eightball
+how old are you now|age
+what is your favorite game|favorite
+i really love you|love
+give me a hard riddle|riddle
+what is a tornado|lookup
+who is elon musk|lookup
+tell me about saturn|lookup

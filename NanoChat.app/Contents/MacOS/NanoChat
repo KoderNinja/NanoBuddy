@@ -1,0 +1,9 @@
+#!/bin/bash
+# Starts NanoChat's chat window. app.py lives in the NanoChat folder next to this app.
+ROOT="$(cd "$(dirname "$0")/../../.." && pwd)"
+APP="$ROOT/NanoChat/app.py"
+if [ ! -f "$APP" ]; then
+  osascript -e 'display alert "NanoChat" message "Could not find NanoChat/app.py. Keep NanoChat.app in the same folder as the NanoChat folder."'
+  exit 1
+fi
+exec /usr/bin/python3 "$APP" >> "$HOME/Library/Logs/NanoChat.log" 2>&1

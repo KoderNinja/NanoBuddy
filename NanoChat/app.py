@@ -1,0 +1,196 @@
+"""NanoChat app: chat with the Nano in a browser window, no Terminal needed.
+
+Double-click NanoChat.app (or run `python3 app.py`). It finds the Nano, gives
+it internet access the same way bridge.py does, and opens a chat page at
+http://127.0.0.1:8777. Unplugging and replugging the Nano is fine; it reconnects.
+Standard library only.
+"""
+import glob
+import json
+import os
+import queue
+import sys
+import threading
+import time
+import urllib.request
+import webbrowser
+from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
+
+HERE = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, HERE)
+import bridge  # noqa: E402  (internet lookups + serial setup)
+
+PORTS = range(8777, 8787)  # first free one wins
+
+
+class Nano:
+    """Keeps a connection to the Nano and fans its messages out to open pages."""
+
+    def __init__(self):
+        self.fd = None
+        self.status = "searching"
+        self.pages = []  # one event queue per open chat page
+        threading.Thread(target=self.run, daemon=True).start()
+
+    def emit(self, kind, text=""):
+        for q in list(self.pages):
+            q.put({"kind": kind, "text": text})
+
+    def set_status(self, status):
+        self.status = status
+        self.emit("status", status)
+
+    def send(self, text):
+        if self.fd is None or self.status != "online":
+            return False
+        os.write(self.fd, (text + "\n").encode())
+        return True
+
+    def run(self):
+        while True:
+            ports = sorted(glob.glob("/dev/cu.usbserial*") + glob.glob("/dev/cu.usbmodem*"))
+            if ports:
+                try:
+                    self.fd = bridge.open_port(ports[0])
+                    self.set_status("connecting")
+                    time.sleep(2.5)  # opening the port resets the Nano
+                    os.write(self.fd, b"@HELLO\n")
+                    self.read_loop(ports[0])
+                except OSError:
+                    pass
+                finally:
+                    if self.fd is not None:
+                        try:
+                            os.close(self.fd)
+                        except OSError:
+                            pass
+                    self.fd = None
+            self.set_status("searching")
+            time.sleep(1)
+
+    def read_loop(self, path):
+        buf = b""
+        ready = False  # skip startup chatter until the Nano confirms the bridge
+        while True:
+            data = os.read(self.fd, 256)
+            if not data:
+                if not os.path.exists(path):
+                    raise OSError("unplugged")
+                continue
+            buf += data
+            while b"\n" in buf:
+                raw, buf = buf.split(b"\n", 1)
+                text = raw.decode("ascii", "replace").strip()
+                while text.startswith(">"):  # the Nano's "> " prompt
+                    text = text[1:].lstrip()
+                if text.startswith("@NET "):
+                    self.emit("thinking")
+                    threading.Thread(target=self.net_reply, args=(text[5:],), daemon=True).start()
+                elif text.startswith("@F") and text[2:].isdigit():
+                    self.emit("face", text[2:])  # mood of the reply just sent
+                elif "@OK" in text:
+                    ready = True
+                    self.set_status("online")
+                elif ready and text:
+                    self.emit("nano", text)
+
+    def net_reply(self, req):
+        kind, _, msg = req.partition("|")
+        try:
+            ans = bridge.HANDLERS.get(kind, lambda m: "I don't know how to do that.")(msg)
+        except Exception as e:
+            ans = f"Internet error ({type(e).__name__})."
+        if self.fd is not None:
+            os.write(self.fd, ("@R " + bridge.ascii_only(ans)[:300] + "\n").encode())
+
+
+nano = None
+
+
+class Handler(BaseHTTPRequestHandler):
+    def log_message(self, *args):
+        pass
+
+    def reply(self, code, body=b"", ctype="text/plain"):
+        self.send_response(code)
+        self.send_header("Content-Type", ctype)
+        self.send_header("Content-Length", str(len(body)))
+        self.end_headers()
+        self.wfile.write(body)
+
+    def do_GET(self):
+        if self.path == "/":
+            with open(os.path.join(HERE, "app.html"), "rb") as f:
+                self.reply(200, f.read(), "text/html; charset=utf-8")
+        elif self.path == "/nanochat":  # lets a second launch find this one
+            self.reply(200, b"nanochat")
+        elif self.path == "/events":
+            self.stream_events()
+        else:
+            self.reply(404)
+
+    def do_POST(self):
+        if self.path == "/send":
+            n = int(self.headers.get("Content-Length", 0))
+            text = self.rfile.read(n).decode("utf-8", "replace")
+            text = bridge.ascii_only(text).replace("\n", " ")[:80]  # the Nano reads 80 chars max
+            self.reply(200 if text and nano.send(text) else 503)
+        elif self.path == "/quit":
+            self.reply(200)
+            threading.Timer(0.3, lambda: os._exit(0)).start()
+        else:
+            self.reply(404)
+
+    def stream_events(self):
+        """Server-sent events: the page listens here for Nano messages."""
+        self.send_response(200)
+        self.send_header("Content-Type", "text/event-stream")
+        self.send_header("Cache-Control", "no-cache")
+        self.end_headers()
+        q = queue.Queue()
+        q.put({"kind": "status", "text": nano.status})
+        nano.pages.append(q)
+        try:
+            while True:
+                try:
+                    event = q.get(timeout=15)
+                    self.wfile.write(f"data: {json.dumps(event)}\n\n".encode())
+                except queue.Empty:
+                    self.wfile.write(b": keep-alive\n\n")
+                self.wfile.flush()
+        except OSError:
+            pass  # page closed
+        finally:
+            nano.pages.remove(q)
+
+
+def already_running(port):
+    try:
+        with urllib.request.urlopen(f"http://127.0.0.1:{port}/nanochat", timeout=1) as r:
+            return r.read() == b"nanochat"
+    except OSError:
+        return False
+
+
+def main():
+    global nano
+    for port in PORTS:
+        url = f"http://127.0.0.1:{port}/"
+        try:
+            server = ThreadingHTTPServer(("127.0.0.1", port), Handler)
+            break
+        except OSError:
+            if already_running(port):
+                webbrowser.open(url)  # just show the window again
+                return
+    else:
+        sys.exit("No free port for NanoChat.")
+    server.daemon_threads = True
+    nano = Nano()
+    if not os.environ.get("NANOCHAT_NO_BROWSER"):
+        threading.Timer(0.5, lambda: webbrowser.open(url)).start()
+    server.serve_forever()
+
+
+if __name__ == "__main__":
+    main()

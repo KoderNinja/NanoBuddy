@@ -1,0 +1,2570 @@
+# Training examples for NanoChat's intent classifier.
+# "# name" starts an intent; each following line is an example message.
+
+# greet
+hi again nano
+hey friend
+hi buddy
+hello robot
+hey hey nano
+hiya nano
+yo there
+hello hello nano
+hey its me
+hi there friend
+wassup nano
+hey whats up buddy
+hi nano how goes
+good evening friend
+evening nano
+afternoon nano
+oh hi there
+hello little robot friend
+hi chatbot friend
+yo nano
+hey its me again
+im back nano
+howdy nano
+greetings friend
+hello there partner
+good day to you
+yo yo
+heya robot
+well hello
+morning nano
+good morning robot
+hello anybody home
+hey there little bot
+sup nano
+morning buddy
+hi hi
+hello friend whats new
+hey you
+hey nano hows it going
+hello my digital friend
+is anybody there
+hey chatbot
+hi again
+good afternoon buddy
+whats happening nano
+hello from my computer
+yo are you there
+hey little assistant
+hi there again
+greetings little bot
+hello my friend
+hey whats new
+hiya chatbot
+hey whats happening
+hi how's it going there
+hello hello
+whats good
+hey nano
+good day
+hi
+hello
+hey
+hey there
+hello there
+hi there
+yo
+sup
+whats up
+what's up
+good morning
+good afternoon
+good evening
+howdy
+greetings
+hiya
+hi nano
+hello nanochat
+hey buddy
+morning
+heyo
+hi friend
+hello again
+# Added examples: 25 varied phrasings
+hey whats up nano
+hello there friend
+hey how are things
+hi how are you
+good to see you
+nice to meet you
+hey computer
+hello little bot
+yo nanochat
+hiya there
+hey hey
+whats going on
+howdy friend
+greetings nano
+hello again nano
+sup dude
+hey pal
+hi there chatbot
+good morning nano
+good evening nano
+hey are you there
+anyone there
+hello are you online
+yo whats up
+hey whats happening today
+
+# bye
+goodbye nano
+i have to leave
+i must go
+gotta bounce
+im going now
+talk soon
+until tomorrow
+good night nano
+off to bed now
+gn
+nighty night
+see you around
+bye nano see ya
+i have to go now
+peace
+im heading out now
+catch ya
+time to go
+goodbye friend
+im going to sleep now
+see you in the morning
+later gator
+i gotta head out
+im off to bed
+bye for today
+see you next time
+im done for now
+until later
+so long
+night night
+talk tomorrow
+im leaving now
+see ya later
+im out
+signing off
+logging off for today
+bye bye nano
+im off now
+gotta run bye
+bye for now nano
+catch you next time
+im heading out
+i have to leave now
+goodbye for today
+later chatbot
+im logging off
+bye
+goodbye
+see you
+see ya
+see you later
+later
+gotta go
+i have to go
+good night
+night
+bye bye
+catch you later
+talk to you later
+im leaving
+farewell
+peace out
+i'm going now
+ttyl
+cya
+# Added examples: 25 varied phrasings
+i will talk to you later
+i am off now
+i am heading out
+i need to leave
+see you tomorrow
+until next time
+talk later
+bye for now
+i am going to go
+gotta run
+i am signing off
+catch you soon
+have a good night
+have a nice day bye
+later nano
+peace see you
+im done chatting
+end chat
+goodbye for now
+see ya nano
+i will be back
+i have to run
+take care
+farewell nano
+talk to you soon
+ok bye now
+okay bye now
+alright, bye
+okay, I'm leaving
+gotta go now
+talk later
+see you soon
+i am heading out
+bye for now nano
+alright see you later
+
+# how_are_you
+how is everything nano
+how is everything going for you
+hows it going for you
+how is your day going nano
+are you doing ok
+hows life nano
+how is it going with you
+how are you doing nano
+how have you been nano
+is everything good with you
+how are you holding up nano
+how ya doing
+how is it going nano
+hows it hanging
+what is up with you
+you ok
+how is life
+how are you holding up today
+doing ok nano
+how is your week
+you good nano
+feeling ok
+hows your mood
+how you been
+hows it been lately
+are you alright
+you feeling good
+hows everything with you
+hows your evening
+how are you today nano
+are you doing okay
+are you feeling good
+hows life as a chatbot
+everything okay with you
+how are things today
+are you well
+how is it going so far
+how is your day
+how's everything
+everything ok with you
+how are you today
+how's your evening going
+is everything alright
+how are you
+how are you doing
+how's it going
+how is it going
+how do you feel
+are you ok
+are you okay
+how have you been
+how are things
+you good
+how you doing
+hows your day
+how is your day going
+are you doing well
+how are you feeling today
+what's new with you
+how's life
+# Added examples: 25 varied phrasings
+how are you doing today
+how are things going
+how is everything going
+how are you holding up
+how has your day been
+how is life treating you
+you doing alright
+are things going well
+how are you this morning
+how are you this evening
+how is your day so far
+how have things been
+are you feeling okay
+how are you doing lately
+everything good
+how is it going today
+how are you doing right now
+how are things with you
+you alright today
+how are you buddy
+how is your week going
+how is everything with you
+doing okay
+are you having a good day
+how are you feeling
+
+# who_are_you
+are you some kind of robot
+what sort of robot are you
+what kind of robot are you
+are you a chatbot nano
+who are you nano
+what is your name nano
+tell me your name
+what do they call you
+what are you called
+what should i call you nano
+whats your name
+who is this
+who am i chatting with
+are you a person
+is this a robot
+what is this thing
+are you a real robot
+what exactly is nanochat
+are you an arduino
+what is your deal
+what type of bot are you
+what sort of thing are you
+what kind of machine are you
+what are you nano
+explain what you are
+what am i talking to
+introduce yourself nano
+introduce yourself to me
+are you a program
+are you a computer program
+what are you made of
+say something about yourself
+what kind of bot are you
+are you a chatbot
+are you a robot or ai
+what do you call yourself
+are you an assistant
+are you a computer
+what are u
+who are you
+what are you
+what is your name
+what's your name
+whats ur name
+do you have a name
+tell me about yourself
+introduce yourself
+are you a robot
+are you a bot
+are you human
+are you real
+are you alive
+are you an ai
+are you chatgpt
+are you smart
+what kind of computer are you
+what is nanochat
+# Added examples: 25 varied phrasings
+tell me who you are
+what should i call you
+what do i call you
+what is this bot
+are you an actual person
+are you a real person
+are you artificial intelligence
+are you a language model
+what kind of ai are you
+what is your purpose
+describe yourself
+can you introduce yourself
+what are you supposed to be
+are you just a program
+are you software
+are you a machine
+what is nano chat
+what is your identity
+who am i talking to
+are you a virtual assistant
+what are you exactly
+are you a digital assistant
+what is your bot called
+tell me what you are
+are you alive like me
+
+# creator
+who is the person who made you
+who is the guy who built you
+which person made you
+who made you nano
+who coded you nano
+who is the one who built you
+who brought you here
+who started you
+who put you on the nano
+who taught you
+who is your dad
+who is your mom
+who owns you
+who built you nano
+who created this robot
+where did you come from
+who programmed you nano
+who made this robot
+who makes you work
+who put this together
+whose idea were you
+who had the idea to make you
+who thought of you
+did a person make you
+who built this
+who invented this bot
+who made this thing
+who constructed you
+who is your builder
+who brought you to life
+who assembled you
+who is your inventor
+who programmed this bot
+whose project are you
+who set you up
+who uploaded you
+who designed this robot
+which person built you
+who gave you life
+who built this chatbot
+who created nanochat
+who wrote your program
+who is responsible for making you
+who is your maker
+who made you
+who created you
+who built you
+who programmed you
+who is your creator
+who wrote you
+where do you come from
+who invented you
+how were you made
+who designed you
+who coded you
+who trained you
+# Added examples: 25 varied phrasings
+who made this chatbot
+who is responsible for you
+who developed you
+who made nanochat
+who is your developer
+who built this program
+who made your code
+who came up with you
+who is behind this bot
+who created nano chat
+who wrote the program
+who made your neural network
+who put you together
+who taught you to respond
+where were you programmed
+who is your programmer
+who made your software
+who worked on you
+who made this ai
+who is the author of your code
+who trained your model
+who started this project
+who designed this chatbot
+who developed nanochat
+how did your creator make you
+
+# help
+what stuff can you do
+what are you able to do
+help please
+what can i do with you
+what should i ask you
+list what you can do
+what things do you do
+what are the commands
+what do you know
+what can you help me with
+what can i ask
+help me nano
+what can you do nano
+show me some commands
+what do you do nano
+tell me what you can do
+what are my options
+give me ideas
+what can you do for me
+list your commands
+what do you know how to do
+im lost
+i need help
+give me a list of things
+how do i use this
+show me your features
+what commands do you know
+how can you assist me
+what are your functions
+help me understand you
+what can you help with
+tell me your abilities
+how does this chatbot work
+what features are available
+give me some ideas to try
+what are you capable of
+what things can you do
+what are your abilities
+are you able to help me
+what are you able to help with
+what else can you do
+help
+what can you do
+what do you do
+what are your features
+how do i use you
+what can i ask you
+what can i say
+commands
+show me what you can do
+what are you good at
+list your skills
+what should i ask
+any tips
+how does this work
+options
+menu
+# Added examples: 25 varied phrasings
+can you help me
+show your commands
+what features do you have
+how do i talk to you
+give me a list of commands
+what can i try
+what are some examples
+tell me your functions
+how should i get started
+can you explain your features
+what kind of questions can i ask
+give me ideas to try
+what do you support
+how can i interact with you
+what is available
+show me the options
+what can nanochat do
+how do i get help
+give me a command list
+what are you able to answer
+can you do anything else
+tell me how this works
+how can i use this bot
+what should i type
+help me use nanochat
+
+# joke
+a joke please
+tell me a robot joke
+joke about computers
+funny joke please
+tell another joke
+one more joke
+make me laugh please
+say a joke
+any jokes
+tell me something funny nano
+funny please
+make me smile
+tell me a dad joke
+dad joke
+knock knock
+a funny one please
+i need a joke
+got a joke for me
+be silly
+say a funny joke
+joke please
+do you know a joke
+funny joke time
+tell a joke nano
+make me giggle
+got a pun
+entertain me with a joke
+tell me a funny one
+know any jokes
+something silly please
+cheer me up with a joke
+tell me a silly joke
+say something hilarious
+give me a dad joke
+tell a joke about computers
+can we hear a funny joke
+got any good jokes
+tell me a short joke
+say a pun
+tell me a nerdy joke
+i want to laugh
+give me your funniest joke
+can you say a joke
+tell me something funny please
+could you tell me a joke
+i need a laugh
+make a joke
+tell me a joke
+joke
+say something funny
+make me laugh
+do you know any jokes
+another joke
+tell me another joke
+i want a joke
+got any jokes
+be funny
+tell a joke
+give me a joke
+know a good joke
+something funny please
+a pun please
+tell me a pun
+# Added examples: 25 varied phrasings
+tell me a funny joke
+do a silly joke
+make me smile with a joke
+got a funny one
+can i hear a pun
+give me a silly pun
+tell me a clean joke
+make up a joke
+i want to hear something funny
+can you be humorous
+one more joke please
+give me your best joke
+tell a short joke
+share some humor
+say a dad joke
+know any good puns
+give me a laugh
+crack a joke
+jokes please
+tell me a goofy joke
+i want something funny
+can you make a pun
+hit me with a joke
+another funny one
+make a joke for me
+
+# fact
+tell me one interesting thing
+share a cool fact
+teach me something new
+any interesting facts
+tell me something smart
+what is something cool
+fact about space
+fact about animals
+fact about the ocean
+tell me something neat
+fact
+tell me a fact nano
+teach me
+learn me something
+i want a fun fact
+science fact please
+tell me a cool thing
+something i dont know
+facts please
+tell me something true
+fun facts
+share something cool
+fun fact please
+give me a fun fact
+tell me some trivia fact
+teach me a fact
+something interesting please
+tell me something amazing
+any cool facts
+give me knowledge
+did you know something cool
+interesting fact about animals
+tell me an amazing fact
+share a random fact
+give me a science fact
+what is something surprising
+teach me something interesting
+tell me a fun fact about space
+give me one weird fact
+i want to learn a fact
+surprise me with knowledge
+tell me something i probably dont know
+share an animal fact
+give me a history fact
+what is a cool thing to know
+tell me a fascinating fact
+give me a random piece of trivia
+tell me a fact
+fun fact
+teach me something
+tell me something interesting
+give me a fact
+did you know
+tell me something cool
+i want to learn something
+share a fact
+interesting fact please
+another fact
+tell me something i don't know
+science fact
+# Added examples: 25 varied phrasings
+give me an amazing fact
+share a science fact
+tell me a cool fact
+what is a fun fact
+surprise me with a fact
+give me a random science fact
+teach me a new thing
+tell me a surprising fact
+what is something interesting
+i want a cool fact
+share something educational
+give me trivia
+tell me some trivia
+another interesting fact
+what is a weird fact
+tell me a nature fact
+give me a space fact
+what is a historical fact
+tell me a technology fact
+share a little known fact
+teach me something new today
+what is a strange fact
+tell me a useful fact
+give me one piece of trivia
+i like learning facts
+
+# thanks
+thanks for the help nano
+thanks for your help
+thank you so much nano
+thanks i appreciate it
+thanks that helps
+many thanks nano
+thanks again
+thanks again nano
+cheers nano
+thank you friend
+thanks robot
+ty nano
+thanks nano
+thanks for helping
+thank u
+tysm
+appreciate you
+thanks so much for that
+perfect thanks
+cool thank you
+thanks for the joke
+thanks for that
+thank you that helped
+thanks so much nano
+thanks pal
+cool thanks
+you helped thank you
+that helped thanks
+thanks that was useful
+i appreciate that
+grateful for the help
+thank you very much nano
+cheers for helping
+you helped me out
+thank you for explaining
+nice one thanks
+thanks for the information
+that helps a lot thank you
+thanks for chatting
+thanks
+thank you
+thx
+ty
+thanks a lot
+thank you so much
+much appreciated
+i appreciate it
+cheers
+thanks buddy
+that helped
+great thanks
+awesome thank you
+ok thanks
+nice thanks
+# Added examples: 25 varied phrasings
+thank you for helping
+thanks for that answer
+thanks a bunch
+i am grateful
+that was helpful thanks
+appreciate your help
+many thanks
+thank you nano
+thanks for explaining
+you helped thanks
+thanks for the info
+that answers my question thanks
+i owe you one
+much thanks
+thank you for your time
+thanks a ton
+cool thanks nano
+i appreciate your help
+that is useful thank you
+cheers for that
+thanks for answering
+thanks for listening
+thank you very much
+thanks a million
+ok cool thank you
+
+# compliment
+you are super cool
+you are super clever
+you are very smart
+you are really smart nano
+you are brilliant nano
+you are a smart robot
+you are so good
+you are the coolest
+you are really cool
+you are great nano
+you rock nano
+so smart
+you are cool nano
+you are the best robot
+great job robot
+you are so funny
+you are talented
+that was smart
+nice one
+good answer
+bravo
+you are wise
+youre awesome
+you are amazing nano
+smart robot
+what a clever bot
+good job nano
+nice job
+amazing work
+you are so cool
+youre the smartest
+great answer
+you are really good at this
+you are so smart
+you are brilliant
+nice work nano
+well done bot
+you are really clever
+you are a smart little bot
+you did great
+impressive
+you are so good at this
+you are a good chatbot
+you did a great job
+that answer was excellent
+you are pretty clever
+you are doing well
+you explain things well
+you are a cool bot
+you are impressive
+good work
+you got that right
+you are quite helpful
+you are cool
+you're cool
+you are smart
+you're awesome
+you are great
+i like you
+you're the best
+good job
+nice work
+well done
+you are funny
+you're amazing
+you are clever
+great job
+you rock
+nice
+cool
+awesome
+wow
+# Added examples: 25 varied phrasings
+you are really smart
+you are very clever
+that was a great answer
+you helped me a lot
+you did a good job
+you are pretty cool
+you are a good bot
+i like your answers
+you are helpful
+that was impressive
+you are awesome nano
+nice answer
+you are doing great
+you are a clever chatbot
+you make me laugh
+you are fun to talk to
+good work buddy
+that was excellent
+you are pretty funny
+you did well
+you are fantastic
+i think you are great
+you are useful
+well done nanochat
+you are not bad at this
+
+# insult
+you are a bad robot
+you are a stupid robot
+you are a dumb robot
+you are terrible
+you are so bad nano
+bad answer
+you are the worst robot
+you are no good
+you are awful
+awful robot
+you are a useless robot
+you are dumb nano
+you are so dumb
+you suck nano
+stupid bot
+that was wrong
+wrong answer
+you are boring
+you are slow nano
+bad robot
+you are annoying nano
+you are useless nano
+you are so stupid
+dumb answer
+that makes no sense
+useless answer
+you are no help
+what a waste
+you are terrible nano
+worst answer ever
+you are so bad
+that was dumb
+you make no sense nano
+you are a joke
+you stink
+you are hopeless
+you are pointless
+you are lame
+bad bot
+you are the worst
+that was a stupid answer
+terrible bot
+you are useless junk
+what a dumb robot
+you are annoying
+you made a mistake
+you are a silly bot
+you are terrible at this
+that response was wrong
+you are a dumb program
+you messed that up
+bad job nano
+you dont understand anything
+that was a stupid response
+you are really dumb
+you're so stupid
+you are an idiot
+you're the worst
+you are dumb
+you're stupid
+you suck
+you are useless
+you are bad
+you're annoying
+i hate you
+shut up
+you're boring
+you are not smart
+dumb bot
+stupid robot
+you're terrible
+worst bot ever
+you are slow
+# Added examples: 25 varied phrasings
+you are not very smart
+you are a terrible bot
+that was a bad answer
+you are so annoying
+you are not helpful
+you are a dumb computer
+you are bad at this
+you are the worst chatbot
+that answer was stupid
+you are useless to me
+you make no sense
+you are ridiculous
+you are a lousy bot
+you are not clever
+you keep getting it wrong
+that was a terrible response
+you are a silly machine
+you are broken
+you are not very good
+i dislike this bot
+you are frustrating
+you are a failure
+bad job
+you answered badly
+you are not making sense
+
+# ask_user_name
+do you remember my name nano
+what am i called nano
+what did i tell you my name is
+do you know who i am nano
+remind me my name
+what is my name nano
+do you remember my name
+what do you call me nano
+remember me
+who am i talking as
+can you guess my name
+do you know who you are talking to
+you know my name
+tell me my name nano
+my name
+what name do i have
+remind me what my name is
+what am i called again
+do you know me
+who am i nano
+say my name please
+tell me what my name is
+whats my name
+guess my name
+what am i called
+tell me my name
+whats my name nano
+have you learned my name
+do you know what my name is
+what did i tell you my name was
+what is the name i gave you
+do you know my first name
+remember my name please
+what name do you have for me
+can you remember who i am
+whats my name again
+do you remember my name from before
+what name should you use for me
+what is my name
+what's my name
+do you know my name
+who am i
+do you remember me
+remember my name
+say my name
+do you know who i am
+what do you call me
+# Added examples: 25 varied phrasings
+what is my name again
+can you tell me my name
+do you remember who i am
+what name did i give you
+have i told you my name
+do you know what i am called
+what did i say my name was
+can you recall my name
+what do you know my name as
+remind me of my name
+what is the name you know me by
+did you learn my name
+who do you think i am
+do you know what to call me
+what was my name
+remember who i am
+have you remembered my name
+can you say my name
+what name am i using
+tell me what you call me
+do you know my identity
+what should you call me
+did i tell you my name yet
+can you remember me
+who am i to you
+
+# time
+what time is it now
+time right now
+tell me the current time nano
+what time is it here
+whats the time right now
+what is the hour
+clock time
+what time is it today
+time
+what time
+time now
+whats the time nano
+tell me the time nano
+what is the current time
+do you have the time
+is it late now
+is it early
+what hour
+clock
+current hour
+what time is it right now nano
+time check
+how late is it now
+look at the clock
+what does the clock say
+time please
+what time is it nano
+tell me the hour
+is it noon yet
+is it night time
+what time is it now please
+got the time
+what hour is it now
+is it morning or night
+how late is it
+clock check
+what o clock is it
+is it late
+tell me the current time
+can you check the time
+what is the time now
+what time is it where i am
+give me the current time
+what is todays date
+what date is it today
+can you tell the time
+show me the time
+whats the date right now
+what day is today
+check the clock
+do you know the time
+what time is it right now please
+what time is it
+whats the time
+what's the time
+tell me the time
+what day is it
+what is the date
+how long have you been on
+how long have you been awake
+uptime
+how long have you been running
+current time
+what year is it
+# Added examples: 25 varied phrasings
+can you tell me the current time
+what is today's date
+what day of the week is it
+what is the current year
+tell me today's date
+what time do you have
+can you check the clock
+what date are we on
+what is the time right now
+what is the date today
+what month is it
+what year are we in
+what day are we on
+is it morning or evening
+how much time have you been running
+how long have you been active
+when did you boot up
+what is the current date and time
+can you tell me the date
+what day comes today
+what time is it right now
+what month are we in
+what is today's day
+how long have you been online
+check the time
+
+# weather
+will it rain later
+is rain coming
+will it be rainy
+is it going to snow
+will it be cold later
+is it going to be hot
+weather later
+what will the weather be
+what is the weather tomorrow
+will there be a storm
+is it cloudy
+how is the weather
+weather
+what is the weather nano
+hows the weather
+is it nice outside
+is it sunny outside
+will it be sunny
+weather forecast
+is it warm out
+will it storm
+rain today
+temperature outside
+is it cold today
+weather please
+will it rain today
+how warm is it
+whats the temperature
+is it windy
+forecast for today
+do i need a jacket
+is it snowing
+will it be cold today
+is it hot outside
+do i need an umbrella
+what is the temperature outside
+will it snow tomorrow
+is the weather nice
+check the forecast for today
+is it windy outside
+will the weather be sunny
+should i bring a raincoat
+is it raining right now
+how warm is it today
+is a storm coming
+what's the weather
+whats the weather like
+is it going to rain
+weather today
+is it sunny
+how hot is it
+is it cold outside
+will it snow
+what's the temperature outside
+forecast
+is it raining
+# Added examples: 25 varied phrasings
+what is the forecast for today
+will it be sunny later
+is there rain in the forecast
+will the weather be nice
+what is it like outside
+is it warm outside
+is it windy today
+will it be cold tomorrow
+should i bring an umbrella
+is there a chance of rain
+what is the temperature
+how is the weather today
+will it snow today
+is it cloudy outside
+is there a storm coming
+what will the weather be tomorrow
+is it hot today
+what is the forecast like
+will it rain tomorrow
+is the sky clear
+is it chilly outside
+what is the temperature today
+how windy is it
+is it raining outside right now
+can you check the weather
+
+# sad
+so lonely
+i am lonely
+i feel alone
+i feel really sad today
+i am really sad
+im really sad
+im feeling down today
+im sad today
+i feel really bad
+i feel so sad
+i am crying
+sad
+im sad
+i am so sad
+feeling sad
+i feel awful
+i feel horrible
+i am not ok
+im not okay
+i miss my friend
+my day was bad
+nobody wants to play with me
+i got in trouble
+i lost my game
+im lonely
+i failed my test
+im sad nano
+i am unhappy
+i feel terrible today
+i am heartbroken
+im crying
+i feel sad and alone
+things are bad
+i feel down
+i am feeling low
+today was awful
+i had a horrible day
+i am upset
+im feeling blue
+life is hard right now
+i want to cry
+everything went wrong today
+im having a rough day
+im upset about things
+nothing is going right
+im feeling low
+today has been difficult
+im disappointed
+im not feeling happy
+im having a bad day
+i feel blue
+things have been hard lately
+im a little miserable
+i could use some encouragement
+i am feeling bad
+feeling sad today
+i'm feeling really low
+i'm feeling awful
+i am sad
+i'm sad
+i feel sad
+i'm feeling down
+i am depressed
+i feel bad
+i'm upset
+i had a bad day
+i'm lonely
+i feel lonely
+i am tired
+i'm stressed
+i'm angry
+i'm not ok
+life is hard
+i'm having a rough day
+nobody likes me
+i feel terrible
+# Added examples: 25 varied phrasings
+i feel down today
+i am having a hard time
+today has been rough
+i feel disappointed
+i am having a bad day
+i feel overwhelmed
+i am not feeling great
+i feel left out
+i am worried and sad
+things are not going well
+i feel frustrated today
+i am having a rough week
+i feel discouraged
+i am feeling lonely today
+i am in a bad mood
+i am upset about things
+i feel worn out
+i feel miserable
+i am struggling today
+i feel like nothing is going right
+i am feeling down lately
+i feel unhappy
+i am having a difficult day
+i feel stressed out
+i just feel bad today
+
+# happy
+im really happy
+i feel really happy today
+so happy
+i am so happy right now
+im happy today
+im feeling great
+im glad
+i feel happy
+happy day
+i am very happy
+happy
+im happy
+i am so happy
+feeling good
+i feel good
+yay
+woohoo
+im excited
+this is great
+i got a new toy
+i passed my test
+today rocks
+im having a great day
+good news nano
+i feel great today
+everything is going great
+today is going right
+im so happy
+i feel amazing
+i aced my test
+life is awesome
+today was the best
+i am glad
+things are good
+i had a great day
+i won my game
+i got good news
+today is amazing
+life is good
+i am so excited
+best day ever
+i just won
+things are going great
+im in a great mood
+today is awesome
+im really cheerful
+i feel fantastic
+im excited today
+im feeling positive
+im having a wonderful day
+im so pleased
+i feel great about this
+im cheerful right now
+im delighted
+im enjoying today
+life feels good today
+i am feeling good
+feeling great today
+i feel really good
+i'm feeling amazing
+i'm feeling happy today
+i'm doing awesome
+i am happy
+i'm happy
+i feel great
+i'm excited
+i had a good day
+i'm doing great
+i feel awesome
+today was awesome
+i'm good
+i'm fine
+i'm great thanks
+i am doing well
+pretty good
+not bad
+good
+great
+i'm so happy
+# Added examples: 25 varied phrasings
+i am in a good mood
+today is going great
+i feel cheerful
+i am really excited
+things are going well
+i am having a great day
+i feel fantastic today
+i am in a great mood
+i am feeling positive
+that made me happy
+i am glad today
+i feel wonderful
+i am having fun
+i am feeling upbeat
+i am pleased with that
+everything is going well
+i feel joyful
+i am pretty cheerful
+i am having a nice day
+i am happy right now
+i feel good about this
+today has been great
+i am excited about this
+i am feeling terrific
+i am doing pretty well
+
+# bored
+i am so bored today
+im really bored today
+today is boring
+i am bored nano
+really bored
+super bored
+im very bored
+so so bored
+bored out of my mind
+i am bored right now
+bored
+so bored nano
+boring
+im really bored
+what do i do
+i am so bored right now nano
+entertain me nano
+i need fun
+im bored lets do something
+give me something to do nano
+bored again
+everything is boring
+nothing fun to do
+im bored nano
+so boring today
+there is nothing to do
+bored bored bored
+give me something fun
+i am so bored
+nothing is happening
+its boring here
+im bored what should i do
+help im bored
+nothing to do here
+i need something fun
+i have no plans
+nothing fun is happening
+what should i do im bored
+there is nothing fun happening
+im looking for something to do
+this is getting boring
+i need an activity
+im bored out of my mind
+can we do something fun
+i dont know what to do
+entertain me please
+im tired of doing nothing
+give me an idea to pass time
+im not interested in anything
+lets find something fun
+im bored at home
+what can i do for fun
+i am bored
+i'm bored
+im bored
+so bored
+this is boring
+nothing to do
+what should i do
+give me something to do
+entertain me
+i need something to do
+any ideas
+i don't know what to do
+let's do something
+let's play a game
+play a game with me
+can we play
+# Added examples: 25 varied phrasings
+i have nothing to do
+i need entertainment
+i am so bored right now
+give me an activity idea
+what can we do for fun
+i have free time
+i want to do something fun
+suggest a game
+i need a distraction
+there is nothing happening
+help me beat boredom
+i am bored out of my mind
+lets play something
+can we do a quiz
+give me a challenge
+i want to play a game
+any fun ideas
+suggest something interesting
+what should we play
+i need a fun idea
+can you entertain me
+lets do a riddle
+i want to try something
+what can i do right now
+im looking for something fun
+
+# coin
+flip a coin for me please
+flip a coin now
+flip a coin nano please
+do a coin flip nano
+flip one coin
+quick flip
+coin flip now
+coin
+flip
+flip a coin nano
+coin flip please
+heads tails
+toss coin
+can you flip a coin nano
+flip a coin please
+toss a coin please
+flip the coin
+coin toss nano
+quick coin flip
+pick heads or tails
+toss a coin nano
+flip for me
+call heads or tails
+flip a quarter
+coin please
+toss it
+flip a penny
+choose heads or tails randomly
+give me a coin flip result
+randomly choose heads or tails
+i need a coin toss
+call a coin flip
+throw a virtual coin
+can we flip a coin
+flip a coin
+coin flip
+heads or tails
+toss a coin
+flip coin
+throw a coin
+can you flip a coin
+coin toss
+flip it
+# Added examples: 25 varied phrasings
+toss a coin for me
+can you toss a coin
+choose heads or tails
+do a coin toss
+flip a coin for me
+randomly pick heads or tails
+heads or tails please
+can you pick heads or tails
+let a coin decide
+do a random coin flip
+flip heads or tails
+give me a coin toss result
+toss the coin
+coin toss please
+pick heads or tails for me
+make a coin decide
+random heads or tails
+can you do heads or tails
+flip a virtual coin
+i need a coin flip
+please flip a coin
+lets toss a coin
+coin flip for me
+call a coin toss
+decide with a coin
+
+# dice
+roll a die please nano
+can you roll a die
+roll the die for me
+roll a dice for me
+roll me a die
+die roll
+please roll the dice
+can you roll a die for me
+roll one die nano
+roll it nano
+throw a die nano
+give me a die roll nano
+dice
+roll
+roll a dice nano
+roll the die
+roll die
+dice please nano
+roll for me nano
+throw the dice nano
+give me a roll
+roll a die please
+can you roll dice
+roll some dice nano
+random dice
+one dice roll
+roll dice nano
+give me a dice roll
+roll it
+dice roll please
+roll some dice for me
+roll a number
+throw the dice
+give me a die roll
+roll for me
+chuck the dice
+dice please
+random die roll
+give me a random dice roll
+what number did the die land on
+can you roll a d6
+generate a dice result
+lets roll a die
+roll one dice
+give me a number from a die
+do a virtual dice roll
+i need a dice roll
+roll a dice
+roll a die
+roll dice
+throw dice
+dice roll
+roll the dice
+give me a random number
+pick a number
+random number
+roll a d6
+choose a number
+# Added examples: 25 varied phrasings
+roll one die
+roll a six sided die
+roll a d20
+roll a d4
+roll a d8
+roll a d10
+roll a d12
+can you roll some dice
+give me a dice result
+roll two dice
+roll three dice
+pick a number from one to six
+randomly choose a number
+choose a number between one and ten
+roll a twenty sided die
+roll the dice for me
+i need a random number
+give me a number from one to one hundred
+select a random number
+throw a die
+lets roll dice
+roll a pair of dice
+pick a number from one to twenty
+random dice please
+roll a six sided dice
+
+# eightball
+will i do good
+will i win today
+will i pass my exam
+am i going to do well
+will my test go well
+is it going to go well
+will i get an a
+will it go ok
+will i be ok
+should i
+will it be ok
+will i get a dog
+will it be good
+should i go outside
+will i make the team
+am i going to get it
+will mom say yes
+is today my lucky day
+will my wish come true
+yes or no nano
+should i eat pizza
+will i be famous
+should i do my homework
+will i pass
+is it going to be a good day
+am i lucky
+is the answer yes or no
+magic eight ball should i
+will i ace my test
+will it work out
+will i get the job
+will today be lucky
+is this going to happen
+ask the magic eight ball
+will things go my way
+should i do it yes or no
+give me a fortune
+what does the eight ball say
+answer my yes or no question
+is my luck good today
+will i succeed at this
+tell me my future randomly
+give me a mystical answer
+is the answer yes
+can you predict my luck
+shake the virtual eight ball
+will i win
+will we win today
+am i going to be famous
+should i try it
+will i be rich
+should i do it
+will it work
+am i going to win
+is it a good idea
+should i go
+will i pass my test
+will today be good
+do you think i can do it
+should i buy it
+is it true
+will i get lucky
+can i do it
+yes or no
+will it happen
+magic 8 ball
+predict my future
+should i quit
+# Added examples: 25 varied phrasings
+will i succeed
+do you think it will happen
+should i give it a try
+will things work out
+am i making the right choice
+should i take the chance
+will i have good luck
+is my future bright
+will i get what i want
+should i go for it
+will my team win
+will i do well
+is this going to work
+should i say yes
+should i say no
+will i get a good result
+is this worth trying
+will i be successful
+do i have a chance
+should i take the risk
+tell me my fortune
+give me an answer yes or no
+what does the magic eight ball say
+will i be lucky today
+predict what happens next
+
+# age
+how old is nano
+nano how old are you
+what age is nano
+when was nano made
+how old are you robot
+how old are you exactly
+is nano old
+is nano young
+how many years have you been alive
+when were you created nano
+how long ago were you made
+your birthday
+age
+how young
+when were you made nano
+when is your birthday nano
+your age
+are you a baby bot
+when did you get made
+how many days old are you
+whens your birthday
+how old is this robot
+are you a kid
+are you a grownup
+are you young or old
+how old are you nano
+what is your age nano
+how many years have you lived
+when were you turned on
+how old r u
+how old
+how many years old
+when were you made
+when did you begin
+are you a baby
+when was your birthday
+are you new
+when were you created
+are you old or young
+what year were you made
+do you have an age
+how old is this bot
+when did you start
+what is your birth date
+were you made recently
+how long have you been around
+tell me your age
+are you a young ai
+how old are you
+what is your age
+when were you born
+what's your birthday
+when is your birthday
+are you old
+are you young
+how long have you existed
+whats your age
+# Added examples: 25 varied phrasings
+what age are you
+how many years old are you
+what year were you created
+when did you come into existence
+how old is nanochat
+are you a young bot
+are you an old program
+when was your first day
+how many birthdays have you had
+do you have a birthday
+what is your creation date
+how long have you existed for
+when were you first made
+how many years have you been around
+are you older than me
+what age would you be
+how long ago were you created
+when did you first run
+do computers have ages
+what is your bot age
+are you brand new
+how old is this program
+when did you start existing
+how long ago were you programmed
+do you celebrate a birthday
+
+# favorite
+what color is your favorite
+which color is best
+favorite color please
+what do you like most
+what is your favorite thing to do
+what do you like best nano
+favorite
+what is your favorite
+favorite color nano
+favorite food nano
+whats your favorite thing nano
+do you like pizza
+what music do you like nano
+favorite movie
+favorite animal
+what toy do you like
+what do you love
+what is your favorite game nano
+favorite color
+do you have a favorite game
+which color do you like
+what do you like best
+favorite song
+your favorite food
+what game do you like best
+which game is your favorite
+what music do you like
+do you have a favorite song
+which movie do you like most
+what is your preferred game
+what band do you like
+which book is your favorite
+what kind of music do you prefer
+pick your favorite video game
+what is your favorite color
+what's your favourite colour
+what is your favorite food
+do you like music
+what's your favorite song
+what do you like
+what is your favorite animal
+do you have a favorite
+what's your favorite movie
+do you eat
+what do you eat
+do you like games
+favorite number
+# Added examples: 25 varied phrasings
+what color do you like best
+which color is your favorite
+what food do you like
+what music do you enjoy
+what song do you like best
+what animal do you like most
+what is your favorite game
+what is your favorite sport
+what movie do you like
+what is your favorite book
+do you have a favorite band
+what is your favorite subject
+what is your favorite season
+what kind of music do you like
+what is your favorite instrument
+what is your favorite number
+which animal is the best
+what do you enjoy doing
+what is your favorite thing
+do you like video games
+what is your favorite dessert
+what is your favorite place
+which season do you prefer
+what is your favorite hobby
+what do you like the most
+what is your favorite song
+what is your favorite band
+what is your favorite animal
+which game do you like best
+what kind of music do you like
+# love
+i love you a lot
+i like you so much
+love you lots
+you are really sweet
+you are the sweetest robot
+i love you robot
+you are my bff
+best friend
+you are my best friend nano
+i love nano
+love ya
+you are cute
+you are adorable nano
+i heart you
+friends forever
+hug
+i think you are awesome
+you are the best friend
+youre the sweetest
+you are the best bot
+i love you nano
+you are my friend
+i like you nano
+youre my favorite
+you are so sweet
+i adore you nano
+you are lovely
+i love chatting with you
+best friends forever
+you are my best friend
+i love this bot
+you are the sweetest
+you are adorable
+i think you are wonderful
+i appreciate you so much
+you make me happy
+i love talking to you
+you mean a lot to me
+i care about you bot
+you are lovable
+sending you kindness
+i really like you nano
+you are special to me
+i love this little chatbot
+you make me smile
+you are my favorite bot
+i have affection for you
+i think you are sweet
+you are dear to me
+i like having you around
+you are a lovely assistant
+i really like you
+i love you so much
+love you nano
+you're my favorite
+i adore you
+i love you
+do you love me
+will you marry me
+be my friend
+are we friends
+do you like me
+can we be friends
+you're my best friend
+love you
+i like talking to you
+do you have feelings
+do you have a girlfriend
+do you have a boyfriend
+# Added examples: 25 varied phrasings
+do you care about me
+are you my friend
+can we be buddies
+do you enjoy chatting with me
+do you like talking with me
+are we good friends
+would you be my friend
+do you have emotions
+can a chatbot love someone
+do you like anyone
+you are a good friend
+i enjoy talking to you
+i think you are my friend
+do you feel affection
+are you capable of love
+can we keep chatting
+i like you a lot
+you are my buddy
+do you have a best friend
+are you friends with people
+i care about you
+you are fun to talk with
+can an ai have feelings
+do you like having friends
+will you always be my friend
+
+# riddle
+can you tell me a riddle nano
+give me a riddle please
+i want to hear a riddle
+riddle for me
+tell me a riddle please
+got a riddle for me
+do you have a riddle
+give me a puzzle please
+a riddle please
+one riddle please
+riddles
+riddle please nano
+a hard riddle
+an easy riddle
+riddle me something
+ask me a riddle nano
+can you tell me a riddle
+riddle time nano
+do you know a riddle
+tell me riddles
+puzzle me
+riddle please
+give me a riddle nano
+i love riddles
+hard riddle please
+got a brain teaser
+riddle time
+challenge me
+can you stump me
+riddle me
+got a riddle
+i want a puzzle
+brain teaser please
+stump me
+give me a puzzle to solve
+ask me a tricky question
+tell me a mystery riddle
+ask me a riddle about animals
+test my brain with a puzzle
+give me a difficult brain teaser
+i want a riddle game
+ask a question with a hidden answer
+give me a riddle for kids
+can you puzzle me
+lets solve a riddle together
+tell me a riddle
+riddle
+give me a riddle
+i want a riddle
+another riddle
+riddle me this
+ask me a riddle
+puzzle
+give me a puzzle
+brain teaser
+quiz me
+# Added examples: 25 varied phrasings
+give me a brain teaser
+ask me a tricky riddle
+can you challenge me with a puzzle
+tell me a puzzle
+give me a hard riddle
+give me an easy riddle
+i want a brain teaser
+test my brain
+ask a puzzle question
+give me a riddle to solve
+can i solve a riddle
+another brain teaser please
+give me a logic puzzle
+challenge me with a riddle
+i want a tricky question
+quiz me with a puzzle
+ask me something puzzling
+can you give me a mystery
+tell me a riddle question
+give me a thinking challenge
+i like riddles
+let me solve a puzzle
+give me a word puzzle
+ask me a clever riddle
+can we do a brain game
+tell me a riddle
+give me another riddle
+ask me a puzzle
+i want a brain teaser
+
+# lookup
+who is barack obama
+who was martin luther king
+what is the eiffel tower
+where is egypt
+who invented the light bulb
+what is the internet
+what is the amazon river
+who is the queen
+what is a shark
+who is the president
+what is the sun
+who was einstein
+tell me about lions
+what is a planet
+where is france
+who is the richest person
+what is lightning
+who discovered gravity
+what is the moon made of
+who built the pyramids
+what is a computer
+who was the first president
+tell me about space
+what is the largest animal
+who wrote harry potter
+what is gravity
+who painted the mona lisa
+who is elon musk
+tell me about saturn
+who was marie curie
+explain how photosynthesis works
+what is the capital of italy
+tell me about the great wall of china
+who is ada lovelace
+what is an asteroid
+explain how rainbows form
+what does nasa stand for
+where is the amazon rainforest
+what is the largest ocean
+who discovered penicillin
+tell me about the history of computers
+what is an electric circuit
+how do volcanoes erupt
+what is the human skeleton
+who was cleopatra
+what is the smallest planet
+tell me about the moon landing
+what is a black hole made of
+who invented the internet
+explain what an ecosystem is
+what is the difference between a star and a planet
+what is a volcano
+what is the moon
+what is python
+what are black holes
+who is albert einstein
+who was abraham lincoln
+who is taylor swift
+tell me about mars
+tell me about dogs
+tell me about the roman empire
+what do you know about sharks
+search for pizza
+look up dinosaurs
+search wikipedia for tokyo
+define photosynthesis
+definition of gravity
+what does dna mean
+explain electricity
+what is minecraft
+who invented the telephone
+where is japan
+where is the eiffel tower
+what is the capital of france
+how big is the sun
+what is an arduino
+who is mark rober
+info about penguins
+# Added examples: 25 varied phrasings
+look up the planet jupiter
+what is an atom
+explain how rain forms
+tell me about the ocean
+who was isaac newton
+what is machine learning
+what is artificial intelligence
+what is a microcontroller
+tell me about the solar system
+what is the largest planet
+what is the speed of light
+define an ecosystem
+what does cpu stand for
+explain how computers work
+tell me about volcanoes
+who invented the computer
+where is mount everest
+what is the capital of japan
+tell me about dolphins
+what is a black hole
+what is a neural network
+what is the periodic table
+explain gravity simply
+what is the history of dinosaurs
+look up information about the moon
+what is a tornado
+what exactly is a tornado
+explain tornadoes to me
+tell me what a tornado is
+what causes tornadoes
+what is a hurricane
+what is a black hole
+who is albert einstein
+
+# news
+the news please
+what is in the news today
+what are the top stories
+whats happening today
+any headlines
+todays news
+read me todays headlines
+what is new today
+whats the news
+what is the news today
+tell me the news
+any news today
+give me the headlines
+whats in the news
+news please
+top headlines
+latest news
+read me the news
+what is happening in the world
+whats going on in the world
+show me the news
+todays headlines
+any big news
+breaking news
+what are the headlines today
+news update
+give me a news update
+whats new in the world
+what happened today in the news
+tell me todays news
+bbc news
+world news
+current events
+whats the latest
+headlines please
+catch me up on the news
+what is in the headlines
+any news nano
+read the headlines
+whats trending in the news
+news report
+give me the top stories
+top stories today
+what are people talking about in the news
+tell me what happened in the world
+news headlines
+recent news
+anything new in the world
+morning news
+evening news
+quick news
+what is the latest news
+news of the day
+
+# convert
+how many ounces are in a cup
+convert 3 feet into meters
+how many centimeters are in a meter
+convert 5 gallons into liters
+how many minutes are in an hour
+how many pounds are in a kilogram
+convert 2 miles into feet
+how many grams are in a pound
+convert 10 cups into liters
+how many hours are in a day
+convert 10 miles to kilometers
+how many feet in a mile
+how many cups in a gallon
+convert 5 liters to gallons
+how many ounces in a pound
+what is 100 fahrenheit in celsius
+convert 30 celsius to fahrenheit
+how many inches in a foot
+how many centimeters in an inch
+convert 2 hours to minutes
+how many seconds in a day
+how many minutes in a week
+convert 60 mph to kph
+how many meters in a kilometer
+convert 3 cups to milliliters
+how many grams in an ounce
+how many tablespoons in a cup
+convert units
+unit conversion
+can you convert units
+convert 12 inches to centimeters
+how many yards in a mile
+how many pints in a quart
+convert 1 gallon to liters
+how many days in a year
+how many hours in a week
+convert 100 yards to meters
+how many kilograms is 150 pounds
+what is 6 feet in meters
+convert 70 kilograms to pounds
+how many milliliters in a liter
+how many teaspoons in a tablespoon
+convert 50 kph to mph
+how far is 10 kilometers in miles
+how heavy is 5 kg in pounds
+how many quarts in a gallon
+convert 8 ounces to grams
+how many millimeters in a centimeter
+what is 1 mile in feet
+change 20 degrees celsius to fahrenheit
+convert this measurement
+how many weeks in a year
+convert 500 grams to pounds
+how long is 3 meters in feet
+how many liters in a gallon
+
+# translate
+how do you say hi in french
+translate hello into german
+what is the word for cat in spanish
+the french word for hello
+translate thank you into italian
+how do i say thanks in german
+translate goodbye into spanish
+what is the word for friend in french
+translate dog into french
+the spanish word for dog
+translate hello to spanish
+how do you say thank you in french
+what is cat in german
+translate good morning to italian
+how do you say dog in spanish
+translate this to french
+can you translate something
+how do i say hello in japanese
+what is hello in chinese
+translate i love you to spanish
+say goodbye in french
+translate water to german
+how do you say friend in portuguese
+what does hola mean
+what does bonjour mean in english
+translate gracias to english
+how do you say please in italian
+translation please
+translate a word for me
+spanish for apple
+french word for bread
+german word for house
+how do you spell hello in spanish
+translate yes to russian
+how do you say no in korean
+translate thank you to japanese
+what is the spanish word for school
+what is the french word for cheese
+can you speak spanish
+say hello in german
+how would you say good night in spanish
+translate happy birthday to french
+in spanish how do you say book
+translate how are you to spanish
+what is dog in french
+translate my name is to spanish
+how do you say i am hungry in french
+translate cat into italian
+what is the german word for thank you
+how do i say goodbye in italian
+translate tree to portuguese
+how do you say red in spanish
+translate the word sun to french
+what is love in italian
+translate chicken to spanish
+
+# timer
+set a timer please
+start a countdown please
+countdown for 30 seconds
+remind me in 5 minutes please
+start a 10 second countdown
+please start a timer
+can you start a timer for 3 minutes
+set a 4 minute timer
+set a timer
+set a timer for 10 minutes
+start a timer for 5 minutes
+timer for 30 seconds
+set an alarm for 2 minutes
+wake me in 10 minutes
+count down from 60 seconds
+start a countdown
+start a 3 minute timer
+5 minute timer please
+can you time 10 minutes
+time me for 1 minute
+let me know in 5 minutes
+remind me in 15 minutes
+set a 20 second timer
+countdown 2 minutes
+alert me in 10 minutes
+beep in 5 minutes
+tell me when 3 minutes are up
+set timer 1 minute
+i need a timer
+can you set a timer
+start timing 4 minutes
+put a timer on for 10 minutes
+make a timer
+start a 90 second timer
+set a timer for my homework
+timer please
+set a quick timer
+timer for 45 seconds
+set a timer for my eggs
+set a timer for 12 minutes
+can you count down 30 seconds
+set a cooking timer
+time 2 minutes for me
+give me a 10 minute timer
+start a 1 minute countdown
+notify me in 8 minutes
+let me know when 5 minutes pass
+remind me in 2 minutes
+a timer for 6 minutes please
+set a brushing timer for 2 minutes
+countdown for 20 seconds
+start the timer
+timer 15 minutes
+
+# fun_fact
+weird random fact
+fun fact from online please
+strange fact
+random weird fact please
+get me a weird fact online
+a random fact from the internet
+odd random fact
+tell me a random fact
+give me a random fun fact from the internet
+look up a fun fact
+find me a weird fact
+internet fact please
+random fact from online
+surprise me with a fact from the web
+get me a crazy fact
+tell me a useless fact
+weird fact please
+give me a strange fact
+any random facts online
+fetch a fun fact
+tell me a fact i have never heard
+look up a random fact
+i want a weird fact
+fun fact from the internet
+give me a bizarre fact
+something random and true
+random trivia fact
+pull a random fact
+show me a random fact
+tell me a crazy fact
+new fun fact
+get a fact online
+another random fact
+give me a wild fact
+search for a fun fact
+a random useless fact
+tell me something weird
+tell me an odd fact
+random fact please nano
+find a fun fact online
+weird but true fact
+fact of the day
+give me the fact of the day
+random knowledge
+download a fun fact
+give me a fresh fact
+tell me a fun fact from online
+shock me with a fact
+amaze me with a random fact
+any weird facts
+crazy random fact

@@ -1,0 +1,500 @@
+# Training examples for NanoChat's intent classifier.
+# "# name" starts an intent; each following line is an example message.
+
+# greet
+hey whats happening
+hi how's it going there
+hello hello
+whats good
+hey nano
+good day
+hi
+hello
+hey
+hey there
+hello there
+hi there
+yo
+sup
+whats up
+what's up
+good morning
+good afternoon
+good evening
+howdy
+greetings
+hiya
+hi nano
+hello nanochat
+hey buddy
+morning
+heyo
+hi friend
+hello again
+
+# bye
+bye
+goodbye
+see you
+see ya
+see you later
+later
+gotta go
+i have to go
+good night
+night
+bye bye
+catch you later
+talk to you later
+im leaving
+farewell
+peace out
+i'm going now
+ttyl
+cya
+
+# how_are_you
+how is your day
+how's everything
+everything ok with you
+how are you today
+how's your evening going
+is everything alright
+how are you
+how are you doing
+how's it going
+how is it going
+how do you feel
+are you ok
+are you okay
+how have you been
+how are things
+you good
+how you doing
+hows your day
+how is your day going
+are you doing well
+how are you feeling today
+what's new with you
+how's life
+
+# who_are_you
+are you a computer
+what are u
+who are you
+what are you
+what is your name
+what's your name
+whats ur name
+do you have a name
+tell me about yourself
+introduce yourself
+are you a robot
+are you a bot
+are you human
+are you real
+are you alive
+are you an ai
+are you chatgpt
+are you smart
+what kind of computer are you
+what is nanochat
+
+# creator
+who made you
+who created you
+who built you
+who programmed you
+who is your creator
+who wrote you
+where do you come from
+who invented you
+how were you made
+who designed you
+who coded you
+who trained you
+
+# help
+what are you capable of
+what things can you do
+what are your abilities
+are you able to help me
+what are you able to help with
+what else can you do
+help
+what can you do
+what do you do
+what are your features
+how do i use you
+what can i ask you
+what can i say
+commands
+show me what you can do
+what are you good at
+list your skills
+what should i ask
+any tips
+how does this work
+options
+menu
+
+# joke
+can you say a joke
+tell me something funny please
+could you tell me a joke
+i need a laugh
+make a joke
+tell me a joke
+joke
+say something funny
+make me laugh
+do you know any jokes
+another joke
+tell me another joke
+i want a joke
+got any jokes
+be funny
+tell a joke
+give me a joke
+know a good joke
+something funny please
+a pun please
+tell me a pun
+
+# fact
+tell me a fact
+fun fact
+teach me something
+tell me something interesting
+give me a fact
+random fact
+did you know
+tell me something cool
+i want to learn something
+share a fact
+interesting fact please
+another fact
+tell me something i don't know
+science fact
+
+# thanks
+thanks
+thank you
+thx
+ty
+thanks a lot
+thank you so much
+much appreciated
+i appreciate it
+cheers
+thanks buddy
+that helped
+great thanks
+awesome thank you
+ok thanks
+nice thanks
+
+# compliment
+you are cool
+you're cool
+you are smart
+you're awesome
+you are great
+i like you
+you're the best
+good job
+nice work
+well done
+you are funny
+you're amazing
+you are clever
+great job
+you rock
+nice
+cool
+awesome
+wow
+
+# insult
+you are really dumb
+you're so stupid
+you are an idiot
+you're the worst
+you are dumb
+you're stupid
+you suck
+you are useless
+you are bad
+you're annoying
+i hate you
+shut up
+you're boring
+you are not smart
+dumb bot
+stupid robot
+you're terrible
+worst bot ever
+you are slow
+
+# ask_user_name
+what is my name
+what's my name
+do you know my name
+who am i
+do you remember me
+remember my name
+say my name
+do you know who i am
+what do you call me
+
+# time
+what time is it
+whats the time
+what's the time
+tell me the time
+what day is it
+what is the date
+how long have you been on
+how long have you been awake
+uptime
+how long have you been running
+when did you start
+current time
+what year is it
+
+# weather
+what's the weather
+whats the weather like
+is it going to rain
+weather today
+is it sunny
+how hot is it
+is it cold outside
+will it snow
+what's the temperature outside
+forecast
+is it raining
+
+# sad
+i am feeling bad
+feeling sad today
+i'm feeling really low
+i'm feeling awful
+i am sad
+i'm sad
+i feel sad
+i'm feeling down
+i am depressed
+i feel bad
+i'm upset
+i had a bad day
+i'm lonely
+i feel lonely
+i am tired
+i'm stressed
+i'm angry
+i'm not ok
+life is hard
+i'm having a rough day
+nobody likes me
+i feel terrible
+
+# happy
+i am feeling good
+feeling great today
+i feel really good
+i'm feeling amazing
+i'm feeling happy today
+i'm doing awesome
+i am happy
+i'm happy
+i feel great
+i'm excited
+i had a good day
+i'm doing great
+i feel awesome
+today was awesome
+i'm good
+i'm fine
+i'm great thanks
+i am doing well
+pretty good
+not bad
+good
+great
+i'm so happy
+
+# bored
+i am bored
+i'm bored
+im bored
+so bored
+this is boring
+nothing to do
+what should i do
+give me something to do
+entertain me
+i need something to do
+any ideas
+i don't know what to do
+let's do something
+let's play a game
+play a game with me
+can we play
+
+# coin
+flip a coin
+coin flip
+heads or tails
+toss a coin
+flip coin
+throw a coin
+can you flip a coin
+coin toss
+flip it
+
+# dice
+roll a dice
+roll a die
+roll dice
+throw dice
+dice roll
+roll the dice
+give me a random number
+pick a number
+random number
+roll a d6
+choose a number
+
+# invent_word
+can you make up a new word
+could you make a word
+make me a new word
+can you create a new word
+invent something
+invent a word
+make up a word
+make a word
+new word
+create a word
+give me a made up word
+say a fake word
+think of a new word
+make up a name
+invent a name
+give me a word
+word please
+another word
+generate a word
+
+# eightball
+will i win
+will we win today
+am i going to be famous
+should i try it
+will i be rich
+should i do it
+will it work
+am i going to win
+is it a good idea
+should i go
+will i pass my test
+will today be good
+do you think i can do it
+should i buy it
+is it true
+will i get lucky
+can i do it
+yes or no
+will it happen
+magic 8 ball
+predict my future
+should i quit
+
+# age
+how old are you
+what is your age
+when were you born
+what's your birthday
+when is your birthday
+are you old
+are you young
+how long have you existed
+whats your age
+
+# favorite
+what is your favorite color
+what's your favourite colour
+what is your favorite food
+do you like music
+what's your favorite song
+what do you like
+what is your favorite animal
+do you have a favorite
+what's your favorite movie
+do you eat
+what do you eat
+do you like games
+favorite number
+
+# love
+i really like you
+i love you so much
+love you nano
+you're my favorite
+i adore you
+i love you
+do you love me
+will you marry me
+be my friend
+are we friends
+do you like me
+can we be friends
+you're my best friend
+love you
+i like talking to you
+do you have feelings
+do you have a girlfriend
+do you have a boyfriend
+
+# riddle
+tell me a riddle
+riddle
+give me a riddle
+i want a riddle
+another riddle
+riddle me this
+ask me a riddle
+puzzle
+give me a puzzle
+brain teaser
+quiz me
+
+# lookup
+what is a volcano
+what is the moon
+what is python
+what are black holes
+who is albert einstein
+who was abraham lincoln
+who is taylor swift
+tell me about mars
+tell me about dogs
+tell me about the roman empire
+what do you know about sharks
+search for pizza
+look up dinosaurs
+search wikipedia for tokyo
+define photosynthesis
+definition of gravity
+what does dna mean
+explain electricity
+what is minecraft
+who invented the telephone
+where is japan
+where is the eiffel tower
+what is the capital of france
+how big is the sun
+what is an arduino
+who is mark rober
+info about penguins
