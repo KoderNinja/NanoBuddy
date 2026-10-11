@@ -13,7 +13,6 @@ import os
 import queue
 import socket
 import struct
-import subprocess
 import sys
 import threading
 import time
@@ -166,7 +165,7 @@ class Handler(BaseHTTPRequestHandler):
             text = bridge.ascii_only(text).replace("\n", " ")[:80]  # the Nano reads 80 chars max
             self.reply(200 if text and nano.send(text) else 503)
         elif self.path == "/quit":
-            if self.client_address[0] != "127.0.0.1":  # only the Mac itself can stop the app
+            if self.client_address[0] not in ("127.0.0.1", "::1", "::ffff:127.0.0.1"):  # only the Mac can stop it
                 return self.reply(403)
             self.reply(200)
             threading.Timer(0.3, lambda: os._exit(0)).start()
@@ -201,26 +200,25 @@ class Handler(BaseHTTPRequestHandler):
 
 
 def lan_url():
-    """An address phones on the same Wi-Fi can open, e.g. http://MacBook-Air.local:8777/ ("" if offline).
-
-    The .local name keeps working when the Wi-Fi gives the Mac a new IP address,
-    so a NanoChat icon saved on a phone's home screen doesn't break."""
+    """This Mac's address on the local network, e.g. http://192.168.1.20:8777/ ("" if offline)."""
     try:
         with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as s:
             s.connect(("192.168.0.1", 9))  # picks the Wi-Fi interface; nothing is sent
-            ip = s.getsockname()[0]
+            return f"http://{s.getsockname()[0]}:{SERVER_PORT}/"
     except OSError:
         return ""
-    host = ""
-    try:
-        if sys.platform == "darwin":
-            host = subprocess.run(["scutil", "--get", "LocalHostName"], capture_output=True, text=True,
-                                  timeout=2).stdout.strip()
-        else:
-            host = socket.gethostname().split(".")[0]  # Raspberry Pi OS answers to <name>.local
-    except (OSError, subprocess.SubprocessError):
-        pass
-    return f"http://{host + '.local' if host else ip}:{SERVER_PORT}/"
+
+
+class DualStackServer(ThreadingHTTPServer):
+    """Listens on IPv4 and IPv6, so http://<mac-name>.local:8777/ works too (it often resolves to IPv6)."""
+    address_family = socket.AF_INET6
+
+    def server_bind(self):
+        try:
+            self.socket.setsockopt(socket.IPPROTO_IPV6, socket.IPV6_V6ONLY, 0)
+        except OSError:
+            pass
+        super().server_bind()
 
 
 MANIFEST = {
@@ -272,7 +270,7 @@ def main():
     for port in PORTS:
         url = f"http://127.0.0.1:{port}/"
         try:
-            server = ThreadingHTTPServer(("0.0.0.0", port), Handler)  # Mac + phones on the same Wi-Fi
+            server = DualStackServer(("::", port), Handler)  # Mac + phones on the same Wi-Fi
             break
         except OSError:
             if already_running(port):
