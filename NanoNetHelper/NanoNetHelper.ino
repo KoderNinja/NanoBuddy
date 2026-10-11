@@ -3,7 +3,7 @@
 // The boss (NanoChat, with the LCD) sends a text message over I2C and reads
 // back a text reply. Each helper has one job, picked by ROLE below:
 //
-//   ROLE 1  Brain    big chat model; tells the boss what a message means  (I2C 0x10)
+//   ROLE 1  Brain    mini GPT: writes replies the boss can't pick itself   (I2C 0x10)
 //   ROLE 2  Words    word inventor, trivia, morse, encyclopedia part C      (I2C 0x11)
 //   ROLE 3  Calc     NanoCalc math, unit converter, encyclopedia part B     (I2C 0x12)
 //   ROLE 4  Library  jokes, facts, riddles, survival tips, encyclopedia A   (I2C 0x13)
@@ -11,7 +11,7 @@
 // Wiring: every Nano's A4 together, A5 together, GND together (and 5V together
 // to power them all from one USB). The boss is the I2C master.
 //
-// Messages from the boss: "?text" (Brain), "do text" (handle it if it's yours,
+// Messages from the boss: "gen text" (Brain), "do text" (handle it if it's yours,
 // else reply nothing), "wiki question" (encyclopedia), "joke"/"fact"/"riddle".
 // You can also test a helper on its own: open Serial at 9600 and type a message
 // (Words and Calc treat a plain message like "do ...").

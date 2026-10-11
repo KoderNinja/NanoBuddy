@@ -135,7 +135,7 @@ NOINLINE bool askHelper(uint8_t addr, PGM_P prefix, const char *msg) {
     if (strlen(c) < 24) break;
   }
   uint8_t n = 0;
-  for (unsigned long start = millis(); millis() - start < 8000;) {  // the mini GPT needs a few seconds
+  for (unsigned long start = millis(); millis() - start < 12000;) {  // the mini GPT needs up to ~9 s
     uint8_t chunk[16];
     if (!i2cStart(addr << 1 | 1)) { i2cStop(); return false; }
     for (uint8_t i = 0; i < 16; i++) chunk[i] = i2cRead(i == 15);
@@ -903,8 +903,12 @@ void reply(char *s) {
   uint8_t k = classify(s, &conf);
   if (conf < MIN_CONFIDENCE) {
     if (bridgeOn && looksLikeQuestion(s)) askNet("lookup", s);
-    else if (askHelper(NET_BRAIN, PSTR("gen "), s) && isalpha(netReply[0])) out.println(netReply);  // the mini GPT writes one
-    else { face = FACE_WOW; say(R_UNKNOWN); }
+    else {
+      face = FACE_WOW;  // the mini GPT on the Brain writes a reply; it takes a few seconds
+      if (lcdAddr) { lcdRow(0, F("Thinking...")); lcdRow(1, F("")); }
+      if (askHelper(NET_BRAIN, PSTR("gen "), s) && isalpha(netReply[0])) { face = FACE_HAPPY; out.println(netReply); }
+      else say(R_UNKNOWN);
+    }
     return;
   }
 
