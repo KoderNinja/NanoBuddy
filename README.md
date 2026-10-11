@@ -70,7 +70,7 @@ arduino-cli compile -u -p /dev/cu.usbserial-XXXX -b arduino:avr:nano --build-pro
 
 - **No computer:** short press the button = next menu item on the LCD, hold = do it.
 - **Serial Monitor:** 9600 baud, type to chat. Type `help` for ideas.
-- **Phone:** with the app running, scan the QR code on the Mac's chat page with your phone (same Wi-Fi) to chat from the phone. For phone chat with no computer, run the app on a Raspberry Pi (it finds the Nano on Linux too), or add a BLE module such as an HM-10 to the Boss's RX/TX pins and use a BLE terminal app (iPhones can't talk to the Nano's USB chip directly).
+- **Phone app:** with the app running, scan the QR code on the Mac's chat page with your phone (same Wi-Fi). On an iPhone, tap **Share → Add to Home Screen** and NanoChat becomes an app with its own icon: full screen, the same faces, LCD and helper lights, and the chat is shared with the Mac (open it later and the conversation is still there). The link uses the Mac's `.local` name, so it keeps working when the Wi-Fi changes its address. For phone chat with no computer, run the app on a Raspberry Pi (it finds the Nano on Linux too), or add a BLE module such as an HM-10 to the Boss's RX/TX pins and use a BLE terminal app (iPhones can't talk to the Nano's USB chip directly).
 - **Mac app:** double-click `NanoChat.app` (keep it next to the `NanoChat` folder). It opens a chat page in your browser with a live copy of the LCD, shows which NanoNet helpers are online and which one answered, and gives the Nano internet access. Or run `python3 NanoChat/bridge.py` in Terminal. Both use only Python's standard library.
 
 ## Train your own

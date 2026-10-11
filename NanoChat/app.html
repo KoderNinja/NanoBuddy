@@ -2,8 +2,17 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>NanoChat</title>
+<!-- "Add to Home Screen" on a phone turns this page into a full-screen app -->
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="apple-touch-icon" href="/icon-180.png">
+<link rel="icon" href="/icon-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="NanoChat">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#1a1d26">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
 <style>
@@ -23,17 +32,18 @@
   }
   * { box-sizing: border-box; }
   html, body { height: 100%; margin: 0; }
+  body { height: 100dvh; overscroll-behavior: none; -webkit-tap-highlight-color: transparent; }
   body {
     background: var(--bg); color: var(--text);
     font: 15px/1.45 -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, sans-serif;
   }
-  .app { height: 100%; display: grid; grid-template-columns: 360px 1fr; max-width: 1100px; margin: 0 auto; }
+  .app { height: 100dvh; display: grid; grid-template-columns: 360px 1fr; max-width: 1100px; margin: 0 auto; }
 
   /* ---------- the "device": big face + virtual LCD ---------- */
   .device {
     background: var(--device); color: var(--device-text);
     display: flex; flex-direction: column; align-items: center; gap: 22px;
-    padding: 28px 22px; border-right: 1px solid var(--device-edge);
+    padding: 28px 22px; border-right: 1px solid var(--device-edge); overflow-y: auto;
   }
   .brand { align-self: stretch; display: flex; align-items: center; justify-content: space-between; }
   .brand h1 { margin: 0; font: 400 30px/1 var(--pixel); letter-spacing: 1px; color: #fff; }
@@ -135,9 +145,31 @@
   }
   button:disabled { opacity: .45; cursor: default; }
 
+  .install {
+    display: none; margin: 0 16px 10px; padding: 10px 12px; border-radius: 12px; font-size: 13px;
+    background: var(--nano-bubble); border: 1px solid var(--line); color: var(--muted);
+  }
+  .install.show { display: flex; gap: 10px; align-items: center; }
+  .install b { color: var(--text); }
+  .install button { margin-left: auto; border: 0; background: none; color: var(--muted); font-size: 18px; padding: 0 4px; }
+
   @media (max-width: 760px) {
-    .app { grid-template-columns: 1fr; grid-template-rows: auto 1fr; }
-    .device { flex-direction: row; flex-wrap: wrap; justify-content: center; padding: 14px 16px; gap: 14px; }
+    .app { grid-template-columns: minmax(0, 1fr); grid-template-rows: auto minmax(0, 1fr); }
+    .phone { display: none !important; }  /* the QR code is for the Mac's screen */
+    .device {
+      flex-direction: row; flex-wrap: wrap; justify-content: center; gap: 12px;
+      padding: calc(10px + env(safe-area-inset-top)) calc(16px + env(safe-area-inset-right)) 12px calc(16px + env(safe-area-inset-left));
+      border-right: 0; border-bottom: 1px solid var(--device-edge);
+    }
+    .net { flex-basis: 100%; }
+    .net-title { display: none; }
+    .helpers { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 6px; }
+    .helper { padding: 5px 6px; font-size: 12px; justify-content: center; }
+    .helper small { display: none; }
+    .chips { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; }
+    .chips::-webkit-scrollbar { display: none; }
+    .chips button { flex: none; }
+    input { font-size: 16px; }  /* 16px stops iPhones zooming in when you tap the box */
     .brand { flex-basis: 100%; }
     .face-wrap { width: 92px; height: 112px; border-radius: 18px; }
     #bigFace { width: 56px; height: 90px; }
@@ -146,7 +178,7 @@
     .cell { height: 20px; font-size: 19px; line-height: 20px; }
     #log { padding: 16px; }
     .chips { padding: 0 16px 10px; }
-    form { padding: 12px 16px 16px; }
+    form { padding: 10px 16px calc(12px + env(safe-area-inset-bottom)); }
   }
 </style>
 </head>
@@ -178,6 +210,10 @@
 
   <main class="chat">
     <div id="log" aria-live="polite"></div>
+    <div class="install" id="install">
+      <span>📱 Make NanoChat an app: tap <b>Share</b>, then <b>Add to Home Screen</b>.</span>
+      <button type="button" id="installClose" aria-label="Hide">×</button>
+    </div>
     <div class="chips" id="chips"></div>
     <form id="form">
       <input id="input" maxlength="80" autocomplete="off" placeholder="Say something to NanoChat…" autofocus>
@@ -267,7 +303,7 @@
   }
 
   // ---------- NanoNet helpers: lit = plugged in, flashing = just answered ----------
-  const HELPERS = [["Brain", "understands you"], ["Words", "words, trivia"], ["Calc", "math, units"], ["Library", "facts, tips"]];
+  const HELPERS = [["Brain", "mini GPT"], ["Words", "words, trivia"], ["Calc", "math, units"], ["Library", "facts, tips"]];
   const helperEls = HELPERS.map(([name, job]) => {
     const el = document.createElement("div");
     el.className = "helper";
@@ -339,8 +375,7 @@
   async function say(text) {
     text = text.trim();
     if (!text || !online) return;
-    addRow("you", text);
-    input.value = "";
+    input.value = "";  // the app echoes it back as a "you" event, so every open phone/Mac shows it
     const r = await fetch("/send", { method: "POST", body: text });
     if (!r.ok) note("Couldn't reach the Nano. Is it plugged in?");
   }
@@ -356,10 +391,43 @@
     document.body.innerHTML = "<p style='margin:40vh auto;text-align:center;color:gray'>NanoChat stopped. You can close this tab.</p>";
   };
 
-  const events = new EventSource("/events");
-  events.onmessage = e => {
+  // Live messages from the app. Phones drop the connection when the app is in the
+  // background, so reconnect (and redraw the chat history) when it comes back.
+  let events = null;
+  function connect() {
+    if (events) events.close();
+    log.innerHTML = "";
+    pendingHelpers = [];
+    lastNano = null;
+    events = new EventSource("/events");
+    events.onmessage = onEvent;
+    events.onerror = () => { if (events.readyState === EventSource.CLOSED) setStatus("stopped"); else setStatus("connecting"); };
+  }
+  document.addEventListener("visibilitychange", () => {
+    if (document.visibilityState === "visible" && (!events || events.readyState !== EventSource.OPEN)) connect();
+  });
+
+  function tagHelpers(row) {  // tag a reply with the helpers that worked on it
+    if (!pendingHelpers.length) return;
+    const via = document.createElement("div");
+    via.className = "via";
+    via.innerHTML = pendingHelpers.map(i => `<span>via ${HELPERS[i][0]}</span>`).join("");
+    row.querySelector(".bubble").appendChild(via);
+    pendingHelpers = [];
+  }
+
+  function onEvent(e) {
     const ev = JSON.parse(e.data);
+    if (ev.old) {  // history from before this page opened: just redraw the chat
+      if (ev.kind === "you") addRow("you", ev.text);
+      else if (ev.kind === "nano") { lastNano = addRow("nano", ev.text); tagHelpers(lastNano); }
+      else if (ev.kind === "helper" && !pendingHelpers.includes(+ev.text)) pendingHelpers.push(+ev.text);
+      else if (ev.kind === "learned") onEvent({ data: JSON.stringify({ kind: "learned", text: ev.text }) });
+      else if (ev.kind === "face" && lastNano) lastNano.querySelector(".avatar").innerHTML = svg(FACES[Math.min(+ev.text, FACES.length - 1)]);
+      return;
+    }
     if (ev.kind === "status") setStatus(ev.text);
+    else if (ev.kind === "you") addRow("you", ev.text);
     else if (ev.kind === "thinking") {
       stopTyping();
       typing = addRow("nano", "");
@@ -378,13 +446,7 @@
     } else if (ev.kind === "nano") {
       stopTyping();
       lastNano = addRow("nano", ev.text);
-      if (pendingHelpers.length) {  // tag the reply with the helpers that worked on it
-        const via = document.createElement("div");
-        via.className = "via";
-        via.innerHTML = pendingHelpers.map(i => `<span>via ${HELPERS[i][0]}</span>`).join("");
-        lastNano.querySelector(".bubble").appendChild(via);
-        pendingHelpers = [];
-      }
+      tagHelpers(lastNano);
       lcdShow(ev.text, 0);
     } else if (ev.kind === "face") {
       const f = Math.min(+ev.text, FACES.length - 1);
@@ -393,8 +455,19 @@
       lcdFace = f;
       if (lcdPos !== 0 || lcdText) { lcdPos = 0; lcdPage(); }
     }
+  }
+  connect();
+
+  // On an iPhone/iPad in Safari (not yet installed), suggest adding it to the home screen.
+  const standalone = navigator.standalone || matchMedia("(display-mode: standalone)").matches;
+  let hideInstall = false;
+  try { hideInstall = localStorage.getItem("nanochat-install-hidden") === "1"; } catch (e) {}
+  if (/iPhone|iPad|iPod/.test(navigator.userAgent) && !standalone && !hideInstall)
+    document.getElementById("install").classList.add("show");
+  document.getElementById("installClose").onclick = () => {
+    document.getElementById("install").classList.remove("show");
+    try { localStorage.setItem("nanochat-install-hidden", "1"); } catch (e) {}
   };
-  events.onerror = () => setStatus("stopped");
 
   showFace(0, "hello!");
   lcdRaw("Waiting for", "the Nano...");

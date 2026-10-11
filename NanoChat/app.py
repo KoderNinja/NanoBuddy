@@ -6,16 +6,20 @@ http://127.0.0.1:8777, and to phones on the same Wi-Fi (scan the QR code on the
 page). Unplugging and replugging the Nano is fine; it reconnects.
 Standard library only.
 """
+import collections
 import glob
 import json
 import os
 import queue
 import socket
+import struct
+import subprocess
 import sys
 import threading
 import time
 import urllib.request
 import webbrowser
+import zlib
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -33,9 +37,12 @@ class Nano:
         self.status = "searching"
         self.network = ""  # last "@N" report, e.g. "1111", for pages that open later
         self.pages = []  # one event queue per open chat page
+        self.history = collections.deque(maxlen=120)  # recent chat, replayed to pages that open later
         threading.Thread(target=self.run, daemon=True).start()
 
     def emit(self, kind, text=""):
+        if kind in ("you", "nano", "face", "helper", "learned"):
+            self.history.append({"kind": kind, "text": text})
         for q in list(self.pages):
             q.put({"kind": kind, "text": text})
 
@@ -47,6 +54,7 @@ class Nano:
         if self.fd is None or self.status != "online":
             return False
         os.write(self.fd, (text + "\n").encode())
+        self.emit("you", text)  # every open page (Mac and phones) shows the message
         return True
 
     def run(self):
@@ -135,6 +143,13 @@ class Handler(BaseHTTPRequestHandler):
         if self.path == "/":
             with open(os.path.join(HERE, "app.html"), "rb") as f:
                 self.reply(200, f.read(), "text/html; charset=utf-8")
+        elif self.path == "/manifest.webmanifest":  # lets phones install it as an app
+            self.reply(200, json.dumps(MANIFEST).encode(), "application/manifest+json")
+        elif self.path.startswith("/icon-") and self.path.endswith(".png"):
+            size = self.path[6:-4]
+            if size not in ("180", "192", "512"):
+                return self.reply(404)
+            self.reply(200, icon_png(int(size)), "image/png")
         elif self.path == "/phone":  # the address a phone on the same Wi-Fi can open
             self.reply(200, lan_url().encode())
         elif self.path == "/nanochat":  # lets a second launch find this one
@@ -165,6 +180,8 @@ class Handler(BaseHTTPRequestHandler):
         self.send_header("Cache-Control", "no-cache")
         self.end_headers()
         q = queue.Queue()
+        for event in list(nano.history):
+            q.put(dict(event, old=True))
         q.put({"kind": "status", "text": nano.status})
         if nano.network:
             q.put({"kind": "network", "text": nano.network})
@@ -184,13 +201,59 @@ class Handler(BaseHTTPRequestHandler):
 
 
 def lan_url():
-    """This Mac's address on the local network, e.g. http://192.168.1.20:8777/ ("" if offline)."""
+    """An address phones on the same Wi-Fi can open, e.g. http://MacBook-Air.local:8777/ ("" if offline).
+
+    The .local name keeps working when the Wi-Fi gives the Mac a new IP address,
+    so a NanoChat icon saved on a phone's home screen doesn't break."""
     try:
         with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as s:
             s.connect(("192.168.0.1", 9))  # picks the Wi-Fi interface; nothing is sent
-            return f"http://{s.getsockname()[0]}:{SERVER_PORT}/"
+            ip = s.getsockname()[0]
     except OSError:
         return ""
+    host = ""
+    try:
+        if sys.platform == "darwin":
+            host = subprocess.run(["scutil", "--get", "LocalHostName"], capture_output=True, text=True,
+                                  timeout=2).stdout.strip()
+        else:
+            host = socket.gethostname().split(".")[0]  # Raspberry Pi OS answers to <name>.local
+    except (OSError, subprocess.SubprocessError):
+        pass
+    return f"http://{host + '.local' if host else ip}:{SERVER_PORT}/"
+
+
+MANIFEST = {
+    "name": "NanoChat", "short_name": "NanoChat", "start_url": "/", "display": "standalone",
+    "background_color": "#1a1d26", "theme_color": "#1a1d26",
+    "icons": [{"src": f"/icon-{n}.png", "sizes": f"{n}x{n}", "type": "image/png"} for n in (192, 512)],
+}
+
+
+def icon_png(size):
+    """The app icon: NanoChat's happy LCD face on blue, as a PNG (no image files needed)."""
+    face = [0x00, 0x0A, 0x0A, 0x00, 0x11, 0x0E, 0x00, 0x00]
+    cell = size // 12
+    x0, y0 = (size - 5 * cell) // 2, (size - 8 * cell) // 2
+    rows = []
+    for y in range(size):
+        row = bytearray(b"\0")  # PNG filter: none
+        for x in range(size):
+            t = (x + y) / (2 * size)  # soft diagonal gradient
+            r, g, b = int(0x1f + 20 * (1 - t)), int(0x46 + 20 * (1 - t)), int(0xe0 - 40 * t)
+            cx, cy = (x - x0) // cell, (y - y0) // cell
+            if 0 <= cx < 5 and 0 <= cy < 8 and x >= x0 and y >= y0:
+                inset = cell // 8  # small gaps between pixels, like a real LCD
+                on = face[cy] >> (4 - cx) & 1
+                if (x - x0) % cell >= inset and (y - y0) % cell >= inset:
+                    r, g, b = (0xee, 0xf4, 0xff) if on else (r + 8, g + 8, min(255, b + 10))
+            row += bytes((r, g, b))
+        rows.append(bytes(row))
+
+    def chunk(kind, data):
+        return struct.pack(">I", len(data)) + kind + data + struct.pack(">I", zlib.crc32(kind + data))
+    return (b"\x89PNG\r\n\x1a\n" + chunk(b"IHDR", struct.pack(">IIBBBBB", size, size, 8, 2, 0, 0, 0)) +
+            chunk(b"IDAT", zlib.compress(b"".join(rows), 9)) + chunk(b"IEND", b""))
 
 
 SERVER_PORT = 0
