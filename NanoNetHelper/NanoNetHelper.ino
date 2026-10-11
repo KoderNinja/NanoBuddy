@@ -4,14 +4,17 @@
 // back a text reply. Each helper has one job, picked by ROLE below:
 //
 //   ROLE 1  Brain    big chat model; tells the boss what a message means  (I2C 0x10)
-//   ROLE 2  Words    NanoBrain's word and name inventor                     (I2C 0x11)
-//   ROLE 3  Calc     NanoCalc: math with variables                          (I2C 0x12)
-//   ROLE 4  Library  hundreds of jokes, facts and riddles                   (I2C 0x13)
+//   ROLE 2  Words    word inventor, trivia, morse, encyclopedia part C      (I2C 0x11)
+//   ROLE 3  Calc     NanoCalc math, unit converter, encyclopedia part B     (I2C 0x12)
+//   ROLE 4  Library  jokes, facts, riddles, survival tips, encyclopedia A   (I2C 0x13)
 //
 // Wiring: every Nano's A4 together, A5 together, GND together (and 5V together
 // to power them all from one USB). The boss is the I2C master.
 //
-// You can also test a helper on its own: open Serial at 9600 and type a message.
+// Messages from the boss: "?text" (Brain), "do text" (handle it if it's yours,
+// else reply nothing), "wiki question" (encyclopedia), "joke"/"fact"/"riddle".
+// You can also test a helper on its own: open Serial at 9600 and type a message
+// (Words and Calc treat a plain message like "do ...").
 
 #ifndef ROLE
 #define ROLE 1  // change this before uploading to each helper
@@ -21,8 +24,8 @@
 #include <avr/pgmspace.h>
 
 const uint8_t ADDR = 0x10 + ROLE - 1;
-const uint8_t MSG_LEN = 80;
-const uint8_t BOX_LEN = 160;
+const uint8_t MSG_LEN = 90;   // boss message (80) plus a short prefix like "wiki "
+const uint8_t BOX_LEN = 240;
 const uint8_t CHUNK = 16;  // bytes per I2C read; must match the boss
 
 // Replies are printed into this box, then the boss reads it out in chunks.

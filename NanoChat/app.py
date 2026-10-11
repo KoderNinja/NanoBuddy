@@ -86,6 +86,10 @@ class Nano:
                 if text.startswith("@NET "):
                     self.emit("thinking")
                     threading.Thread(target=self.net_reply, args=(text[5:],), daemon=True).start()
+                elif text.startswith("@N") and text[2:].isdigit():
+                    self.emit("network", text[2:])  # which helpers are plugged in, e.g. "1011"
+                elif text.startswith("@H") and text[2:].isdigit():
+                    self.emit("helper", text[2:])  # a helper answered the next reply
                 elif text.startswith("@F") and text[2:].isdigit():
                     self.emit("face", text[2:])  # mood of the reply just sent
                 elif "@OK" in text:

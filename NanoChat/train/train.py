@@ -19,6 +19,8 @@ LR = float(ENV.get("LR", 0.05))
 DROP = float(ENV.get("DROP", 0.15))  # randomly drop words during training so it copes with new phrasing
 WD = float(ENV.get("WD", 0))         # weight decay on the first layer (keeps it from over-trusting one word)
 SMOOTH = float(ENV.get("SMOOTH", 0))  # label smoothing: aim for less than 100% confidence
+FILL = float(ENV.get("FILL", 0))      # chance of adding a filler word ("hey", "nano"...) to an example
+FILLERS = "hey nano please um ok so hi yo uh well like plz pls".split()
 BIGRAMS = __import__("os").environ.get("BI", "1") == "1"
 
 
@@ -79,6 +81,9 @@ def fit(data, K, log=print):
         loss = correct = 0
         for words, y in data:
             kept = [w for w in words if random.random() > DROP] or words
+            if FILL and random.random() < FILL:  # teach it to ignore chit-chat words
+                f = random.choice(FILLERS)
+                kept = [f] + kept if random.random() < 0.5 else kept + [f]
             feats = features(kept)
             h, p = forward(feats)
             loss -= math.log(p[y] + 1e-12)

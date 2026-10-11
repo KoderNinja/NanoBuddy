@@ -2,6 +2,18 @@
 # "# name" starts an intent; each following line is an example message.
 
 # greet
+greetings human
+hello there nano bot
+hi robot friend
+hey whats cracking
+good to see you again
+hello my robot
+hey you there
+oh hey nano
+hello world
+morning sunshine
+hi hi hi
+heyyy
 hi again nano
 hey friend
 hi buddy
@@ -112,6 +124,16 @@ yo whats up
 hey whats happening today
 
 # bye
+i gotta jet
+catch you around
+bye see you soon
+im leaving bye
+im signing out
+see you after school
+bye robot
+adios
+cya later
+i will talk to you tomorrow
 goodbye nano
 i have to leave
 i must go
@@ -215,6 +237,17 @@ bye for now nano
 alright see you later
 
 # how_are_you
+how are you feeling nano
+whats up with you today
+hows your battery
+are you feeling good today
+how was your day
+hows your brain doing
+are you happy today
+how are you today robot
+doing alright nano
+how is your circuit board
+are you tired
 how is everything nano
 how is everything going for you
 hows it going for you
@@ -303,6 +336,15 @@ are you having a good day
 how are you feeling
 
 # who_are_you
+what kind of creature are you
+are you a toy
+are you a program on a chip
+whats a nanochat
+are you a person or a robot
+are you a computer brain
+are you siri
+are you alexa
+what exactly is this
 are you some kind of robot
 what sort of robot are you
 what kind of robot are you
@@ -388,6 +430,17 @@ tell me what you are
 are you alive like me
 
 # creator
+who is your owner
+who soldered you
+who flashed you
+who uploaded your code
+who wrote your code
+who built your brain
+who gave you a brain
+who designed nanochat
+who put the code in you
+who made your program
+who assembled this robot
 who is the person who made you
 who is the guy who built you
 which person made you
@@ -472,6 +525,17 @@ who developed nanochat
 how did your creator make you
 
 # help
+what do i say
+what are you for
+what can you help me do
+show help
+help menu
+list of commands
+what can you tell me
+what are some things to try
+i dont know what to ask
+give me something to try
+what do you understand
 what stuff can you do
 what are you able to do
 help please
@@ -557,6 +621,18 @@ what should i type
 help me use nanochat
 
 # joke
+say something to make me laugh
+tell me a knock knock joke
+i want a funny joke
+tell me a pun nano
+joke time
+give me a silly joke
+make a funny joke
+tell me your best joke
+got any funny jokes
+can you be funny
+crack me up
+a dad joke please
 a joke please
 tell me a robot joke
 joke about computers
@@ -648,6 +724,15 @@ another funny one
 make a joke for me
 
 # fact
+give me an animal fact
+tell me a space fact
+teach me something about animals
+say a fun fact
+a cool fact please
+tell me something smart nano
+teach me a cool thing
+what is a fun fact you know
+tell me facts
 tell me one interesting thing
 share a cool fact
 teach me something new
@@ -736,6 +821,16 @@ give me one piece of trivia
 i like learning facts
 
 # thanks
+thank you robot
+thanks for that nano
+ok thank you
+great thank you nano
+thanks dude
+thank you buddy
+thank you for answering
+thanks for telling me
+merci
+gracias nano
 thanks for the help nano
 thanks for your help
 thank you so much nano
@@ -818,6 +913,16 @@ thanks a million
 ok cool thank you
 
 # compliment
+you are so smart nano
+you are really clever robot
+you are amazing robot
+nice going nano
+great work
+you are the smartest robot
+wow you are smart
+you did good
+you are a cool robot
+you are so helpful
 you are super cool
 you are super clever
 you are very smart
@@ -918,6 +1023,16 @@ well done nanochat
 you are not bad at this
 
 # insult
+you are the dumbest
+you are a dumb bot
+you are so useless
+bad nano
+you are rubbish
+you are trash
+worst robot
+you are a stupid machine
+you know nothing
+you are an idiot robot
 you are a bad robot
 you are a stupid robot
 you are a dumb robot
@@ -1019,6 +1134,15 @@ you answered badly
 you are not making sense
 
 # ask_user_name
+do you know me nano
+whats my name robot
+who am i to you nano
+do you know what im called
+what do you know about me
+tell me who i am
+what is my name robot
+do you remember me nano
+do you know who is talking
 do you remember my name nano
 what am i called nano
 what did i tell you my name is
@@ -1094,6 +1218,15 @@ can you remember me
 who am i to you
 
 # time
+what time is it please
+current time please
+what is the time
+what time is it currently
+is it daytime
+is it bedtime yet
+what time is it now nano
+the current time
+time please nano
 what time is it now
 time right now
 tell me the current time nano
@@ -1186,6 +1319,17 @@ how long have you been online
 check the time
 
 # weather
+whats the weather today
+whats the weather like today
+is it raining today
+is it snowing outside
+how hot is it today
+how cold is it today
+what is the forecast
+weather report
+is it sunny today
+will it be windy
+is there a storm today
 will it rain later
 is rain coming
 will it be rainy
@@ -1270,6 +1414,16 @@ is it raining outside right now
 can you check the weather
 
 # sad
+i am sad today
+i feel sad nano
+im feeling sad
+i feel so lonely
+i had the worst day
+i feel like crying
+i am upset today
+i lost my toy
+my friend was mean to me
+i am really down
 so lonely
 i am lonely
 i feel alone
@@ -1374,6 +1528,15 @@ i feel stressed out
 i just feel bad today
 
 # happy
+i am super happy
+im so happy today
+im really excited
+i got an a on my test
+i feel so good
+yay i won
+this is the best day
+im in a great mood today
+i am so excited today
 im really happy
 i feel really happy today
 so happy
@@ -1481,6 +1644,13 @@ i am feeling terrific
 i am doing pretty well
 
 # bored
+im super bored
+there is nothing to do here
+i have nothing to do today
+what can i do im bored
+bored nano
+so bored right now
+entertain me robot
 i am so bored today
 im really bored today
 today is boring
@@ -1577,6 +1747,12 @@ what can i do right now
 im looking for something fun
 
 # coin
+coin flip please nano
+flip the coin please
+do a coin flip please
+give me heads or tails
+flip a coin robot
+heads tails please
 flip a coin for me please
 flip a coin now
 flip a coin nano please
@@ -1648,6 +1824,17 @@ call a coin toss
 decide with a coin
 
 # dice
+roll a die nano
+roll the dice please
+roll a dice please
+throw a dice
+roll one die please
+roll dice for me
+dice roll nano
+give me a random roll
+roll a die robot
+can you roll the dice
+roll it for me
 roll a die please nano
 can you roll a die
 roll the die for me
@@ -1734,6 +1921,17 @@ random dice please
 roll a six sided dice
 
 # eightball
+will i get a puppy
+will i be famous one day
+should i go to the park
+is my team going to win
+will it be a good day
+am i going to be lucky
+will i pass my math test
+should i play outside
+will my wish come true nano
+is it a yes or no
+magic ball tell me
 will i do good
 will i win today
 will i pass my exam
@@ -1830,6 +2028,13 @@ will i be lucky today
 predict what happens next
 
 # age
+what age are you robot
+when were you born robot
+are you a baby robot
+when did you get turned on
+how old are you really
+when is your birthday robot
+are you new nano
 how old is nano
 nano how old are you
 what age is nano
@@ -1915,6 +2120,16 @@ how long ago were you programmed
 do you celebrate a birthday
 
 # favorite
+what is your favorite color nano
+what is your favorite food nano
+whats your favorite game
+do you have a favorite animal
+what is your favorite song nano
+what do you like to do
+whats your favorite thing
+which food do you like
+do you like robots
+what is your favorite number nano
 what color is your favorite
 which color is best
 favorite color please
@@ -1994,6 +2209,15 @@ what is your favorite animal
 which game do you like best
 what kind of music do you like
 # love
+i like you robot
+you are my best friend robot
+you are so cute nano
+i really love you nano
+youre my favorite robot
+i care about you nano
+you are sweet nano
+i love you so much robot
+will you be my friend
 i love you a lot
 i like you so much
 love you lots
@@ -2091,6 +2315,16 @@ do you like having friends
 will you always be my friend
 
 # riddle
+tell me a riddle robot
+i want a riddle nano
+do you have any riddles
+ask me a riddle robot
+a riddle for me
+another riddle please
+give me a brain teaser nano
+riddle me robot
+i love riddles nano
+can i have a riddle
 can you tell me a riddle nano
 give me a riddle please
 i want to hear a riddle
@@ -2179,6 +2413,15 @@ ask me a puzzle
 i want a brain teaser
 
 # lookup
+who is the president of the usa
+what is the biggest planet
+who was the first man on the moon
+what is photosynthesis
+where is australia
+who wrote romeo and juliet
+what is a volcano made of
+tell me about elephants
+who painted starry night
 who is barack obama
 who was martin luther king
 what is the eiffel tower
@@ -2293,6 +2536,17 @@ what is a black hole
 who is albert einstein
 
 # news
+whats the news nano
+tell me todays headlines
+what happened in the news today
+news update please
+read me the news nano
+what are the headlines
+any big news today
+give me the news
+top news please
+latest headlines
+what is in the news
 the news please
 what is in the news today
 what are the top stories
@@ -2348,6 +2602,18 @@ what is the latest news
 news of the day
 
 # convert
+how many feet in a yard
+how many cm in a foot
+convert 3 miles to km
+how many grams in a kilogram
+convert 10 pounds to kg
+how many ounces in a gallon
+how many liters in 2 gallons
+convert 100 cm to inches
+how many seconds in an hour
+how many minutes in a day
+convert 5 kg to pounds
+how many inches in 2 feet
 how many ounces are in a cup
 convert 3 feet into meters
 how many centimeters are in a meter
@@ -2405,6 +2671,18 @@ how long is 3 meters in feet
 how many liters in a gallon
 
 # translate
+translate hi to spanish
+how do you say cat in french
+translate dog to german
+what is hello in italian
+say thank you in french
+how do i say goodbye in spanish
+translate friend to spanish
+how do you say water in french
+translate love to italian
+what is yes in spanish
+translate apple to french
+how do you say good morning in german
 how do you say hi in french
 translate hello into german
 what is the word for cat in spanish
@@ -2462,6 +2740,18 @@ what is love in italian
 translate chicken to spanish
 
 # timer
+set a timer for 3 minutes
+timer for 10 minutes please
+start a 5 minute timer
+countdown from 30 seconds
+set a 1 minute timer
+remind me in 10 minutes
+timer 2 minutes
+set an alarm for 5 minutes
+start a timer nano
+count down 1 minute
+time 3 minutes
+make a 10 minute timer
 set a timer please
 start a countdown please
 countdown for 30 seconds
@@ -2517,6 +2807,16 @@ start the timer
 timer 15 minutes
 
 # fun_fact
+give me a random fact nano
+random fact please
+weird fact nano
+fun fact from the internet please
+tell me a crazy random fact
+get a random fact
+random fun fact
+a weird fact please
+strange fact please
+random internet fact
 weird random fact
 fun fact from online please
 strange fact

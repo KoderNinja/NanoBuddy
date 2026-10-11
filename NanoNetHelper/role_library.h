@@ -2,8 +2,9 @@
 // tips, all kept in flash so the boss doesn't have to fit them.
 // Messages: "joke", "fact", "riddle", "survival tip", "wiki <question>".
 // Entries are separated by '|'. Add your own; keep each under ~150 characters.
-// wiki_data.h is made by make_wiki.py; survival_data.h is written by hand.
-#include "wiki_data.h"
+// wiki_a.h (part of the encyclopedia) is made by make_wiki.py; survival_data.h is written by hand.
+#include "wiki_lookup.h"
+#include "wiki_a.h"
 #include "survival_data.h"
 
 #define ROLE_NAME F("Library")
@@ -174,34 +175,6 @@ void pick(PGM_P list, Print &out) {
   for (char ch; (ch = pgm_read_byte(c)) && ch != '|'; c++) out.print(ch);
 }
 
-// Find the entry whose key appears in msg (whole words; longest key wins) and print
-// its text. Returns false if no key matches.
-bool lookup(PGM_P list, const char *msg, Print &out) {
-  PGM_P best = nullptr;
-  uint8_t bestLen = 0;
-  PGM_P e = list;
-  while (pgm_read_byte(e)) {
-    PGM_P text = e;
-    while (pgm_read_byte(text) != ':') text++;  // keys end at ':'
-    for (PGM_P k = e; k < text;) {
-      char key[32];
-      uint8_t n = 0;
-      while (k < text && pgm_read_byte(k) != ',' && n < 31) key[n++] = pgm_read_byte(k++);
-      key[n] = '\0';
-      k++;
-      for (const char *hit = strstr(msg, key); hit; hit = strstr(hit + 1, key)) {
-        bool whole = (hit == msg || !isalnum(hit[-1])) && !isalnum(hit[n]);
-        if (whole && n > bestLen) { best = text + 1; bestLen = n; }
-      }
-    }
-    while (pgm_read_byte(e) && pgm_read_byte(e) != '|') e++;  // next entry
-    if (pgm_read_byte(e)) e++;
-  }
-  if (!best) return false;
-  for (char c; (c = pgm_read_byte(best)) && c != '|'; best++) out.print(c);
-  return true;
-}
-
 // Like pick(), but skips the "keys:" part of each entry.
 void pickTip(Print &out) {
   uint8_t count = 1;
@@ -212,20 +185,24 @@ void pickTip(Print &out) {
   for (char ch; (ch = pgm_read_byte(++c)) && ch != '|';) out.print(ch);
 }
 
+// Boss messages: "wiki <question>", "do <message>" (answer only safety questions),
+// or "joke" / "fact" / "riddle". An empty reply means "not mine".
 void handle(char *msg, Print &out) {
   for (char *c = msg; *c; c++) *c = tolower(*c);
+  if (!strncmp(msg, "wiki ", 5)) {
+    if (!lookup(WIKI_A, msg + 5, out)) lookup(SURVIVAL, msg + 5, out);
+    return;
+  }
+  if (!strncmp(msg, "do ", 3)) msg += 3;
   bool safety = strstr(msg, "surviv") || strstr(msg, "safe") || strstr(msg, "tip") ||
                 strstr(msg, "what do i do") || strstr(msg, "what should i do") || strstr(msg, "first aid") ||
                 strstr(msg, "how do i") || strstr(msg, "emergency");
-  if (!strncmp(msg, "wiki ", 5) || safety) {
-    // Safety questions check the tips first ("earthquake tip"), others the encyclopedia.
-    if (safety ? lookup(SURVIVAL, msg, out) || lookup(WIKI, msg, out)
-               : lookup(WIKI, msg, out) || lookup(SURVIVAL, msg, out)) return;
+  if (safety) {
+    if (lookup(SURVIVAL, msg, out)) return;
     if (strstr(msg, "surviv") || strstr(msg, "tip")) pickTip(out);  // "survival tip": a random one
-    return;  // nothing found: empty reply, so the boss says it needs the internet
+    return;
   }
-  if (strstr(msg, "riddle") || strstr(msg, "puzzle")) pick(RIDDLES, out);
-  else if (strstr(msg, "fact")) pick(FACTS, out);
-  else if (strstr(msg, "joke")) pick(JOKES, out);
-  // anything else: empty reply, so the boss handles it itself
+  if (!strcmp(msg, "riddle")) pick(RIDDLES, out);
+  else if (!strcmp(msg, "fact")) pick(FACTS, out);
+  else if (!strcmp(msg, "joke")) pick(JOKES, out);
 }

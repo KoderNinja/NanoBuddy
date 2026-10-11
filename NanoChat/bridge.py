@@ -248,8 +248,8 @@ def main():
                 if text.startswith("@NET "):
                     print("(looking it up...)", flush=True)
                     threading.Thread(target=net_reply, args=(text[5:],), daemon=True).start()
-                elif text.startswith("@F"):
-                    pass  # face code for the app's screen
+                elif text.startswith(("@F", "@N", "@H")):
+                    pass  # face / network codes for the app
                 elif "@OK" in text:
                     ready = True
                     print("NanoChat online with internet. Type to chat, Ctrl+C to quit.", flush=True)

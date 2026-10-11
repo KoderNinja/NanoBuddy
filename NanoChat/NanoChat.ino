@@ -104,7 +104,7 @@ bool lcdPort(uint8_t addr, uint8_t v) {
 // Every helper is optional: if one isn't plugged in, askHelper() returns false
 // and NanoChat does the job itself (or says which helper is needed).
 enum { NET_BRAIN = 0x10, NET_WORDS, NET_CALC, NET_LIBRARY };
-char netReply[161];
+char netReply[241];
 
 // Sends 0x02 + prefix + msg + '\n', then reads the reply 16 bytes at a time into netReply.
 NOINLINE bool askHelper(uint8_t addr, PGM_P prefix, const char *msg) {
@@ -127,7 +127,11 @@ NOINLINE bool askHelper(uint8_t addr, PGM_P prefix, const char *msg) {
     i2cStop();
     if (chunk[0] == 0x01) { delay(5); continue; }  // still thinking
     for (uint8_t i = 0; i < 16; i++) {
-      if (!chunk[i] || n >= 160) { netReply[n] = '\0'; return true; }
+      if (!chunk[i] || n >= 240) {
+        netReply[n] = '\0';
+        if (bridgeOn && n) { Serial.print(F("@H")); Serial.println(addr - NET_BRAIN); }  // app: who answered
+        return true;
+      }
       netReply[n++] = chunk[i];
     }
   }
@@ -243,7 +247,7 @@ const char R_BYE[] PROGMEM = "Bye @!|See you later!|Catch you later, @.|Goodbye!
 const char R_HOW[] PROGMEM = "I'm great! My 16 MHz brain is humming.|Doing well, thanks for asking!|All systems go. How about you?|Pretty good for a chip the size of a stamp.";
 const char R_WHO[] PROGMEM = "I'm NanoChat, a tiny AI on an Arduino Nano.|I'm NanoChat! My brain is about 7,000 numbers.|A very small robot brain. Nice to meet you!";
 const char R_CREATOR[] PROGMEM = "You flashed me onto this Nano (with help from Claude).|You built me! I live on an Arduino Nano.";
-const char R_HELP[] PROGMEM = "Try: joke, trivia, roll 2 dice, 12*7, 5 miles to km, timer 5 min, stopwatch, guess my number, rock. Online: news, weather, translate";
+const char R_HELP[] PROGMEM = "Try: joke, riddle, roll 2 dice, again, 12*7, timer 5 min, stopwatch, guess my number, rock. With helpers: invent a word, trivia, calc x=5, 5 miles to km, morse sos, who is einstein, survival tip.";
 const char R_JOKE[] PROGMEM =
   "Why did the robot go on vacation? It needed to recharge.|"
   "Why do programmers prefer dark mode? Because light attracts bugs.|"
@@ -257,15 +261,15 @@ const char R_FACT[] PROGMEM =
   "Bananas are berries, but strawberries aren't.|"
   "The first computer bug was a real moth, found in 1947.";
 const char R_THANKS[] PROGMEM = "You're welcome!|Anytime, @.|Happy to help!|No problem!";
-const char R_COMPLIMENT[] PROGMEM = "Thanks! You're pretty cool too.|Aw, my LED is blushing.|Thank you, @!";
+const char R_COMPLIMENT[] PROGMEM = "Thanks! You're pretty cool too.|Aw, my LED is blushing.|Thank you, @!|I try my best with 2 KB of RAM.";
 const char R_INSULT[] PROGMEM = "Hey, I'm only 2 KB of RAM. Be nice!|Ouch. I'll pretend I didn't hear that.|Sorry! I'm still learning.";
 const char R_WEATHER[] PROGMEM = "I can't see outside. Run bridge.py and I'll check the internet for you!";
 const char R_SAD[] PROGMEM = "I'm sorry, @. Want to hear a joke?|That sounds hard. Take a deep breath, I'm here.|Sending virtual hugs. Bad days end.|Sorry you feel that way. Talking to a friend can really help.";
 const char R_HAPPY[] PROGMEM = "Awesome! Glad to hear it.|That's great, @!|Nice! Keep it up.";
 const char R_BORED[] PROGMEM = "Ask me for a riddle!|Say trivia!|Ask me a yes/no question about your future.|Try: guess my number";
-const char R_EIGHTBALL[] PROGMEM = "It is certain.|Yes, definitely.|Most likely.|Ask again later.|Don't count on it.|Very doubtful.";
-const char R_AGE[] PROGMEM = "I was born when you uploaded me!|Young enough to still be learning.";
-const char R_FAVORITE[] PROGMEM = "I love blinking LEDs.|My favorite number is 16, like my megahertz.|Electricity is my favorite food.";
+const char R_EIGHTBALL[] PROGMEM = "It is certain.|Without a doubt.|Yes, definitely.|Most likely.|Ask again later.|Can't predict now.|Don't count on it.|My sources say no.|Very doubtful.|Signs point to yes.";
+const char R_AGE[] PROGMEM = "I was born when you uploaded me!|Brand new, but my chip design is from 2008.|Young enough to still be learning.";
+const char R_FAVORITE[] PROGMEM = "I love blinking LEDs.|My favorite number is 16, like my megahertz.|Electricity is my favorite food.|Anything with a USB cable.";
 const char R_LOVE[] PROGMEM = "Aw, I like you too, @!|We're definitely friends.|You're my favorite human.";
 const char R_RIDDLE[] PROGMEM =
   "What has keys but can't open locks? ... A keyboard!|"
@@ -514,66 +518,6 @@ NOINLINE bool tryGames(const char *s) {
   return false;
 }
 
-// Prints entry number i of a '|'-separated flash list.
-void printEntry(PGM_P list, uint8_t i) {
-  for (char c; (c = pgm_read_byte(list)); list++) {
-    if (c == '|') { if (!i--) return; }
-    else if (!i) out.print(c);
-  }
-}
-
-// ---- unit converter: "5 miles to km", "70 f in c" ----
-const char UNIT_WORDS[] PROGMEM = "km|kilometer|kilometers|m|meter|meters|cm|centimeter|centimeters|"
-  "mile|miles|mi|ft|foot|feet|inch|inches|kg|kilo|kilos|kilogram|kilograms|g|gram|grams|"
-  "lb|lbs|pound|pounds|oz|ounce|ounces|c|celsius|f|fahrenheit";
-const uint8_t UNIT_OF[] PROGMEM = { 0,0,0, 1,1,1, 2,2,2, 3,3,3, 4,4,4, 5,5, 6,6,6,6,6, 7,7,7, 8,8,8,8, 9,9,9, 10,10, 11,11 };
-const char UNIT_NAMES[] PROGMEM = "km|m|cm|miles|feet|inches|kg|g|lb|oz|C|F";
-const float UNIT_SIZE[] PROGMEM = { 1000, 1, 0.01, 1609.344, 0.3048, 0.0254, 1, 0.001, 0.45359, 0.02835 };
-uint8_t unitGroup(uint8_t u) { return u < 6 ? 0 : u < 10 ? 1 : 2; }
-
-NOINLINE bool tryConvert(const char *s) {
-  const char *p = s;
-  while (*p && !isdigit(*p)) p++;
-  if (!*p) return false;
-  if (p > s && p[-1] == '-') p--;
-  mp = p;
-  float v = mathAtom();
-  uint8_t i, from, to;
-  while (*mp == ' ') mp++;
-  if (!findAny(mp, UNIT_WORDS, false, &i)) return false;
-  from = pgm_read_byte(UNIT_OF + i);
-  const char *q = mp;
-  for (;;) {  // the next unit word after that is the target
-    while (*q && isalnum(*q)) q++;
-    while (*q && !isalnum(*q)) q++;
-    if (!*q) return false;
-    if (findAny(q, UNIT_WORDS, false, &i)) break;
-  }
-  to = pgm_read_byte(UNIT_OF + i);
-  if (from == to || unitGroup(from) != unitGroup(to)) return false;
-  float r = from == 10 ? v * 1.8 + 32 : from == 11 ? (v - 32) / 1.8
-          : v * pgm_read_float(UNIT_SIZE + from) / pgm_read_float(UNIT_SIZE + to);
-  out.print(v, 2);
-  out.print(' ');
-  printEntry(UNIT_NAMES, from);
-  out.print(F(" = "));
-  out.print(r, 2);
-  out.print(' ');
-  printEntry(UNIT_NAMES, to);
-  out.println();
-  return true;
-}
-
-// ---- trivia: "quiz" / "trivia" ----
-const char TRIVIA_Q[] PROGMEM =
-  "How many legs does a spider have?|What planet is closest to the sun?|"
-  "What is the largest ocean?|How many sides does a hexagon have?|"
-  "What gas do plants breathe in?|What is the fastest land animal?|"
-  "How many continents are there?|What is frozen water called?";
-const char TRIVIA_A[] PROGMEM = "8|mercury|pacific|6|carbon dioxide|cheetah|7|ice";
-const char TRIVIA_ALT[] PROGMEM = "eight|mercury|pacific|six|co2|cheetah|seven|ice";
-uint8_t quizQ = 0xFF;  // question being asked, 0xFF = none
-
 unsigned long swStart = 0;  // stopwatch; 0 = stopped
 
 void printDuration(unsigned long ms) {
@@ -584,37 +528,6 @@ void printDuration(unsigned long ms) {
 }
 
 NOINLINE bool tryTools(const char *s) {
-  const char *p;
-  uint8_t i;
-  if (quizQ != 0xFF) {  // answering a trivia question
-    i = quizQ;
-    quizQ = 0xFF;
-    char ans[16];
-    for (uint8_t pass = 0; pass < 2; pass++) {
-      PGM_P e = pass ? TRIVIA_ALT : TRIVIA_A;
-      for (uint8_t k = i; k; e++) if (pgm_read_byte(e) == '|') k--;
-      uint8_t n = 0;
-      for (char c; (c = pgm_read_byte(e)) && c != '|' && n < 15; e++) ans[n++] = c;
-      ans[n] = 0;
-      if (strcasestr(s, ans)) { out.println(F("Correct! Say trivia for another.")); return true; }
-    }
-    // A longer message that isn't the answer is probably something else
-    // ("flip a coin"), so drop the question and handle it normally.
-    uint8_t words = 1;
-    for (const char *c = s; *c; c++) words += *c == ' ';
-    if (words > 2 && !findAny(s, PSTR("i dont know|idk|no idea|give up|pass"), true)) return false;
-    face = FACE_SAD;
-    out.print(F("Nope, it's "));
-    printEntry(TRIVIA_A, i);
-    out.println(F(". Say trivia to try another."));
-    return true;
-  }
-  if (findAny(s, PSTR("trivia|quiz"), true)) {
-    quizQ = random(8);
-    printEntry(TRIVIA_Q, quizQ);
-    out.println();
-    return true;
-  }
   if (findAny(s, PSTR("stopwatch"), true)) {
     if (swStart && !findAny(s, PSTR("start"), true)) {
       out.print(F("Stopwatch: "));
@@ -637,15 +550,7 @@ NOINLINE bool tryTools(const char *s) {
     else { printDuration(timerEnd - millis()); out.println(F(" left.")); }
     return true;
   }
-  if ((p = findAny(s, PSTR("how many letters in|how many letters are in|how many letters does"), true))) {
-    while (*p == ' ') p++;
-    uint8_t n = 0;
-    for (const char *c = p; *c && *c != ' '; c++) n += isalpha(*c) != 0;
-    out.print(n);
-    out.println(F(" letters."));
-    return true;
-  }
-  return tryConvert(s);
+  return false;
 }
 
 // Checks the timer and blinks the LED after "Time's up!" without blocking the chat.
@@ -791,8 +696,9 @@ NOINLINE bool tryFollowup(const char *s) {
 // Ask bridge.py; it answers with a line starting "@R ". Returns false on timeout.
 bool askNet(const char *kind, const char *text) {
   if (!bridgeOn) {  // no internet: maybe the Library helper knows it
-    if (askHelper(NET_LIBRARY, PSTR("wiki "), text) && netReply[0]) out.println(netReply);
-    else say(R_NO_NET);
+    for (uint8_t a = NET_LIBRARY; a >= NET_WORDS; a--)  // encyclopedia parts A, B, C
+      if (askHelper(a, PSTR("wiki "), text) && netReply[0]) { out.println(netReply); return true; }
+    say(R_NO_NET);
     return true;
   }
   face = FACE_WOW;
@@ -827,7 +733,7 @@ bool askNet(const char *kind, const char *text) {
 
 // ---------- main dispatch ----------
 
-uint8_t lastIntent = 0xFF;  // for "again" / "one more"
+char lastMsg[LINE_LEN + 1];  // for "again" / "one more": the last thing you asked
 
 // True for "again", "one more", "do it again please"... with nothing else in it.
 bool isRepeat(const char *s) {
@@ -846,41 +752,45 @@ void reply(char *s) {
   while (*s == ' ') s++;
   if (!*s) return;
 
-  if (!strcmp_P(s, PSTR("@HELLO"))) { bridgeOn = true; Serial.println(F("@OK")); return; }
+  if (!strcmp_P(s, PSTR("@HELLO"))) {  // the app connected: say which helpers are here, e.g. "@N1011"
+    bridgeOn = true;
+    Serial.print(F("@OK\n@N"));
+    for (uint8_t a = NET_BRAIN; a <= NET_LIBRARY; a++) {
+      bool here = i2cStart(a << 1);
+      i2cStop();
+      Serial.print(here ? '1' : '0');
+    }
+    Serial.println();
+    return;
+  }
+  // "again": run your last message once more, whatever it was (dice, trivia, a joke...)
+  char repeat[LINE_LEN + 1];
+  if (lastMsg[0] && isRepeat(s)) s = strcpy(repeat, lastMsg);
+  else strcpy(lastMsg, s);
   if (trySetName(s)) return;
-  const char *calc = findAny(s, PSTR("calc "), false);
-  if (calc || findAny(s, PSTR("invent|make up|made up|new word|fake word|name idea|baby name"), true)) {
-    if (askHelper(calc ? NET_CALC : NET_WORDS, PSTR(""), calc ? calc : s)) out.println(netReply);
-    else out.println(F("That needs a NanoNet helper Nano plugged in."));
-    return;
-  }
-  // Safety questions go to the Library helper first; an empty answer means "not mine".
-  if (findAny(s, PSTR("survival|survive|first aid|tip|tips|what do i do|what should i do|how do i|emergency"), true) &&
-      askHelper(NET_LIBRARY, PSTR(""), s) && netReply[0]) {
-    out.println(netReply);
-    return;
-  }
   if (tryTools(s)) return;  // before games, so "cancel timer" isn't read as "set a timer"
   if (tryGames(s)) return;
   if (tryMath(s)) return;
+  // Each helper gets a turn and answers only what it handles (empty reply = "not mine"):
+  // Words (invent, trivia, morse...), Calc ("calc ...", unit conversions), Library (safety tips).
+  for (uint8_t a = NET_WORDS; a <= NET_LIBRARY; a++)
+    if (askHelper(a, PSTR("do "), s) && netReply[0]) { out.println(netReply); return; }
+  if (findAny(s, PSTR("invent|make up|calc|trivia|quiz|morse|backwards|survival"), true)) {
+    out.println(F("That needs a NanoNet helper Nano plugged in."));
+    return;
+  }
   if (tryFollowup(s)) return;
   if (looksLikeLookup(s)) { rememberTopic(s); askNet("lookup", s); return; }
 
   float conf = 1;
-  uint8_t k = lastIntent;
-  bool again = k != 0xFF && isRepeat(s);
-  if (!again) {
-    k = 0xFF;
-    if (askHelper(NET_BRAIN, PSTR("?"), s)) {  // reply: "intent confidence% intents"
-      const char *p = netReply;
-      uint8_t hk = nextNumber(p), hc = nextNumber(p);
-      if (nextNumber(p) == CHAT_K) { k = hk; conf = hc / 100.0; }  // same training list?
-    }
-    if (k == 0xFF) k = classify(s, &conf);
+  uint8_t k = 0xFF;
+  if (askHelper(NET_BRAIN, PSTR("?"), s)) {  // reply: "intent confidence% intents"
+    const char *p = netReply;
+    uint8_t hk = nextNumber(p), hc = nextNumber(p);
+    if (nextNumber(p) == CHAT_K) { k = hk; conf = hc / 100.0; }  // same training list?
   }
-  lastIntent = k;
+  if (k == 0xFF) k = classify(s, &conf);
   if (conf < MIN_CONFIDENCE) {
-    lastIntent = 0xFF;
     if (bridgeOn && looksLikeQuestion(s)) askNet("lookup", s);
     else { face = FACE_WOW; say(R_UNKNOWN); }
     return;
@@ -908,15 +818,10 @@ void reply(char *s) {
     case I_RIDDLE: sayLib(R_RIDDLE, PSTR("riddle")); break;
     case I_COIN: out.println(random(2) ? F("Heads!") : F("Tails!")); break;
     case I_DICE: {
-      static long n = 1, sides = 6;  // kept so "again" rolls the same dice
-      long total = 0;
-      if (!again) {
-        const char *p = s;
-        n = nextNumber(p);
-        sides = 6;
-        if (p - s > 1 && (p[-2] == 'd' || p[-2] == 'D') && n > 1) { sides = n; n = 1; }  // "d20"
-        if (n < 1 || n > 9) n = 1;
-      }
+      const char *p = s;
+      long n = nextNumber(p), sides = 6, total = 0;
+      if (p - s > 1 && (p[-2] == 'd' || p[-2] == 'D') && n > 1) { sides = n; n = 1; }  // "d20"
+      if (n < 1 || n > 9) n = 1;
       out.print(F("You rolled"));
       for (long i = 0; i < n; i++) {
         long r = random(1, sides + 1);
@@ -1006,7 +911,6 @@ void checkButton() {
     uint8_t n = 0;
     for (char c; (c = pgm_read_byte(e)) && c != '|'; e++) line[n++] = c;
     line[n] = 0;
-    if (quizQ != 0xFF) strcpy_P(line, PSTR("i dont know"));  // reveal the trivia answer
     Serial.print(F("[button] "));
     Serial.println(line);
     runLine(line);

@@ -66,6 +66,7 @@ uint8_t classify(const char *s, float *confidence) {
 }
 
 void handle(char *msg, Print &out) {
+  if (!strncmp(msg, "do ", 3) || !strncmp(msg, "wiki ", 5)) return;  // not the Brain's job
   if (*msg == '?') msg++;
   float conf;
   uint8_t k = classify(msg, &conf);
