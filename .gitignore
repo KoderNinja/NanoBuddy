@@ -6,3 +6,6 @@ build/
 *.elf
 *.hex
 .venv/
+MiniGPT/*.log
+MiniGPT/*.pt
+MiniGPT/corpus.txt
