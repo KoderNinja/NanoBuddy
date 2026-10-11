@@ -45,6 +45,13 @@ Wiring:
 
 **NanoNet:** connect every Nano's **A4** together, every **A5** together, and every **GND** together. Also join the **5V** pins so one USB cable powers them all. The Nano with the LCD runs NanoChat (the boss); the others run NanoNetHelper.
 
+## Just one Nano? Use Solo
+
+Uncomment `#define SOLO` near the top of `NanoChat/NanoChat.ino` before uploading. It drops the NanoNet code and uses the space for trivia (16 questions) and a bigger joke collection. Everything else (chat, faces, LCD, games, timer, button menu) works the same. With arduino-cli:
+```bash
+arduino-cli compile -u -p /dev/cu.usbserial-XXXX -b arduino:avr:nano --build-property "compiler.cpp.extra_flags=-DSOLO" NanoChat
+```
+
 ## Upload
 
 Install the [Arduino IDE](https://www.arduino.cc/en/software) (or `arduino-cli`), board **Arduino Nano**. If uploads fail with "not in sync", choose **Processor → ATmega328P (Old Bootloader)**.
@@ -62,6 +69,7 @@ arduino-cli compile -u -p /dev/cu.usbserial-XXXX -b arduino:avr:nano --build-pro
 
 - **No computer:** short press the button = next menu item on the LCD, hold = do it.
 - **Serial Monitor:** 9600 baud, type to chat. Type `help` for ideas.
+- **Phone:** with the app running, scan the QR code on the Mac's chat page with your phone (same Wi-Fi) to chat from the phone. For phone chat with no computer, run the app on a Raspberry Pi (it finds the Nano on Linux too), or add a BLE module such as an HM-10 to the Boss's RX/TX pins and use a BLE terminal app (iPhones can't talk to the Nano's USB chip directly).
 - **Mac app:** double-click `NanoChat.app` (keep it next to the `NanoChat` folder). It opens a chat page in your browser with a live copy of the LCD, shows which NanoNet helpers are online and which one answered, and gives the Nano internet access. Or run `python3 NanoChat/bridge.py` in Terminal. Both use only Python's standard library.
 
 ## Train your own

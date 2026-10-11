@@ -15,6 +15,10 @@
 #include <math.h>
 #include "chat_model.h"
 
+// Solo version: a single Nano with no helpers. Uncomment to drop the NanoNet code
+// and use the space for trivia and a bigger joke collection.
+// #define SOLO
+
 // Keep big helpers out of loop(): inlined, all their buffers would sit on the stack at once.
 #define NOINLINE __attribute__((noinline))
 
@@ -60,11 +64,18 @@ class Tee : public Print {
 
 // Bit-banged I2C on A4 (PC4) / A5 (PC5). Lines are open-drain: setting the
 // DDR bit pulls the line low, clearing it lets the backpack's pull-up win.
-void sdaLow(bool low) { if (low) DDRC |= _BV(4); else DDRC &= ~_BV(4); delayMicroseconds(4); }
+// Releasing a line also turns on the pin's built-in pull-up, so with no screen or helpers
+// attached the lines read "idle" instead of floating (which looks like a busy device).
+void sdaLow(bool low) {
+  if (low) { PORTC &= ~_BV(4); DDRC |= _BV(4); }
+  else { DDRC &= ~_BV(4); PORTC |= _BV(4); }
+  delayMicroseconds(4);
+}
 void sclLow(bool low) {
-  if (low) DDRC |= _BV(5);
+  if (low) { PORTC &= ~_BV(5); DDRC |= _BV(5); }
   else {  // let go of SCL; a busy helper Nano may hold it low for a moment ("clock stretching")
     DDRC &= ~_BV(5);
+    PORTC |= _BV(5);
     for (uint8_t t = 0; t < 250 && !(PINC & _BV(5)); t++) delayMicroseconds(10);
   }
   delayMicroseconds(4);
@@ -104,6 +115,10 @@ bool lcdPort(uint8_t addr, uint8_t v) {
 // Every helper is optional: if one isn't plugged in, askHelper() returns false
 // and NanoChat does the job itself (or says which helper is needed).
 enum { NET_BRAIN = 0x10, NET_WORDS, NET_CALC, NET_LIBRARY };
+#ifdef SOLO
+char netReply[1];
+inline bool askHelper(uint8_t, PGM_P, const char *) { return false; }  // no helpers: all that code drops out
+#else
 char netReply[241];
 
 // Sends 0x02 + prefix + msg + '\n', then reads the reply 16 bytes at a time into netReply.
@@ -137,6 +152,7 @@ NOINLINE bool askHelper(uint8_t addr, PGM_P prefix, const char *msg) {
   }
   return false;
 }
+#endif
 
 // Joke/fact/riddle from the Library helper, or NanoChat's own few.
 void sayLib(const char *opts, PGM_P kind) {
@@ -160,7 +176,8 @@ uint8_t face = FACE_HAPPY;
 unsigned long replyAt = 0;  // when the last reply was shown
 
 void screenBegin() {
-  PORTC &= ~(_BV(4) | _BV(5));
+  sdaLow(false);  // idle: both lines released, pull-ups on
+  sclLow(false);
   const uint8_t addrs[] = { 0x27, 0x3F };  // most backpacks are 0x27
   for (uint8_t a : addrs) if (lcdPort(a, 0)) { lcdAddr = a; break; }
   if (!lcdAddr) return;
@@ -247,6 +264,26 @@ const char R_BYE[] PROGMEM = "Bye @!|See you later!|Catch you later, @.|Goodbye!
 const char R_HOW[] PROGMEM = "I'm great! My 16 MHz brain is humming.|Doing well, thanks for asking!|All systems go. How about you?|Pretty good for a chip the size of a stamp.";
 const char R_WHO[] PROGMEM = "I'm NanoChat, a tiny AI on an Arduino Nano.|I'm NanoChat! My brain is about 7,000 numbers.|A very small robot brain. Nice to meet you!";
 const char R_CREATOR[] PROGMEM = "You flashed me onto this Nano (with help from Claude).|You built me! I live on an Arduino Nano.";
+#ifdef SOLO
+const char R_HELP[] PROGMEM = "Try: joke, trivia, riddle, roll 2 dice, again, 12*7, timer 5 min, stopwatch, guess my number, rock, flip a coin, my name is ...";
+const char R_JOKE[] PROGMEM =
+  "Why did the robot go on vacation? It needed to recharge.|"
+  "Why do programmers prefer dark mode? Because light attracts bugs.|"
+  "What do you call a sleeping bull? A bulldozer.|"
+  "Why was the math book sad? It had too many problems.|"
+  "I told my Arduino a joke. It didn't laugh, it just blinked.|"
+  "Why did the scarecrow win an award? He was outstanding in his field.|"
+  "Why can't a bicycle stand up by itself? It's two tired.|"
+  "What do you call a bear with no teeth? A gummy bear.|"
+  "Why don't skeletons fight? They don't have the guts.|"
+  "What do you call a pig that does karate? A pork chop.|"
+  "Why are ghosts bad liars? You can see right through them.|"
+  "What is a robot's favorite snack? Computer chips.|"
+  "Why was the computer cold? It left its Windows open.|"
+  "What do you call an alligator in a vest? An investigator.|"
+  "Why did the chicken join a band? It had the drumsticks.|"
+  "What do you call a magic dog? A labracadabrador.";
+#else
 const char R_HELP[] PROGMEM = "Try: joke, riddle, roll 2 dice, again, 12*7, timer 5 min, stopwatch, guess my number, rock. With helpers: invent a word, trivia, calc x=5, 5 miles to km, morse sos, who is einstein, survival tip.";
 const char R_JOKE[] PROGMEM =
   "Why did the robot go on vacation? It needed to recharge.|"
@@ -254,6 +291,7 @@ const char R_JOKE[] PROGMEM =
   "What do you call a sleeping bull? A bulldozer.|"
   "Why was the math book sad? It had too many problems.|"
   "I told my Arduino a joke. It didn't laugh, it just blinked.";
+#endif
 const char R_FACT[] PROGMEM =
   "Honey never spoils. 3000-year-old honey is still edible.|"
   "I run at 16 MHz: 16 million steps per second.|"
@@ -306,13 +344,16 @@ uint8_t extractFeatures(const char *s, uint16_t *feats) {
   while (*s) {
     while (*s && !isalnum(*s)) s++;
     if (!*s) break;
-    uint32_t h = 2166136261UL, hb = fnvStep(hPrev, ' ');
+    uint32_t h = 2166136261UL, hb = fnvStep(hPrev, ' '), hp = fnvStep(2166136261UL, '#');
+    uint8_t len = 0;
     while (isalnum(*s)) {
       char c = tolower(*s++);
       h = fnvStep(h, c);
       hb = fnvStep(hb, c);
+      if (len++ < 4) hp = fnvStep(hp, c);  // "#" + first 4 letters: a cheap word stem
     }
-    uint16_t f[2] = { (uint16_t)(h % CHAT_F), havePrev ? (uint16_t)(hb % CHAT_F) : (uint16_t)0xFFFF };
+    uint16_t f[3] = { (uint16_t)(h % CHAT_F), havePrev ? (uint16_t)(hb % CHAT_F) : (uint16_t)0xFFFF,
+                      CHAT_PREFIX && len > 4 ? (uint16_t)(hp % CHAT_F) : (uint16_t)0xFFFF };
     for (uint16_t x : f) {
       if (x == 0xFFFF || n >= MAX_FEATS) continue;
       bool dup = false;
@@ -325,6 +366,17 @@ uint8_t extractFeatures(const char *s, uint16_t *feats) {
   return n;
 }
 
+// One first-layer weight: 8-bit, or 4-bit packed two per byte (low nibble first).
+int8_t w1(uint32_t idx) {
+#if CHAT_BITS == 4
+  uint8_t b = pgm_read_byte(chat_W1 + (idx >> 1));
+  int8_t v = idx & 1 ? b >> 4 : b & 15;
+  return v >= 8 ? v - 16 : v;
+#else
+  return (int8_t)pgm_read_byte(chat_W1 + idx);
+#endif
+}
+
 NOINLINE uint8_t classify(const char *s, float *confidence) {
   uint16_t feats[MAX_FEATS];
   uint8_t nf = extractFeatures(s, feats);
@@ -332,8 +384,8 @@ NOINLINE uint8_t classify(const char *s, float *confidence) {
   for (uint8_t i = 0; i < CHAT_H; i++) {
     int16_t sum = 0;  // whole-number sum of int8 weights, scaled once below
     for (uint8_t j = 0; j < nf; j++)
-      sum += (int8_t)pgm_read_byte(chat_W1 + (uint16_t)feats[j] * CHAT_H + i);
-    float v = sum * chat_s1 + pgm_read_float(chat_b1 + i);
+      sum += w1((uint32_t)feats[j] * CHAT_H + i);
+    float v = sum * pgm_read_float(chat_s1 + i) + pgm_read_float(chat_b1 + i);  // one scale per hidden unit
     h[i] = v > 0 ? v : 0;
   }
   float best = -1e30, z = 0, lg[CHAT_K];
@@ -731,6 +783,59 @@ bool askNet(const char *kind, const char *text) {
   return printing;
 }
 
+#ifdef SOLO
+// ---------- trivia (on the helpers in NanoNet): question|answer|other answer ----------
+const char TRIVIA[] PROGMEM =
+  "How many legs does a spider have?|8|eight|What planet is closest to the sun?|mercury|mercury|"
+  "What is the largest ocean?|pacific|pacific|How many sides does a hexagon have?|6|six|"
+  "What is the fastest land animal?|cheetah|cheetah|How many continents are there?|7|seven|"
+  "What is the biggest planet?|jupiter|jupiter|What do bees make?|honey|honey|"
+  "Which planet is called the Red Planet?|mars|mars|What is the largest mammal?|blue whale|whale|"
+  "What color do you get mixing blue and yellow?|green|green|What is the tallest animal?|giraffe|giraffe|"
+  "What is 12 times 12?|144|144|How many hours are in a day?|24|twenty four|"
+  "What do caterpillars turn into?|butterflies|butterfly|What instrument has 88 keys?|piano|piano";
+const uint8_t TRIVIA_N = 16;
+uint8_t quiz = 0xFF;  // question being asked; 0xFF = none
+
+// Copy field f (0 question, 1 answer, 2 other answer) of question q into buf.
+void triviaField(uint8_t q, uint8_t f, char *buf, uint8_t len) {
+  PGM_P c = TRIVIA;
+  for (uint8_t skip = q * 3 + f; skip; c++) if (pgm_read_byte(c) == '|') skip--;
+  uint8_t n = 0;
+  for (char ch; (ch = pgm_read_byte(c)) && ch != '|' && n < len - 1; c++) buf[n++] = ch;
+  buf[n] = '\0';
+}
+
+NOINLINE bool tryTrivia(const char *s) {
+  char buf[48];
+  bool ask = findAny(s, PSTR("trivia|quiz"), true);
+  if (quiz != 0xFF) {
+    uint8_t q = quiz, words = 1;
+    quiz = 0xFF;
+    for (const char *c = s; *c; c++) words += *c == ' ';
+    bool giveUp = ask || findAny(s, PSTR("i dont know|dont know|idk|give up"), true);
+    char alt[16];
+    triviaField(q, 1, buf, sizeof buf);
+    triviaField(q, 2, alt, sizeof alt);
+    if (!giveUp && (strcasestr(s, buf) || strcasestr(s, alt))) {
+      out.println(F("Correct! Say trivia for another."));
+      return true;
+    }
+    if (giveUp || words <= 3) {  // a short reply is an answer; a long one is something else
+      out.print(giveUp ? F("The answer is ") : F("Nope, it's "));
+      out.print(buf);
+      out.println(F(". Say trivia for another."));
+      return true;
+    }
+  }
+  if (!ask) return false;
+  quiz = random(TRIVIA_N);
+  triviaField(quiz, 0, buf, sizeof buf);
+  out.println(buf);
+  return true;
+}
+#endif
+
 // ---------- main dispatch ----------
 
 char lastMsg[LINE_LEN + 1];  // for "again" / "one more": the last thing you asked
@@ -775,6 +880,9 @@ void reply(char *s) {
   if (tryTools(s)) return;  // before games, so "cancel timer" isn't read as "set a timer"
   if (tryGames(s)) return;
   if (tryMath(s)) return;
+#ifdef SOLO
+  if (tryTrivia(s)) return;
+#else
   // Each helper gets a turn and answers only what it handles (empty reply = "not mine"):
   // Words (invent, trivia, morse...), Calc ("calc ...", unit conversions), Library (safety tips).
   for (uint8_t a = NET_WORDS; a <= NET_LIBRARY; a++)
@@ -783,6 +891,7 @@ void reply(char *s) {
     out.println(F("That needs a NanoNet helper Nano plugged in."));
     return;
   }
+#endif
   if (tryFollowup(s)) return;
   if (looksLikeLookup(s)) { rememberTopic(s); askNet("lookup", s); return; }
 
@@ -896,9 +1005,15 @@ void runLine(char *msg) {
 // ---------- button menu: use NanoChat with no computer ----------
 // Short press: next item on the LCD. Hold (0.6 s): do it.
 // Each item is just a chat message, so it works exactly like typing it.
+#ifdef SOLO
+const char MENU[] PROGMEM = "tell me a joke|tell me a fact|riddle|trivia|roll a dice|flip a coin|"
+  "magic 8 ball|timer 1 minute|timer 5 minutes|stopwatch|rock";
+const uint8_t MENU_N = 11;
+#else
 const char MENU[] PROGMEM = "tell me a joke|tell me a fact|riddle|trivia|roll a dice|flip a coin|"
   "magic 8 ball|timer 1 minute|timer 5 minutes|stopwatch|rock|invent a word";
 const uint8_t MENU_N = 12;
+#endif
 
 void checkButton() {
   static bool wasDown = false;

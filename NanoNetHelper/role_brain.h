@@ -21,13 +21,16 @@ uint8_t extractFeatures(const char *s, uint16_t *feats) {
   while (*s) {
     while (*s && !isalnum(*s)) s++;
     if (!*s) break;
-    uint32_t h = 2166136261UL, hb = fnvStep(hPrev, ' ');
+    uint32_t h = 2166136261UL, hb = fnvStep(hPrev, ' '), hp = fnvStep(2166136261UL, '#');
+    uint8_t len = 0;
     while (isalnum(*s)) {
       char c = tolower(*s++);
       h = fnvStep(h, c);
       hb = fnvStep(hb, c);
+      if (len++ < 4) hp = fnvStep(hp, c);  // "#" + first 4 letters: a cheap word stem
     }
-    uint16_t f[2] = { (uint16_t)(h % CHAT_F), havePrev ? (uint16_t)(hb % CHAT_F) : (uint16_t)0xFFFF };
+    uint16_t f[3] = { (uint16_t)(h % CHAT_F), havePrev ? (uint16_t)(hb % CHAT_F) : (uint16_t)0xFFFF,
+                      CHAT_PREFIX && len > 4 ? (uint16_t)(hp % CHAT_F) : (uint16_t)0xFFFF };
     for (uint16_t x : f) {
       if (x == 0xFFFF || n >= MAX_FEATS) continue;
       bool dup = false;
@@ -40,6 +43,17 @@ uint8_t extractFeatures(const char *s, uint16_t *feats) {
   return n;
 }
 
+// One first-layer weight: 8-bit, or 4-bit packed two per byte (low nibble first).
+int8_t w1(uint32_t idx) {
+#if CHAT_BITS == 4
+  uint8_t b = pgm_read_byte(chat_W1 + (idx >> 1));
+  int8_t v = idx & 1 ? b >> 4 : b & 15;
+  return v >= 8 ? v - 16 : v;
+#else
+  return (int8_t)pgm_read_byte(chat_W1 + idx);
+#endif
+}
+
 uint8_t classify(const char *s, float *confidence) {
   uint16_t feats[MAX_FEATS];
   uint8_t nf = extractFeatures(s, feats);
@@ -47,8 +61,8 @@ uint8_t classify(const char *s, float *confidence) {
   for (uint8_t i = 0; i < CHAT_H; i++) {
     int16_t sum = 0;
     for (uint8_t j = 0; j < nf; j++)
-      sum += (int8_t)pgm_read_byte(chat_W1 + (uint32_t)feats[j] * CHAT_H + i);
-    float v = sum * chat_s1 + pgm_read_float(chat_b1 + i);
+      sum += w1((uint32_t)feats[j] * CHAT_H + i);
+    float v = sum * pgm_read_float(chat_s1 + i) + pgm_read_float(chat_b1 + i);  // one scale per hidden unit
     h[i] = v > 0 ? v : 0;
   }
   float best = -1e30, z = 0, lg[CHAT_K];

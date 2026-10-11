@@ -220,7 +220,8 @@ def open_port(path):
 
 
 def main():
-    ports = sys.argv[1:] or sorted(glob.glob("/dev/cu.usbserial*") + glob.glob("/dev/cu.usbmodem*"))
+    ports = sys.argv[1:] or sorted(glob.glob("/dev/cu.usbserial*") + glob.glob("/dev/cu.usbmodem*") +  # Mac
+                   glob.glob("/dev/ttyUSB*") + glob.glob("/dev/ttyACM*"))  # Linux / Raspberry Pi
     if not ports:
         sys.exit("No Arduino found. Plug in the Nano and try again.")
     fd = open_port(ports[0])

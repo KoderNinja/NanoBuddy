@@ -87,6 +87,10 @@
     font-size: 11px; padding: 1px 7px; border-radius: 999px;
     background: var(--nano-bubble); color: var(--muted); border: 1px solid var(--line);
   }
+  .phone { align-self: stretch; text-align: center; font-size: 12px; color: #7d8496; }
+  .phone #qr { display: inline-block; background: #fff; padding: 8px; border-radius: 10px; margin: 6px 0 4px; }
+  .phone #qr img, .phone #qr canvas { display: block; width: 112px; height: 112px; }
+  .phone a { color: #a9b8ff; word-break: break-all; }
   .quit {
     margin-top: auto; border: 1px solid var(--device-edge); background: transparent; color: var(--device-text);
     border-radius: 10px; padding: 7px 14px; font: inherit; font-size: 13px; cursor: pointer;
@@ -164,6 +168,11 @@
       <div class="net-title">NanoNet helpers</div>
       <div class="helpers" id="helpers"></div>
     </div>
+    <div class="phone" id="phone" hidden>
+      Chat from your phone (same Wi-Fi):
+      <div id="qr"></div>
+      <div><a id="phoneUrl"></a></div>
+    </div>
     <button class="quit" id="quit" title="Stop NanoChat">Quit NanoChat</button>
   </aside>
 
@@ -176,6 +185,7 @@
     </form>
   </main>
 </div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 <script>
   // The same 5x8 faces the Nano draws on its LCD (one byte per row, 5 bits wide).
   const FACES = [
@@ -385,6 +395,20 @@
 
   showFace(0, "hello!");
   lcdRaw("Waiting for", "the Nano...");
+
+  // On the Mac, show a QR code a phone can scan to open this same page.
+  if (["127.0.0.1", "localhost"].includes(location.hostname)) {
+    fetch("/phone").then(r => r.text()).then(url => {
+      if (!url) return;
+      document.getElementById("phone").hidden = false;
+      const a = document.getElementById("phoneUrl");
+      a.textContent = url;
+      a.href = url;
+      if (window.QRCode) new QRCode(document.getElementById("qr"), { text: url, width: 112, height: 112 });
+    });
+  } else {
+    document.getElementById("quit").hidden = true;  // only the Mac can stop the app
+  }
 </script>
 </body>
 </html>

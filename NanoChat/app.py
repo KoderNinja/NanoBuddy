@@ -2,13 +2,15 @@
 
 Double-click NanoChat.app (or run `python3 app.py`). It finds the Nano, gives
 it internet access the same way bridge.py does, and opens a chat page at
-http://127.0.0.1:8777. Unplugging and replugging the Nano is fine; it reconnects.
+http://127.0.0.1:8777, and to phones on the same Wi-Fi (scan the QR code on the
+page). Unplugging and replugging the Nano is fine; it reconnects.
 Standard library only.
 """
 import glob
 import json
 import os
 import queue
+import socket
 import sys
 import threading
 import time
@@ -29,6 +31,7 @@ class Nano:
     def __init__(self):
         self.fd = None
         self.status = "searching"
+        self.network = ""  # last "@N" report, e.g. "1111", for pages that open later
         self.pages = []  # one event queue per open chat page
         threading.Thread(target=self.run, daemon=True).start()
 
@@ -48,7 +51,8 @@ class Nano:
 
     def run(self):
         while True:
-            ports = sorted(glob.glob("/dev/cu.usbserial*") + glob.glob("/dev/cu.usbmodem*"))
+            ports = sorted(glob.glob("/dev/cu.usbserial*") + glob.glob("/dev/cu.usbmodem*") +  # Mac
+                   glob.glob("/dev/ttyUSB*") + glob.glob("/dev/ttyACM*"))  # Linux / Raspberry Pi
             if ports:
                 try:
                     self.fd = bridge.open_port(ports[0])
@@ -87,7 +91,8 @@ class Nano:
                     self.emit("thinking")
                     threading.Thread(target=self.net_reply, args=(text[5:],), daemon=True).start()
                 elif text.startswith("@N") and text[2:].isdigit():
-                    self.emit("network", text[2:])  # which helpers are plugged in, e.g. "1011"
+                    self.network = text[2:]
+                    self.emit("network", self.network)  # which helpers are plugged in, e.g. "1011"
                 elif text.startswith("@H") and text[2:].isdigit():
                     self.emit("helper", text[2:])  # a helper answered the next reply
                 elif text.startswith("@F") and text[2:].isdigit():
@@ -126,6 +131,8 @@ class Handler(BaseHTTPRequestHandler):
         if self.path == "/":
             with open(os.path.join(HERE, "app.html"), "rb") as f:
                 self.reply(200, f.read(), "text/html; charset=utf-8")
+        elif self.path == "/phone":  # the address a phone on the same Wi-Fi can open
+            self.reply(200, lan_url().encode())
         elif self.path == "/nanochat":  # lets a second launch find this one
             self.reply(200, b"nanochat")
         elif self.path == "/events":
@@ -140,6 +147,8 @@ class Handler(BaseHTTPRequestHandler):
             text = bridge.ascii_only(text).replace("\n", " ")[:80]  # the Nano reads 80 chars max
             self.reply(200 if text and nano.send(text) else 503)
         elif self.path == "/quit":
+            if self.client_address[0] != "127.0.0.1":  # only the Mac itself can stop the app
+                return self.reply(403)
             self.reply(200)
             threading.Timer(0.3, lambda: os._exit(0)).start()
         else:
@@ -153,6 +162,8 @@ class Handler(BaseHTTPRequestHandler):
         self.end_headers()
         q = queue.Queue()
         q.put({"kind": "status", "text": nano.status})
+        if nano.network:
+            q.put({"kind": "network", "text": nano.network})
         nano.pages.append(q)
         try:
             while True:
@@ -168,6 +179,19 @@ class Handler(BaseHTTPRequestHandler):
             nano.pages.remove(q)
 
 
+def lan_url():
+    """This Mac's address on the local network, e.g. http://192.168.1.20:8777/ ("" if offline)."""
+    try:
+        with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as s:
+            s.connect(("192.168.0.1", 9))  # picks the Wi-Fi interface; nothing is sent
+            return f"http://{s.getsockname()[0]}:{SERVER_PORT}/"
+    except OSError:
+        return ""
+
+
+SERVER_PORT = 0
+
+
 def already_running(port):
     try:
         with urllib.request.urlopen(f"http://127.0.0.1:{port}/nanochat", timeout=1) as r:
@@ -181,7 +205,7 @@ def main():
     for port in PORTS:
         url = f"http://127.0.0.1:{port}/"
         try:
-            server = ThreadingHTTPServer(("127.0.0.1", port), Handler)
+            server = ThreadingHTTPServer(("0.0.0.0", port), Handler)  # Mac + phones on the same Wi-Fi
             break
         except OSError:
             if already_running(port):
@@ -190,6 +214,8 @@ def main():
     else:
         sys.exit("No free port for NanoChat.")
     server.daemon_threads = True
+    global SERVER_PORT
+    SERVER_PORT = server.server_address[1]
     nano = Nano()
     if not os.environ.get("NANOCHAT_NO_BROWSER"):
         threading.Timer(0.5, lambda: webbrowser.open(url)).start()
