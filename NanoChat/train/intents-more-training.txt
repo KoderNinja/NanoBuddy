@@ -52,7 +52,6 @@ morning buddy
 hi hi
 hello friend whats new
 hey you
-hey nano hows it going
 hello my digital friend
 is anybody there
 hey chatbot
@@ -99,8 +98,6 @@ hello again
 # Added examples: 25 varied phrasings
 hey whats up nano
 hello there friend
-hey how are things
-hi how are you
 good to see you
 nice to meet you
 hey computer
@@ -309,6 +306,9 @@ well bye
 sleepy time bye
 i'm logging off
 # how_are_you
+hi how are you
+hey how are things
+hey nano hows it going
 how are you feeling nano
 whats up with you today
 hows your battery
@@ -1109,6 +1109,7 @@ what is something cool you know
 gimme a fact
 more facts
 # thanks
+i appreciate you so much
 you helped me a lot
 thank you robot
 thanks for that nano
@@ -1218,6 +1219,8 @@ thank you for helping me
 big thanks
 thanks bro
 # compliment
+you are fun to talk with
+i think you are awesome
 you are so funny nano
 you are hilarious
 you are clever and funny
@@ -1719,7 +1722,6 @@ what day are we on
 is it morning or evening
 how much time have you been running
 how long have you been active
-when did you boot up
 what is the current date and time
 can you tell me the date
 what day comes today
@@ -2707,6 +2709,7 @@ is it a good idea to quit
 wil i pass
 will i be happy
 # age
+when did you boot up
 are you a kid nano
 how old are you exactly nano
 how long have you existed nano
@@ -2961,7 +2964,6 @@ you are adorable nano
 i heart you
 friends forever
 hug
-i think you are awesome
 you are the best friend
 youre the sweetest
 you are the best bot
@@ -2979,7 +2981,6 @@ i love this bot
 you are the sweetest
 you are adorable
 i think you are wonderful
-i appreciate you so much
 you make me happy
 i love talking to you
 you mean a lot to me
@@ -3036,7 +3037,6 @@ you are my buddy
 do you have a best friend
 are you friends with people
 i care about you
-you are fun to talk with
 can an ai have feelings
 do you like having friends
 will you always be my friend
