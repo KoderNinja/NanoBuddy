@@ -1,0 +1,151 @@
+# fresh unseen phrasings (none appear in intents-more-training.txt): text|expected intent
+yo nano whats good|greet
+hello hello anyone home|greet
+morning little robot|greet
+ok im logging off now|bye
+gotta run see ya|bye
+night nano talk tomorrow|bye
+how are things on your end|how_are_you
+you doing alright today|how_are_you
+hows your day been nano|how_are_you
+what exactly are you|who_are_you
+introduce yourself please|who_are_you
+are you some kind of computer program|who_are_you
+whose idea was it to build you|creator
+who put you on this arduino|creator
+which person coded you|creator
+what kinds of things can i ask you|help
+list the stuff you can do|help
+im lost what do i type|help
+make me laugh nano|joke
+know any good jokes|joke
+say something silly|joke
+share a random fact with me|fact
+tell me something interesting about the world|fact
+i want to learn something new|fact
+thank you that was helpful|thanks
+appreciate it nano|thanks
+cheers for the help|thanks
+you are so clever|compliment
+nice job little bot|compliment
+you are a genius|compliment
+you are honestly pointless|insult
+that answer was dumb|insult
+you are the lamest robot|insult
+say my name nano|ask_user_name
+remind me what im called|ask_user_name
+have i told you my name before|ask_user_name
+what hour is it|time
+can you tell me the time please|time
+is it late right now|time
+how cold is it outside|weather
+do i need an umbrella today|weather
+whats the forecast like|weather
+i feel kind of down|sad
+today was a terrible day|sad
+im really upset|sad
+i just got some great news|happy
+today is an awesome day|happy
+im in a really good mood|happy
+theres nothing fun going on|bored
+this is so boring|bored
+im so bored help me out|bored
+heads or tails nano|coin
+heads or tails you pick|coin
+can you do a coin flip|coin
+chuck a die nano|dice
+roll me a number on a die|dice
+roll the dice for me nano|dice
+am i going to ace my exam|eightball
+should i go to the party|eightball
+is today going to be lucky for me|eightball
+is nano a kid or a grownup|age
+how long have you been alive|age
+when were you born nano|age
+whats your favorite color|favorite
+do you have a favorite food|favorite
+which animal do you like most|favorite
+i love you so much nano|love
+you are my best buddy|love
+youre the sweetest bot ever|love
+riddle me this nano|riddle
+got a puzzle for me|riddle
+i want to solve a riddle|riddle
+who was napoleon|lookup
+what is the tallest mountain|lookup
+tell me about the moon|lookup
+hiya there nano|greet
+howdy partner|greet
+hey hey robot friend|greet
+alright im heading off|bye
+catch you on the flip side|bye
+time for me to go to bed|bye
+how have you been lately|how_are_you
+are you feeling ok nano|how_are_you
+hows life treating you|how_are_you
+so what do people call you|who_are_you
+are you a real ai|who_are_you
+what type of thing are you|who_are_you
+who is the brains behind you|creator
+who wired you up|creator
+did someone build you|creator
+what are your skills|help
+what can this thing do|help
+give me some ideas of what to say|help
+i want to hear a joke|joke
+tell me your funniest joke|joke
+got anything funny to say|joke
+teach me something cool|fact
+any fun facts|fact
+tell me a science fact|fact
+thanks a lot nano|thanks
+thank you kindly|thanks
+thanks for the answer nano|thanks
+youre awesome at this|compliment
+what a smart robot|compliment
+you did an amazing job|compliment
+you are really stupid|insult
+that was useless|insult
+you are a dumb machine|insult
+which name did i tell you|ask_user_name
+do you know my name nano|ask_user_name
+how do you know me|ask_user_name
+what time is it in my house|time
+peek at the clock for me|time
+how many minutes past the hour is it|time
+is it raining outside|weather
+how hot is it out there|weather
+is snow coming this week|weather
+im feeling lonely|sad
+i failed my test and feel bad|sad
+i feel like nobody cares|sad
+im super happy right now|happy
+everything is going right today|happy
+i feel great nano|happy
+im bored to death|bored
+theres nothing to do today|bored
+give me an activity im bored|bored
+flip something heads or tails|coin
+can you flip for me|coin
+do a quick coin toss|coin
+roll some dice|dice
+roll a number from one to six|dice
+can you roll the die|dice
+will i be rich someday|eightball
+is my crush going to like me|eightball
+should i eat pizza tonight|eightball
+how old is your chip|age
+when did you first turn on|age
+how young are you|age
+what is your favorite movie|favorite
+do you have a favorite number|favorite
+which tune do you love most|favorite
+i think youre the best|love
+you are my favorite robot|love
+i really like talking with you|love
+do you know any riddles|riddle
+can you give me a brain teaser|riddle
+puzzle me nano|riddle
+what is the biggest ocean|lookup
+what is the speed of sound|lookup
+tell me about dinosaurs|lookup

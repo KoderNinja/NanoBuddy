@@ -282,7 +282,10 @@ const char R_JOKE[] PROGMEM =
   "Why was the computer cold? It left its Windows open.|"
   "What do you call an alligator in a vest? An investigator.|"
   "Why did the chicken join a band? It had the drumsticks.|"
-  "What do you call a magic dog? A labracadabrador.";
+  "What do you call a magic dog? A labracadabrador.|"
+  "Why did the cookie go to the doctor? It felt crummy.|"
+  "What do you call a fish with no eyes? A fsh.|"
+  "Why did the robot cross the road? It was programmed to.";
 #else
 const char R_HELP[] PROGMEM = "Try: joke, riddle, roll 2 dice, again, 12*7, timer 5 min, stopwatch, guess my number, rock. With helpers: invent a word, trivia, calc x=5, 5 miles to km, morse sos, who is einstein, survival tip.";
 const char R_JOKE[] PROGMEM =  // backups: the Library helper has 50 more
@@ -802,8 +805,10 @@ const char TRIVIA[] PROGMEM =
   "Which planet is called the Red Planet?|mars|mars|What is the largest mammal?|blue whale|whale|"
   "What color do you get mixing blue and yellow?|green|green|What is the tallest animal?|giraffe|giraffe|"
   "What is 12 times 12?|144|144|How many hours are in a day?|24|twenty four|"
-  "What do caterpillars turn into?|butterflies|butterfly|What instrument has 88 keys?|piano|piano";
-const uint8_t TRIVIA_N = 16;
+  "What do caterpillars turn into?|butterflies|butterfly|What instrument has 88 keys?|piano|piano|"
+  "What gas do plants breathe in?|carbon dioxide|co2|How many days are in a leap year?|366|366|"
+  "What is frozen water called?|ice|ice|How many planets orbit the sun?|8|eight";
+const uint8_t TRIVIA_N = 20;
 uint8_t quiz = 0xFF;  // question being asked; 0xFF = none
 
 // Copy field f (0 question, 1 answer, 2 other answer) of question q into buf.
@@ -845,7 +850,6 @@ NOINLINE bool tryTrivia(const char *s) {
 }
 #endif
 
-#ifndef SOLO
 // ---------- self-training: remember corrections ----------
 // "wrong, it was a joke" -> your previous message means "joke" from now on.
 // Stored in EEPROM so it survives unplugging: byte 460 = how many, 461 = next slot,
@@ -927,7 +931,6 @@ NOINLINE bool tryCorrection(const char *s, const char *prev) {
   }
   return true;
 }
-#endif
 
 // ---------- main dispatch ----------
 
@@ -969,9 +972,7 @@ void reply(char *s) {
 #endif
     return;
   }
-#ifndef SOLO
   if (tryCorrection(s, lastMsg)) return;  // before lastMsg changes: it's the message being corrected
-#endif
   // "again": run your last message once more, whatever it was (dice, trivia, a joke...)
   char repeat[LINE_LEN + 1];
   if (lastMsg[0] && isRepeat(s)) s = strcpy(repeat, lastMsg);
@@ -996,13 +997,9 @@ void reply(char *s) {
   if (looksLikeLookup(s)) { rememberTopic(s); askNet("lookup", s); return; }
 
   float conf;
-#ifdef SOLO
-  uint8_t k = classify(s, &conf);
-#else
   uint8_t k = learnedIntent(s);  // something you taught it wins
   if (k == 0xFF) k = classify(s, &conf);
   else conf = 1;
-#endif
   if (conf < MIN_CONFIDENCE) {
     if (bridgeOn && looksLikeQuestion(s)) askNet("lookup", s);
     else {
@@ -1038,7 +1035,9 @@ void reply(char *s) {
     case I_DICE: {
       const char *p = s;
       long n = nextNumber(p), sides = 6, total = 0;
-      if (p - s > 1 && (p[-2] == 'd' || p[-2] == 'D') && n > 1) { sides = n; n = 1; }  // "d20"
+      const char *d = p;
+      while (d > s && isdigit(d[-1])) d--;  // back to the number's first digit
+      if (d > s && (d[-1] == 'd' || d[-1] == 'D') && n > 1) { sides = n; n = 1; }  // "d20"
       if (n < 1 || n > 9) n = 1;
       out.print(F("You rolled"));
       for (long i = 0; i < n; i++) {

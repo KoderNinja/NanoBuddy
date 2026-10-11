@@ -48,7 +48,7 @@ Wiring:
 
 ## Just one Nano? Use Solo
 
-Uncomment `#define SOLO` near the top of `NanoChat/NanoChat.ino` before uploading. It drops the NanoNet code and uses the space for trivia (16 questions) and a bigger joke collection. Everything else (chat, faces, LCD, games, timer, button menu) works the same. With arduino-cli:
+Uncomment `#define SOLO` near the top of `NanoChat/NanoChat.ino` before uploading. It drops the NanoNet code and uses the space for trivia (20 questions) and a bigger joke collection. Everything else (chat, faces, LCD, games, timer, button menu, self-training) works the same. With arduino-cli:
 ```bash
 arduino-cli compile -u -p /dev/cu.usbserial-XXXX -b arduino:avr:nano --build-property "compiler.cpp.extra_flags=-DSOLO" NanoChat
 ```
@@ -77,11 +77,10 @@ arduino-cli compile -u -p /dev/cu.usbserial-XXXX -b arduino:avr:nano --build-pro
 
 ```bash
 cd NanoChat/train
-F=320 H=18 FILL=0.3 python3 train.py intents-more-training.txt ../chat_model.h      # boss model
-F=1024 H=20 FILL=0.3 python3 train.py intents-more-training.txt ../../NanoNetHelper/brain_model.h
+F=512 H=18 QBITS=4 PREFIX=1 FILL=0.3 WD=0.0002 SEED=3 EXTRA_TESTS=tests-extra.txt python3 train.py intents-more-training.txt ../chat_model.h   # NanoChat model
 python3 audit.py intents-more-training.txt                       # find confusing examples
 ```
-Add examples under `# intent_name` in `intents-more-training.txt`. `tests-more-training.txt` holds phrases that are *not* in the training data, for an honest score. If you add or reorder intents, retrain both models and re-upload the boss and the Brain helper (the boss ignores a Brain trained on a different list).
+Add examples under `# intent_name` in `intents-more-training.txt`. `tests-more-training.txt` and `tests-extra.txt` hold phrases that are *not* in the training data, for an honest score (currently 173/190). Corrections you taught NanoChat (`learned.txt`) are added automatically.
 
 `FILL=0.3` randomly adds filler words ("hey", "nano", "um") while training so the model learns to ignore them.
 
