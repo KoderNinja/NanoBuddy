@@ -859,6 +859,9 @@ void reply(char *s) {
 
   if (!strcmp_P(s, PSTR("@HELLO"))) {  // the app connected: say which helpers are here, e.g. "@N1011"
     bridgeOn = true;
+#ifdef SOLO
+    Serial.println(F("@OK\n@N0000"));  // Solo build: no helpers
+#else
     Serial.print(F("@OK\n@N"));
     for (uint8_t a = NET_BRAIN; a <= NET_LIBRARY; a++) {
       bool here = false;
@@ -870,6 +873,7 @@ void reply(char *s) {
       Serial.print(here ? '1' : '0');
     }
     Serial.println();
+#endif
     return;
   }
   // "again": run your last message once more, whatever it was (dice, trivia, a joke...)
