@@ -756,8 +756,12 @@ void reply(char *s) {
     bridgeOn = true;
     Serial.print(F("@OK\n@N"));
     for (uint8_t a = NET_BRAIN; a <= NET_LIBRARY; a++) {
-      bool here = i2cStart(a << 1);
-      i2cStop();
+      bool here = false;
+      for (uint8_t t = 0; t < 3 && !here; t++) {  // a helper can miss the first knock
+        here = i2cStart(a << 1);
+        i2cStop();
+        if (!here) delay(20);
+      }
       Serial.print(here ? '1' : '0');
     }
     Serial.println();

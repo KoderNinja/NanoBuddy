@@ -31,6 +31,7 @@ UA = {"User-Agent": "NanoChat-bridge/1.0 (Arduino hobby project)"}
 
 def ascii_only(text):
     text = text.replace("°", " deg ")
+    text = re.sub(r"\s*[\u2013\u2014]\s*", " - ", text)  # long dashes would vanish: "1643-1727"
     text = unicodedata.normalize("NFKD", text).encode("ascii", "ignore").decode()
     return re.sub(r"\s+", " ", text).strip()
 
@@ -78,15 +79,16 @@ def answer_lookup(msg):
     if not topic:
         return "What should I look up?"
     q = urllib.parse.urlencode({"action": "query", "list": "search", "srsearch": topic,
-                                "srlimit": 1, "format": "json"})
+                                "srlimit": 4, "format": "json"})
     hits = json.loads(get("https://en.wikipedia.org/w/api.php?" + q))["query"]["search"]
     if not hits:
         return f"I couldn't find anything about {topic}."
-    title = hits[0]["title"]
-    page = json.loads(get("https://en.wikipedia.org/api/rest_v1/page/summary/"
-                          + urllib.parse.quote(title.replace(" ", "_"))))
-    extract = page.get("extract", "")
-    return short(extract) if extract else f"Wikipedia has a page on {title}, but no summary."
+    for hit in hits:  # skip "X may refer to..." pages and use the first real article
+        page = json.loads(get("https://en.wikipedia.org/api/rest_v1/page/summary/"
+                              + urllib.parse.quote(hit["title"].replace(" ", "_"))))
+        if page.get("type") != "disambiguation" and page.get("extract"):
+            return short(page["extract"])
+    return f"Wikipedia has pages on {topic}, but no clear summary."
 
 
 def answer_news(_):
