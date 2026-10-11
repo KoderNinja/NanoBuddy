@@ -23,6 +23,8 @@ FILL = float(ENV.get("FILL", 0))      # chance of adding a filler word ("hey", "
 FILLERS = "hey nano please um ok so hi yo uh well like plz pls".split()
 BIGRAMS = __import__("os").environ.get("BI", "1") == "1"
 PREFIX = __import__("os").environ.get("PREFIX", "0") == "1"  # also hash each word's first 4 letters ("jokes" ~ "joke")
+TEACHER = ENV.get("TEACHER", "")    # e.g. "4096x64": first train a big model, then copy what it knows
+ALPHA = float(ENV.get("ALPHA", 0.5))  # with a teacher: weight of the true label vs the teacher
 QBITS = int(__import__("os").environ.get("QBITS", 8))           # 8, or 4 to fit twice the weights
 
 
@@ -37,12 +39,13 @@ def tokens(text):
     return re.findall(r"[a-z0-9]+", text.lower())
 
 
-def features(words):
-    feats = {fnv1a(w) % F for w in words}
+def features(words, nb=None):
+    nb = nb or F
+    feats = {fnv1a(w) % nb for w in words}
     if BIGRAMS:
-        feats |= {fnv1a(a + " " + b) % F for a, b in zip(words, words[1:])}
+        feats |= {fnv1a(a + " " + b) % nb for a, b in zip(words, words[1:])}
     if PREFIX:  # a cheap stem: words longer than 4 letters also count as "#" + first 4 letters
-        feats |= {fnv1a("#" + w[:4]) % F for w in words if len(w) > 4}
+        feats |= {fnv1a("#" + w[:4]) % nb for w in words if len(w) > 4}
     return sorted(feats)
 
 
@@ -73,19 +76,23 @@ def load(path):
     return intents, data
 
 
-def fit(data, K, log=print):
-    """Train on [(words, intent)], returning (W1, b1, W2, b2, forward)."""
+def fit(data, K, log=print, nf=None, nh=None, teacher=None):
+    """Train on [(words, intent)], returning (W1, b1, W2, b2, forward).
+
+    teacher: optional words -> probabilities from a bigger model; the student then
+    also learns how sure the teacher is about each intent ("distillation")."""
+    F_, H_ = nf or F, nh or H
     data = list(data)
-    W1 = [[random.gauss(0, 0.3) for _ in range(H)] for _ in range(F)]  # [F][H]
-    b1 = [0.0] * H
-    W2 = [[random.gauss(0, 0.3) for _ in range(H)] for _ in range(K)]  # [K][H]
+    W1 = [[random.gauss(0, 0.3) for _ in range(H_)] for _ in range(F_)]  # [F][H]
+    b1 = [0.0] * H_
+    W2 = [[random.gauss(0, 0.3) for _ in range(H_)] for _ in range(K)]  # [K][H]
     b2 = [0.0] * K
 
     def forward(feats):
         h = b1[:]
         for f in feats:
             row = W1[f]
-            for i in range(H):
+            for i in range(H_):
                 h[i] += row[i]
         h = [x if x > 0 else 0.0 for x in h]
         lg = [b2[k] + sum(w * x for w, x in zip(W2[k], h)) for k in range(K)]
@@ -103,27 +110,32 @@ def fit(data, K, log=print):
             if FILL and random.random() < FILL:  # teach it to ignore chit-chat words
                 f = random.choice(FILLERS)
                 kept = [f] + kept if random.random() < 0.5 else kept + [f]
-            feats = features(kept)
+            feats = features(kept, F_)
             h, p = forward(feats)
             loss -= math.log(p[y] + 1e-12)
             correct += max(range(K), key=p.__getitem__) == y
-            p = [x - SMOOTH / K for x in p]
-            p[y] -= 1 - SMOOTH
-            dh = [0.0] * H
+            if teacher:  # aim between the right answer and the teacher's opinion
+                tp = teacher(kept)
+                p = [x - (1 - ALPHA) * t for x, t in zip(p, tp)]
+                p[y] -= ALPHA
+            else:
+                p = [x - SMOOTH / K for x in p]
+                p[y] -= 1 - SMOOTH
+            dh = [0.0] * H_
             for k in range(K):
                 g = p[k]
                 row = W2[k]
-                for i in range(H):
+                for i in range(H_):
                     dh[i] += row[i] * g
                     row[i] -= lr * (g * h[i] + 1e-4 * row[i])
                 b2[k] -= lr * g
-            for i in range(H):
+            for i in range(H_):
                 if h[i] <= 0:
                     dh[i] = 0.0
                 b1[i] -= lr * dh[i]
             for f in feats:
                 row = W1[f]
-                for i in range(H):
+                for i in range(H_):
                     row[i] -= lr * (dh[i] + WD * row[i])
         if ep % 20 == 0 or ep == EPOCHS - 1:
             log(f"epoch {ep + 1:3d}  loss {loss / len(data):.3f}  acc {correct / len(data):.2%}")
@@ -139,7 +151,12 @@ def main():
         print(f"+ {learned} corrections from learned.txt")
     K = len(intents)
     print(f"{K} intents, {len(data)} examples")
-    W1, b1, W2, b2, forward = fit(data, K)
+    teacher = None
+    if TEACHER:
+        tf, th = map(int, TEACHER.split("x"))
+        *_, tfwd = fit(data, K, log=lambda m: print("teacher", m), nf=tf, nh=th)
+        teacher = lambda words: tfwd(features(words, tf))[1]
+    W1, b1, W2, b2, forward = fit(data, K, teacher=teacher)
 
     # Quantize, then measure with the quantized weights. W1 gets one scale per hidden
     # unit (so 4-bit stays accurate); W2 is small and stays 8-bit with one scale.
