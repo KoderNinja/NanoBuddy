@@ -1019,7 +1019,10 @@ void reply(char *s) {
     case I_CREATOR: say(R_CREATOR); break;
     case I_HELP: say(R_HELP); break;
     case I_JOKE: sayLib(R_JOKE, PSTR("joke")); break;
-    case I_FACT: sayLib(R_FACT, PSTR("fact")); break;
+    case I_FACT:  // "a fact from the internet" goes online; otherwise the Library or my own
+      if (bridgeOn && findAny(s, PSTR("online|internet|web"), true)) askNet("fun_fact", s);
+      else sayLib(R_FACT, PSTR("fact"));
+      break;
     case I_THANKS: say(R_THANKS); break;
     case I_COMPLIMENT: say(R_COMPLIMENT); break;
     case I_INSULT: face = FACE_SAD; say(R_INSULT); break;
@@ -1071,7 +1074,6 @@ void reply(char *s) {
     case I_CONVERT: askNet("convert", s); break;  // the offline converter already tried
     case I_TRANSLATE: askNet("translate", s); break;
     case I_TIMER: setTimer(s); break;
-    case I_FUN_FACT: if (bridgeOn) askNet("fun_fact", s); else say(R_FACT); break;
     default: face = FACE_WOW; say(R_UNKNOWN);
   }
 }

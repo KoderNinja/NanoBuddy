@@ -123,6 +123,13 @@ hello are you online
 yo whats up
 hey whats happening today
 
+hello friend
+greetings little robot
+yo whats new
+hi there buddy
+ahoy nano
+g'day
+well hello there
 # bye
 goodnight
 goodnight nano
@@ -260,6 +267,11 @@ i am heading out
 bye for now nano
 alright see you later
 
+see ya around
+catch ya later
+so long nano
+im off
+farewell friend
 # how_are_you
 how are you feeling nano
 whats up with you today
@@ -359,6 +371,10 @@ doing okay
 are you having a good day
 how are you feeling
 
+hows life
+whats your mood today
+how are you doing buddy
+feeling good today nano
 # who_are_you
 what kind of creature are you
 are you a toy
@@ -453,6 +469,7 @@ what is your bot called
 tell me what you are
 are you alive like me
 
+whats your name buddy
 # creator
 who is your maker nano
 who made you robot
@@ -557,6 +574,8 @@ who designed this chatbot
 who developed nanochat
 how did your creator make you
 
+who coded this bot
+was it a person who made you
 # help
 what do i say
 what are you for
@@ -653,6 +672,13 @@ how can i use this bot
 what should i type
 help me use nanochat
 
+show me your commands
+list your features
+what should i say
+help me out
+what commands do you have
+im not sure what to type
+any suggestions for what to try
 # joke
 say something to make me laugh
 tell me a knock knock joke
@@ -756,6 +782,10 @@ hit me with a joke
 another funny one
 make a joke for me
 
+tell me something funny
+got a joke
+give me a pun
+whats a funny joke
 # fact
 give me an animal fact
 tell me a space fact
@@ -853,6 +883,77 @@ tell me a useful fact
 give me one piece of trivia
 i like learning facts
 
+did you know anything cool
+whats an interesting fact
+tell me something i dont know
+fact please
+tell me some science
+give me a random fact nano
+random fact please
+weird fact nano
+fun fact from the internet please
+tell me a crazy random fact
+get a random fact
+random fun fact
+a weird fact please
+strange fact please
+random internet fact
+weird random fact
+fun fact from online please
+strange fact
+random weird fact please
+get me a weird fact online
+a random fact from the internet
+odd random fact
+tell me a random fact
+give me a random fun fact from the internet
+look up a fun fact
+find me a weird fact
+internet fact please
+random fact from online
+surprise me with a fact from the web
+get me a crazy fact
+tell me a useless fact
+weird fact please
+give me a strange fact
+any random facts online
+fetch a fun fact
+tell me a fact i have never heard
+look up a random fact
+i want a weird fact
+fun fact from the internet
+give me a bizarre fact
+something random and true
+random trivia fact
+pull a random fact
+show me a random fact
+tell me a crazy fact
+new fun fact
+get a fact online
+another random fact
+give me a wild fact
+search for a fun fact
+a random useless fact
+tell me something weird
+tell me an odd fact
+random fact please nano
+find a fun fact online
+weird but true fact
+fact of the day
+give me the fact of the day
+random knowledge
+download a fun fact
+give me a fresh fact
+tell me a fun fact from online
+shock me with a fact
+amaze me with a random fact
+any weird facts
+crazy random fact
+whats a cool fun fact
+random fun fact from the internet
+surprise me with a fun fact
+get a weird fact online
+fun fact of the day
 # thanks
 you helped me a lot
 thank you robot
@@ -946,6 +1047,8 @@ thank you very much
 thanks a million
 ok cool thank you
 
+you helped a lot thanks
+grateful for you thanks
 # compliment
 you are so funny nano
 you are hilarious
@@ -1072,6 +1175,12 @@ you are useful
 well done nanochat
 you are not bad at this
 
+youre so smart
+you are amazing
+youre really clever
+youre pretty cool
+you are the smartest
+impressive nano
 # insult
 you are not funny
 that was not funny
@@ -1193,6 +1302,10 @@ bad job
 you answered badly
 you are not making sense
 
+youre stupid
+youre so annoying
+thats a dumb answer
+youre boring
 # ask_user_name
 do you know me nano
 whats my name robot
@@ -1378,6 +1491,7 @@ what is today's day
 how long have you been online
 check the time
 
+whats the time now
 # weather
 whats the weather today
 whats the weather like today
@@ -1473,6 +1587,12 @@ how windy is it
 is it raining outside right now
 can you check the weather
 
+whats the weather
+weather forecast please
+whats the forecast for tomorrow
+will it storm tonight
+whats it like outside
+should i wear a jacket
 # sad
 i feel sad right now
 i am not happy
@@ -1617,6 +1737,10 @@ i am having a difficult day
 i feel stressed out
 i just feel bad today
 
+im depressed
+im so stressed
+im really unhappy
+my day was terrible
 # happy
 i feel so happy right now
 i am really glad
@@ -1747,6 +1871,10 @@ i am excited about this
 i am feeling terrific
 i am doing pretty well
 
+im so excited
+im really happy today
+i got a good grade
+im pumped
 # bored
 i m so bored
 im bored nano what now
@@ -1862,6 +1990,7 @@ i want to try something
 what can i do right now
 im looking for something fun
 
+im so bored right now
 # coin
 coin flip please nano
 flip the coin please
@@ -1939,6 +2068,8 @@ coin flip for me
 call a coin toss
 decide with a coin
 
+flip coin please
+call it heads or tails
 # dice
 roll a die nano
 roll the dice please
@@ -2036,6 +2167,8 @@ pick a number from one to twenty
 random dice please
 roll a six sided dice
 
+roll 2 dice
+shake the dice
 # eightball
 what is my future
 will i have a good day
@@ -2150,6 +2283,7 @@ what does the magic eight ball say
 will i be lucky today
 predict what happens next
 
+is it going to work out
 # age
 are you a kid nano
 how old are you exactly nano
@@ -2250,6 +2384,7 @@ when did you start existing
 how long ago were you programmed
 do you celebrate a birthday
 
+whats your birthday
 # favorite
 what is your favorite color nano
 what is your favorite food nano
@@ -2339,6 +2474,7 @@ what is your favorite band
 what is your favorite animal
 which game do you like best
 what kind of music do you like
+which color do you like best
 # love
 i like you robot
 you are my best friend robot
@@ -2445,6 +2581,8 @@ can an ai have feelings
 do you like having friends
 will you always be my friend
 
+i like you
+we are friends right
 # riddle
 give me a challenge
 i want a challenge
@@ -2553,6 +2691,9 @@ give me another riddle
 ask me a puzzle
 i want a brain teaser
 
+got any riddles
+know a good riddle
+quiz me with a riddle
 # lookup
 who is the president of the usa
 what is the biggest planet
@@ -2676,6 +2817,10 @@ what is a hurricane
 what is a black hole
 who is albert einstein
 
+look up the moon
+search for sharks
+who invented the lightbulb
+look up mount everest
 # news
 whats the news nano
 tell me todays headlines
@@ -2742,6 +2887,8 @@ quick news
 what is the latest news
 news of the day
 
+whats happening in the world
+top stories
 # convert
 convert 20 miles to kilometers
 convert 50 kilograms to pounds
@@ -2826,6 +2973,13 @@ convert 500 grams to pounds
 how long is 3 meters in feet
 how many liters in a gallon
 
+convert 5 miles to km
+10 pounds in kg
+how many ounces in a cup
+convert 100 fahrenheit to celsius
+whats 3 meters in feet
+convert 2 liters to gallons
+50 kg to pounds
 # translate
 translate hi to spanish
 how do you say cat in french
@@ -2895,6 +3049,13 @@ translate the word sun to french
 what is love in italian
 translate chicken to spanish
 
+what is thank you in german
+say goodbye in italian
+translate dog into spanish
+how do i say water in japanese
+spanish for friend
+translate good morning to french
+how do you say yes in german
 # timer
 set a timer for 3 minutes
 timer for 10 minutes please
@@ -2962,65 +3123,7 @@ countdown for 20 seconds
 start the timer
 timer 15 minutes
 
-# fun_fact
-give me a random fact nano
-random fact please
-weird fact nano
-fun fact from the internet please
-tell me a crazy random fact
-get a random fact
-random fun fact
-a weird fact please
-strange fact please
-random internet fact
-weird random fact
-fun fact from online please
-strange fact
-random weird fact please
-get me a weird fact online
-a random fact from the internet
-odd random fact
-tell me a random fact
-give me a random fun fact from the internet
-look up a fun fact
-find me a weird fact
-internet fact please
-random fact from online
-surprise me with a fact from the web
-get me a crazy fact
-tell me a useless fact
-weird fact please
-give me a strange fact
-any random facts online
-fetch a fun fact
-tell me a fact i have never heard
-look up a random fact
-i want a weird fact
-fun fact from the internet
-give me a bizarre fact
-something random and true
-random trivia fact
-pull a random fact
-show me a random fact
-tell me a crazy fact
-new fun fact
-get a fact online
-another random fact
-give me a wild fact
-search for a fun fact
-a random useless fact
-tell me something weird
-tell me an odd fact
-random fact please nano
-find a fun fact online
-weird but true fact
-fact of the day
-give me the fact of the day
-random knowledge
-download a fun fact
-give me a fresh fact
-tell me a fun fact from online
-shock me with a fact
-amaze me with a random fact
-any weird facts
-crazy random fact
+timer 10 minutes
+remind me in 3 minutes
+count down from 60
+start a 1 minute timer

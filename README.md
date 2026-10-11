@@ -77,10 +77,10 @@ arduino-cli compile -u -p /dev/cu.usbserial-XXXX -b arduino:avr:nano --build-pro
 
 ```bash
 cd NanoChat/train
-F=512 H=18 QBITS=4 PREFIX=1 FILL=0.3 WD=0.0002 SEED=3 EXTRA_TESTS=tests-extra.txt python3 train.py intents-more-training.txt ../chat_model.h   # NanoChat model
+F=512 H=18 QBITS=4 PREFIX=1 FILL=0.3 WD=0.0005 SEED=8 EXTRA_TESTS=tests-extra.txt python3 train.py intents-more-training.txt ../chat_model.h   # NanoChat model
 python3 audit.py intents-more-training.txt                       # find confusing examples
 ```
-Add examples under `# intent_name` in `intents-more-training.txt`. `tests-more-training.txt` and `tests-extra.txt` hold phrases that are *not* in the training data, for an honest score (currently 173/190). Corrections you taught NanoChat (`learned.txt`) are added automatically.
+Add examples under `# intent_name` in `intents-more-training.txt`. `tests-more-training.txt` and `tests-extra.txt` hold phrases that are *not* in the training data, for an honest score (currently 177/190). Corrections you taught NanoChat (`learned.txt`) are added automatically.
 
 `FILL=0.3` randomly adds filler words ("hey", "nano", "um") while training so the model learns to ignore them.
 

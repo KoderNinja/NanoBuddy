@@ -36,6 +36,6 @@ what is the word for dog in german|translate
 please set a timer for 4 minutes|timer
 start a countdown for 10 seconds|timer
 remind me in 20 minutes please|timer
-tell me a random weird fact|fun_fact
-get me a fun fact from the internet|fun_fact
-give me a strange random fact|fun_fact
+tell me a random weird fact|fact
+get me a fun fact from the internet|fact
+give me a strange random fact|fact
