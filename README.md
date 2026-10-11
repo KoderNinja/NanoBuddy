@@ -17,14 +17,14 @@ On the Nano by itself:
 With helper Nanos (NanoNet, all optional):
 | Helper | What it adds |
 |---|---|
-| Brain | a ~4x bigger chat model: understands you better (~95% vs ~86% on held-out tests) |
+| Brain | a mini GPT: when NanoChat doesn't recognize a message, it writes its own reply letter by letter |
 | Words | invents words and names, 30-question trivia, `morse sos`, `spell cat backwards`, `how many letters in banana` |
 | Calc | math with variables (`calc x = 5`), unit converter (`5 miles to km`, `how many cups in a gallon`) |
 | Library | hundreds of jokes/facts/riddles and survival tips (`what do i do if i get lost`) |
 
 All three of Words, Calc and Library also hold part of a ~200-topic offline encyclopedia (`who is newton`, `what is a volcano`).
 
-How it works: the boss offers each message to Words, Calc and Library ("do ..."); a helper answers only what it handles, so you can add features to a helper without changing the boss. The Brain is asked what each message means. Every helper is optional.
+How it works: the boss offers each message to Words, Calc and Library ("do ..."); a helper answers only what it handles, so you can add features to a helper without changing the boss. When the boss's own model doesn't recognize a message, it asks the Brain to write a reply ("gen ..."). Every helper is optional.
 
 With a Mac (`bridge.py` or the NanoChat app): time, weather, Wikipedia, news headlines, translation, unit conversion, random fun facts.
 
@@ -84,7 +84,20 @@ Add examples under `# intent_name` in `intents-more-training.txt`. `tests-more-t
 
 `FILL=0.3` randomly adds filler words ("hey", "nano", "um") while training so the model learns to ignore them.
 
-To change the offline encyclopedia, edit `TOPICS` in `NanoNetHelper/make_wiki.py` and run it; it splits the summaries into `wiki_a.h` (Library), `wiki_b.h` (Calc) and `wiki_c.h` (Words) to fit each helper's free flash.
+To change the offline encyclopedia, edit `TOPICS` in `NanoNetHelper/make_wiki.py` and run it. It compresses the text (the most common pieces of text become one byte, listed in `wiki_dict.h`) and splits it into `wiki_a.h` (Library), `wiki_b.h` (Calc) and `wiki_c.h` (Words) to fit each helper's free flash.
+
+## Mini GPT
+
+`MiniGPT/` trains the Brain's reply writer: a small recurrent network (GRU, ~22K weights) that reads your message and writes a reply one letter at a time. It's trained with 4-bit weights in mind ("quantization-aware training") so it survives being squeezed into the Nano's flash, and runs with whole-number math so a reply takes a few seconds. It writes friendly, real sentences, though not always on-topic: it's a toy GPT, not ChatGPT.
+
+```bash
+python3 -m venv .venv && .venv/bin/pip install torch      # once
+cd MiniGPT
+python3 make_corpus.py                                     # message>reply training text
+../.venv/bin/python train_gpt.py gru 14000                 # ~20 min on a laptop
+../.venv/bin/python export_gru.py                          # writes NanoNetHelper/gpt_model.h
+```
+`train_gpt.py transformer` trains a tiny real transformer for comparison; at Nano size it can only remember ~12 letters, so the GRU writes much better replies.
 
 ## Other sketches
 
@@ -99,7 +112,7 @@ The survival tips are general safety basics, not a substitute for real first-aid
 ## License
 
 Code: [MIT](LICENSE), copyright KoderNinja.
-`NanoNetHelper/wiki_a.h`, `wiki_b.h` and `wiki_c.h` contain shortened text from [Wikipedia](https://en.wikipedia.org) and is licensed [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/).
+`NanoNetHelper/wiki_a.h`, `wiki_b.h`, `wiki_c.h` and `wiki_dict.h` contain shortened text from [Wikipedia](https://en.wikipedia.org) and is licensed [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/).
 The word and name models were trained on the public word lists in macOS (`/usr/share/dict`).
 
 Arduino is a trademark of Arduino SA. This project isn't affiliated with or endorsed by Arduino.

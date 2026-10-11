@@ -9,3 +9,4 @@ build/
 MiniGPT/*.log
 MiniGPT/*.pt
 MiniGPT/corpus.txt
+wiki_cache.json

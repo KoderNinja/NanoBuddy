@@ -135,7 +135,7 @@ NOINLINE bool askHelper(uint8_t addr, PGM_P prefix, const char *msg) {
     if (strlen(c) < 24) break;
   }
   uint8_t n = 0;
-  for (unsigned long start = millis(); millis() - start < 3000;) {
+  for (unsigned long start = millis(); millis() - start < 8000;) {  // the mini GPT needs a few seconds
     uint8_t chunk[16];
     if (!i2cStart(addr << 1 | 1)) { i2cStop(); return false; }
     for (uint8_t i = 0; i < 16; i++) chunk[i] = i2cRead(i == 15);
@@ -895,16 +895,11 @@ void reply(char *s) {
   if (tryFollowup(s)) return;
   if (looksLikeLookup(s)) { rememberTopic(s); askNet("lookup", s); return; }
 
-  float conf = 1;
-  uint8_t k = 0xFF;
-  if (askHelper(NET_BRAIN, PSTR("?"), s)) {  // reply: "intent confidence% intents"
-    const char *p = netReply;
-    uint8_t hk = nextNumber(p), hc = nextNumber(p);
-    if (nextNumber(p) == CHAT_K) { k = hk; conf = hc / 100.0; }  // same training list?
-  }
-  if (k == 0xFF) k = classify(s, &conf);
+  float conf;
+  uint8_t k = classify(s, &conf);
   if (conf < MIN_CONFIDENCE) {
     if (bridgeOn && looksLikeQuestion(s)) askNet("lookup", s);
+    else if (askHelper(NET_BRAIN, PSTR("gen "), s) && isalpha(netReply[0])) out.println(netReply);  // the mini GPT writes one
     else { face = FACE_WOW; say(R_UNKNOWN); }
     return;
   }

@@ -86,6 +86,34 @@ TOPICS = {
     # everyday things
     "Chocolate": "chocolate", "Pizza": "pizza", "Bread": "bread", "Money": "money", "Soccer": "soccer,football",
     "Basketball": "basketball", "Baseball": "baseball", "Chess": "chess", "Music": "music", "Library": "library",
+    # more animals and nature
+    "Crocodile": "crocodile,alligator", "Gorilla": "gorilla", "Chimpanzee": "chimpanzee,chimp", "Koala": "koala",
+    "Polar bear": "polar bear", "Bald eagle": "eagle,bald eagle", "Parrot": "parrot", "Turtle": "turtle,tortoise",
+    "Jellyfish": "jellyfish", "Bat": "bat,bats", "Rabbit": "rabbit,bunny", "Squirrel": "squirrel", "Hippopotamus": "hippo",
+    "Rhinoceros": "rhino,rhinoceros", "Zebra": "zebra", "Camel": "camel", "Coral reef": "coral reef,coral",
+    "Volcanic eruption": "eruption", "Fossil": "fossil,fossils", "Coral": "coral",
+    # science and how things work
+    "Photosynthesis": "photosynthesis", "Plate tectonics": "plate tectonics,tectonic plates", "Magnetism": "magnetism",
+    "Friction": "friction", "Energy": "energy", "Force": "force", "Electron": "electron", "Molecule": "molecule",
+    "Nuclear power": "nuclear power,nuclear energy", "Laser": "laser", "Radio": "radio", "Satellite": "satellite",
+    "GPS": "gps", "Smartphone": "smartphone", "Electric car": "electric car", "3D printing": "3d printing,3d printer",
+    "Programming language": "programming,coding,code", "Python (programming language)": "python",
+    "Microcontroller": "microcontroller", "Raspberry Pi": "raspberry pi", "Bluetooth": "bluetooth", "Wi-Fi": "wifi,wi fi",
+    "Dinosaur extinction": "dinosaur extinction,extinction", "Big Bang": "big bang", "Light-year": "light year",
+    # body and health
+    "Stomach": "stomach", "Skin": "skin", "Eye": "eye,eyes", "Ear": "ear,ears", "Exercise": "exercise",
+    "Water (molecule)": "h2o", "Germ theory of disease": "germs", "Vaccine": "vaccine,vaccines",
+    # world and history
+    "Moon landing": "first moon landing", "Space Shuttle": "space shuttle", "Mars rover": "mars rover,rover",
+    "Ancient Greece": "ancient greece,greeks", "Maya civilization": "maya,mayans", "Aztecs": "aztecs,aztec",
+    "Samurai": "samurai", "Knight": "knight,knights", "Castle": "castle,castles", "Pirate": "pirate,pirates",
+    "Pyramid": "pyramid shape", "Mount Rushmore": "mount rushmore", "Niagara Falls": "niagara falls",
+    "Hawaii": "hawaii", "Alaska": "alaska", "London": "london", "Paris": "paris", "Tokyo": "tokyo",
+    "Moon": "moon", "Ocean current": "ocean current", "Earth's rotation": "earth spin,rotation",
+    # fun and everyday
+    "Lego": "lego", "Pokemon": "pokemon", "Roblox": "roblox", "Skateboarding": "skateboard,skateboarding",
+    "Ice cream": "ice cream", "Candy": "candy", "Popcorn": "popcorn", "Halloween": "halloween",
+    "Christmas": "christmas", "Thanksgiving": "thanksgiving", "Birthday": "birthday",
 }
 
 
@@ -96,18 +124,28 @@ def ascii_only(text):
     return re.sub(r"\s+", " ", text).strip()
 
 
-def summary(title):
+CACHE = "wiki_cache.json"  # downloaded summaries, so reruns don't fetch everything again
+
+
+def fetch(title, cache):
+    if title in cache:
+        return cache[title]
     url = "https://en.wikipedia.org/api/rest_v1/page/summary/" + urllib.parse.quote(title.replace(" ", "_"))
     for attempt in range(5):  # Wikipedia asks us to slow down sometimes (HTTP 429)
         try:
             with urllib.request.urlopen(urllib.request.Request(url, headers=UA), timeout=10) as r:
-                text = ascii_only(json.load(r).get("extract", ""))
+                cache[title] = json.load(r).get("extract", "")
             break
         except urllib.error.HTTPError as e:
             if e.code != 429 or attempt == 4:
                 raise
             time.sleep(2 ** attempt)
     time.sleep(1.0)
+    return cache[title]
+
+
+def summary(title, cache):
+    text = ascii_only(fetch(title, cache))
     out = ""
     for sentence in re.split(r"(?<=[.!?])\s+", text):
         if len(out) + len(sentence) + 1 > MAX_CHARS:
@@ -117,10 +155,53 @@ def summary(title):
     return out.replace("|", "/").replace('"', "'")
 
 
-# The encyclopedia is split across helpers that have free flash, in this order.
-PARTS = [("wiki_a.h", "WIKI_A", 12500),   # Library
-         ("wiki_b.h", "WIKI_B", 14500),   # Calc
-         ("wiki_c.h", "WIKI_C", 8000)]    # Words
+# The encyclopedia is split across helpers that have free flash, in this order
+# (budgets are for the compressed text; each helper also holds the ~0.7 KB dictionary).
+PARTS = [("wiki_a.h", "WIKI_A", 11800),   # Library
+         ("wiki_b.h", "WIKI_B", 13800),   # Calc
+         ("wiki_c.h", "WIKI_C", 7300)]    # Words
+
+
+# ---------- compression: the 128 most useful text pieces become one byte each (128-255) ----------
+def build_dictionary(texts, size=128):
+    """Greedy: repeatedly pick the piece that saves the most bytes, then replace it everywhere."""
+    from collections import Counter
+    work = list(texts)
+    chosen = []
+    for code in range(size):
+        counts = Counter()
+        for t in work:
+            for n in range(3, 13):
+                for i in range(len(t) - n + 1):
+                    piece = t[i:i + n]
+                    if all(ord(c) < 128 for c in piece) and "|" not in piece:
+                        counts[piece] += 1
+        best = max(counts, key=lambda p: counts[p] * (len(p) - 1) - len(p) - 1, default=None)
+        if not best or counts[best] < 4:
+            break
+        chosen.append(best)
+        mark = chr(128 + code)
+        work = [t.replace(best, mark) for t in work]
+    return chosen
+
+
+def compress(text, dictionary):
+    for code, piece in enumerate(dictionary):  # same order as chosen, so replacements line up
+        text = text.replace(piece, chr(128 + code))
+    return text
+
+
+def c_string(text):
+    """C string literal; bytes 128-255 as octal escapes (hex escapes would swallow following letters)."""
+    out = ""
+    for c in text:
+        if ord(c) >= 128:
+            out += "\\%03o" % ord(c)
+        elif c in '"\\':
+            out += "\\" + c
+        else:
+            out += c
+    return out
 
 
 def write_part(path, name, entries):
@@ -132,20 +213,34 @@ def write_part(path, name, entries):
         f.write("// https://creativecommons.org/licenses/by-sa/4.0/  -- this file only; the code is MIT.\n")
         f.write(f"const char {name}[] PROGMEM =\n")
         for i, e in enumerate(entries):
-            f.write('  "' + e.replace("\\", "\\\\") + ("|" if i < len(entries) - 1 else "") + '"\n')
+            f.write('  "' + c_string(e) + ("|" if i < len(entries) - 1 else "") + '"\n')
         f.write("  ;\n" if entries else '  "";\n')
 
 
 def main():
-    entries = []
+    try:
+        cache = json.load(open(CACHE))
+    except (OSError, ValueError):
+        cache = {}
+    raw = []
     for title, keys in TOPICS.items():
         try:
-            text = summary(title)
+            text = summary(title, cache)
         except Exception as e:
             print(f"skip {title}: {e}")
             continue
-        entries.append(f"{keys}:{text}")
-        print(f"{title}: {text}")
+        raw.append((keys, text))
+    json.dump(cache, open(CACHE, "w"), indent=0)
+    dictionary = build_dictionary([t for _, t in raw])
+    with open("wiki_dict.h", "w") as f:
+        f.write("// Made by make_wiki.py: text pieces that wiki_a/b/c.h store as one byte (128 + position).\n")
+        f.write("// Entries separated by '|'. The encyclopedia text is Wikipedia's, CC BY-SA 4.0.\n")
+        f.write('const char WIKI_DICT[] PROGMEM = "' + c_string("|".join(dictionary)) + '";\n')
+    plain = sum(len(t) for _, t in raw)
+    entries = [f"{keys}:{compress(text, dictionary)}" for keys, text in raw]
+    packed = sum(len(e.split(":", 1)[1]) for e in entries)
+    print(f"{len(entries)} topics; text {plain} -> {packed} bytes with a {len(dictionary)}-piece dictionary "
+          f"({100 - 100 * packed // plain}% smaller)")
     part, budget_used, parts = 0, 0, [[] for _ in PARTS]
     for e in entries:
         while part < len(PARTS) and budget_used + len(e) + 1 > PARTS[part][2]:
