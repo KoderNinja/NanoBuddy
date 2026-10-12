@@ -1,0 +1,147 @@
+# second fresh held-out test set (written separately, only scored at the end): text|expected intent
+heyyy whats up|greet
+yo yo yo|greet
+good morning buddy|greet
+oh hey there|greet
+gotta go my mom is calling|bye
+ok im going to bed now|bye
+ttyl nano|bye
+alright i'm out peace|bye
+see ya tmrw|bye
+i have to leave now cya|bye
+how r u feeling today|how_are_you
+u good nano?|how_are_you
+hows ur day going|how_are_you
+whats good with you|how_are_you
+how have you been lately|how_are_you
+so how are you doing|how_are_you
+wait what even are you|who_are_you
+are u a robot or what|who_are_you
+introduce yourself pls|who_are_you
+what kind of thing are you|who_are_you
+whos the person that coded you|creator
+did someone program u|creator
+who is ur maker|creator
+which human made this thing|creator
+whos behind this chatbot|creator
+what can u even do|help
+i dont know what to ask u any ideas|help
+show me ur commands|help
+what are ur features|help
+give me some stuff to try|help
+help me out what is there to do here|help
+ok make me laugh|joke
+got any funny ones|joke
+i need a good joke rn|joke
+cheer me up with a pun|joke
+do u know any jokes|joke
+hit me with something funny|joke
+teach me something cool|fact
+gimme a random fact|fact
+say something i dont know|fact
+i wanna learn something new|fact
+whats a crazy fun fact|fact
+blow my mind with a fact|fact
+thx a lot|thanks
+thank u so much that helped|thanks
+appreciate it man|thanks
+cool thanks buddy|thanks
+thanks for the help today|thanks
+u r so smart|compliment
+youre the best bot ever|compliment
+nice job that was awesome|compliment
+im impressed by u|compliment
+ur really cool|compliment
+good bot|compliment
+ur so dumb|insult
+shut up stupid bot|insult
+u are useless|insult
+worst chatbot ever|insult
+ur trash lol|insult
+do u remember me|ask_user_name
+can u tell me my name|ask_user_name
+u forgot my name didnt you|ask_user_name
+what do u call me|ask_user_name
+remember my name?|ask_user_name
+yo whats the time rn|time
+what's the clock say|time
+time check pls|time
+what hour is it|time
+is it gonna rain today|weather
+how hot is it outside|weather
+whats it like outside rn|weather
+is it sunny out|weather
+how's the weather looking|weather
+i feel really down today|sad
+my dog died and im so sad|sad
+i failed my test and feel awful|sad
+everyone was mean to me at school|sad
+im super stressed about exams|sad
+today was the worst i'm so upset|sad
+i got an A on my test yay|happy
+im so excited its my birthday|happy
+best day ever!!|happy
+i won my game and im pumped|happy
+im feeling great today|happy
+i just made the team so happy|happy
+im so proud of my drawing|happy
+im so bored|bored
+theres nothing to do|bored
+ugh boooring|bored
+i got nothing to do today|bored
+im dying of boredom here|bored
+this is so dull entertain me|bored
+toss a coin pls|coin
+can u do a coin flip|coin
+coin toss time|coin
+flip it heads or tails|coin
+lets flip a coin to decide|coin
+i need a random number 1 to 6|dice
+can u roll a d6|dice
+dice time roll em|dice
+lets roll some dice|dice
+should i ask her to the dance|eightball
+am i gonna get a puppy|eightball
+is it a good idea to quit the team|eightball
+will my team win saturday|eightball
+should i eat the last cookie|eightball
+will i be famous someday|eightball
+when is ur birthday|age
+whats ur age|age
+how long have u been alive|age
+when were u born|age
+what year were u made|age
+what food do u like best|favorite
+whats ur favorite game|favorite
+which movie is ur fav|favorite
+whats ur favorite song|favorite
+fav sport?|favorite
+i love u nano|love
+ur my best friend|love
+i really like talking to u|love
+i luv you bot|love
+wanna be besties|love
+i want a riddle to solve|riddle
+stump me with a riddle|riddle
+do u know any good riddles|riddle
+tell me about the eiffel tower|lookup
+whats a volcano|lookup
+whats going on in the news|news
+tell me the headlines|news
+anything big happen today|news
+give me the latest news|news
+what's the news rn|news
+whats 100 fahrenheit in celsius|convert
+how many inches is 2 feet|convert
+turn 10 kg into lbs|convert
+how many minutes in 3 hours|convert
+how do u say hello in spanish|translate
+what is thank you in japanese|translate
+say good night in german|translate
+whats cat in spanish|translate
+translate i love pizza to french|translate
+set a timer for 5 minutes|timer
+timer 10 min pls|timer
+wake me up in 20 mins|timer
+start a 2 minute timer|timer
+can u time 1 min for me|timer
